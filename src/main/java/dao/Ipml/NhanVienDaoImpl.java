@@ -6,7 +6,6 @@ import entity.TaiKhoan;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import tool.Tool;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ public class NhanVienDaoImpl implements NhanVienDao {
     private EntityManagerFactory emf;
 
     public NhanVienDaoImpl() {
-        this.emf = Tool.initDriver();
+        this.emf = tool.unitServer();
     }
     @Override
     public List<NhanVien> layDSNhanVien() {
@@ -107,6 +106,45 @@ public class NhanVienDaoImpl implements NhanVienDao {
         EntityManager em = emf.createEntityManager();
         try {
             return em.find(NhanVien.class, maNV).getEmail();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<NhanVien> locNVTheoChucVu(String chucVu) {
+        EntityManager em = emf.createEntityManager();
+        try{
+            return em.createNamedQuery("NhanVien.locNVTheoChucVu", NhanVien.class)
+                    .setParameter("chucVu", chucVu)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<NhanVien> locNVTheoGioiTinh(boolean gt) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createNamedQuery("NhanVien.locNVTheoGioiTinh", NhanVien.class)
+                    .setParameter("gioiTinh", gt)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<NhanVien> locNVTheoTrangThai(String trangThai) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createNamedQuery("NhanVien.locNVTheoTrangThai", NhanVien.class)
+                    .setParameter("trangThai", trangThai)
+                    .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
             return null;

@@ -5,8 +5,6 @@ import entity.DonDoiTra;
 import entity.HoaDon;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import tool.Tool;
-
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,7 +13,7 @@ public class DonDoiTraDaoImpl implements DonDoiTraDao {
     private EntityManagerFactory emf;
 
     public DonDoiTraDaoImpl() {
-        emf = Tool.initDriver();
+        emf = tool.unitServer();
     }
 
     @Override

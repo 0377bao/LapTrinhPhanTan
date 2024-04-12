@@ -13,4 +13,7 @@ public interface NhanVienDao {
     public NhanVien layNhanVienTheoMa(String maNV);
     public String layMatKhauNhanVienTheoMa(String ma);
     public String layEmailNhanVienTheoMa(String maNV);
+    public List<NhanVien> locNVTheoChucVu(String chucVu);
+    public List<NhanVien> locNVTheoGioiTinh(boolean gt);
+    public List<NhanVien> locNVTheoTrangThai(String trangThai);
 }

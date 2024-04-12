@@ -1,21 +1,20 @@
 package dao.Ipml;
 
 
-import dao.HoaDonDao;
+import dao.DaoHoaDon;
 import entity.HoaDon;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import tool.Tool;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public class HoaDonDaoImpl implements HoaDonDao {
+public class HoaDonDaoImpl implements DaoHoaDon {
     private EntityManagerFactory emf;
 
     public HoaDonDaoImpl() {
-        emf = Tool.initDriver();
+        emf = tool.unitServer();
     }
 
     public List<HoaDon> layHetDSHoaDon() {
@@ -91,4 +90,6 @@ public class HoaDonDaoImpl implements HoaDonDao {
         }
         return null;
     }
+
+
 }
