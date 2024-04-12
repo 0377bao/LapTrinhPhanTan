@@ -1,4 +1,4 @@
-package dao.Ipml;
+package dao.impl;
 
 import dao.DanhMucDao;
 import entity.DanhMuc;
@@ -12,7 +12,7 @@ public class DanhMucDaoImpl implements DanhMucDao {
     private EntityManagerFactory emf;
 
     public DanhMucDaoImpl() {
-        emf = Tool.innitServer();
+        emf = Tool.initServer();
     }
 
     @Override

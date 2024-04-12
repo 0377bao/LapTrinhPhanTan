@@ -1,7 +1,7 @@
 package bus.Impl;
 
 import bus.NhaCungCapBus;
-import dao.Ipml.NhaCungCapDaoImpl;
+import dao.impl.NhaCungCapDaoImpl;
 import entity.NhaCungCap;
 
 import java.util.ArrayList;

@@ -5,11 +5,8 @@ import jakarta.persistence.Persistence;
 
 public class Tool {
 
-	public static EntityManagerFactory innitServer() {
+	public static EntityManagerFactory initServer() {
 		return Persistence.createEntityManagerFactory("MySql");
 	}
 
-	public static EntityManagerFactory initDriver() {
-		return Persistence.createEntityManagerFactory("MySql");
-	}
 }

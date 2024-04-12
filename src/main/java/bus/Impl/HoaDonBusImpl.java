@@ -1,8 +1,8 @@
 package bus.Impl;
 
 import bus.HoaDonBus;
-import dao.Ipml.HoaDonDaoImpl;
-import dao.Ipml.KhachHangDaoImpl;
+import dao.impl.HoaDonDaoImpl;
+import dao.impl.KhachHangDaoImpl;
 import entity.*;
 
 import java.time.Instant;

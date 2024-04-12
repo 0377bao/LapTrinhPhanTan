@@ -1,7 +1,7 @@
 package bus.Impl;
 
 import bus.NhanVienBus;
-import dao.Ipml.NhanVienDaoImpl;
+import dao.impl.NhanVienDaoImpl;
 import entity.NhanVien;
 import entity.TaiKhoan;
 

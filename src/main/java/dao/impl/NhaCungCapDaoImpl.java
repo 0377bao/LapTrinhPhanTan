@@ -1,4 +1,4 @@
-package dao.Ipml;
+package dao.impl;
 
 import dao.NhaCungCapDao;
 import entity.NhaCungCap;
@@ -12,7 +12,7 @@ public class NhaCungCapDaoImpl implements NhaCungCapDao {
     private EntityManagerFactory emf;
 
     public NhaCungCapDaoImpl() {
-        emf = Tool.initDriver();
+        emf = Tool.initServer();
     }
 
     @Override

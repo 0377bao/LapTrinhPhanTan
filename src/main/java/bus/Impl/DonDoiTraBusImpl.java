@@ -1,8 +1,8 @@
 package bus.Impl;
 
 import bus.DonDoiTraBus;
-import dao.Ipml.DonDoiTraDaoImpl;
-import dao.Ipml.HoaDonDaoImpl;
+import dao.impl.DonDoiTraDaoImpl;
+import dao.impl.HoaDonDaoImpl;
 import entity.ChiTietHoaDon;
 import entity.ChuongTrinhKhuyenMai;
 import entity.DonDoiTra;

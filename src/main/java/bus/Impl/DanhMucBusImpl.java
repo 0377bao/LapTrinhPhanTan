@@ -1,7 +1,7 @@
 package bus.Impl;
 
 import bus.DanhMucBus;
-import dao.Ipml.DanhMucDaoImpl;
+import dao.impl.DanhMucDaoImpl;
 import entity.DanhMuc;
 
 import java.util.List;

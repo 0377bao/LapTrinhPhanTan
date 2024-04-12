@@ -1,4 +1,4 @@
-package dao.Ipml;
+package dao.impl;
 
 import dao.KhachHangDao;
 import entity.HoaDon;
@@ -14,7 +14,7 @@ import java.util.List;
 public class KhachHangDaoImpl implements KhachHangDao {
     EntityManagerFactory emf;
     public KhachHangDaoImpl(){
-        emf = Tool.initDriver();
+        emf = Tool.initServer();
     }
     public List<KhachHang> LayDSKhachHang(){
         EntityManager em = emf.createEntityManager();

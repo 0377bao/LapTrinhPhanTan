@@ -50,7 +50,7 @@ public class HoaDon {
 
 	public HoaDon(String maHoaDon, LocalDate ngayLap, String hinhThucThanhToan, String ghiChu, int diemGiamGia,
 				  float giamGia, NhanVien nhanVien, KhachHang khachHang, ChuongTrinhKhuyenMai ctkm,
-				  ArrayList<ChiTietHoaDon> dsChiTietHoaDon, float tienKhachDua) {
+				  List<ChiTietHoaDon> dsChiTietHoaDon, float tienKhachDua) {
 		super();
 		this.maHoaDon = maHoaDon;
 		this.ngayLap = ngayLap;

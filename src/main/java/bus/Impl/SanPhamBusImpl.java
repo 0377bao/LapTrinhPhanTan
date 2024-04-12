@@ -1,7 +1,7 @@
 package bus.Impl;
 
 import bus.SanPhamBus;
-import dao.Ipml.SanPhamDaoImpl;
+import dao.impl.SanPhamDaoImpl;
 import entity.Sach;
 import entity.SanPham;
 import entity.VanPhongPham;

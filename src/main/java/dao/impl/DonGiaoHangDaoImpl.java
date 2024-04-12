@@ -1,4 +1,4 @@
-package dao.Ipml;
+package dao.impl;
 
 import dao.DonGiaoHangDao;
 import entity.DonGiaoHang;
@@ -7,14 +7,13 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import tool.Tool;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DonGiaoHangDaoImpl implements DonGiaoHangDao {
     private EntityManagerFactory emf;
 
     public DonGiaoHangDaoImpl() {
-        this.emf = Tool.initDriver();
+        this.emf = Tool.initServer();
     }
 
     @Override

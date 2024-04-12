@@ -2,7 +2,7 @@ package bus.Impl;
 
 import bus.KhachHangBus;
 import customUI.MyTable;
-import dao.Ipml.KhachHangDaoImpl;
+import dao.impl.KhachHangDaoImpl;
 import entity.HoaDon;
 import entity.KhachHang;
 

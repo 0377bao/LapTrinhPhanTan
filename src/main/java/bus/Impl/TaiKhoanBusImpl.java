@@ -1,9 +1,8 @@
 package bus.Impl;
 
 import bus.TaiKhoanBus;
-import dao.Ipml.NhanVienDaoImpl;
-import dao.Ipml.TaiKhoanDaoImpl;
-import entity.TaiKhoan;
+import dao.impl.NhanVienDaoImpl;
+import dao.impl.TaiKhoanDaoImpl;
 
 public class TaiKhoanBusImpl implements TaiKhoanBus {
     private TaiKhoanDaoImpl tkDI = new TaiKhoanDaoImpl();

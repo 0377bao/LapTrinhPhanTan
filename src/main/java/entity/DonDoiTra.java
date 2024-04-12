@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
 @Entity
 @Table(name = "DonDoiTra")
 @NamedQueries({
@@ -13,6 +15,7 @@ import java.util.Objects;
 		@NamedQuery(name = "DonDoiTra.findByHoaDon", query = "SELECT d FROM DonDoiTra d WHERE d.hoaDon.maHoaDon = :maHoaDon"),
 		@NamedQuery(name = "DonDoiTra.findByNgayXDenNgayY", query = "SELECT d FROM DonDoiTra d WHERE d.ngayDoiTra BETWEEN :date1 AND :date2"),
 		@NamedQuery(name = "DonDoiTra.fineByPhone", query = "SELECT d FROM DonDoiTra d WHERE d.hoaDon.khachHang.sdt like :sdt"),
+		@NamedQuery(name = "DonDoiTra.findByNhanVien", query = "SELECT d FROM DonDoiTra d WHERE d.nhanVien.maNhanVien = :maNhanVien AND d.ngayDoiTra BETWEEN :date1 AND :date2"),
 })
 public class DonDoiTra {
 	@Id
@@ -20,10 +23,14 @@ public class DonDoiTra {
 	private String maDonDoiTra;
 	@Column(columnDefinition = "date", nullable = false)
 	private LocalDate ngayDoiTra;
-	@Column(columnDefinition = "nvarchar(50)", name="phuongThucDoiTra", nullable = false)
+	@Column(columnDefinition = "nvarchar(50)", name = "phuongThucDoiTra", nullable = false)
 	private String phuongThucDoiTra;
-	@Column(columnDefinition = "int", name = "diemHoanTra",nullable = false)
+	@Column(columnDefinition = "int", name = "diemHoanTra", nullable = false)
 	private int diemHoanTra;
+	@Column(columnDefinition = "int", name = "soLuongSPDoiHang", nullable = false)
+	private int soLuongSPDoiHang = 0;
+	@Column(columnDefinition = "float", name = "tienHoanTra", nullable = false)
+	private float tienHoanTra = 0;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "maHoaDon")
 	private HoaDon hoaDon;
@@ -32,7 +39,7 @@ public class DonDoiTra {
 	@JoinColumn(name = "maNhanVien")
 	private NhanVien nhanVien;
 	@OneToMany(mappedBy = "donDoiTra", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private ArrayList<ChiTietDonDoiTra> dsChiTietDonDoiTra;
+	private List<ChiTietDonDoiTra> dsChiTietDonDoiTra;
 
 	public LocalDate getNgayDoiTra() {
 		return ngayDoiTra;
@@ -58,11 +65,11 @@ public class DonDoiTra {
 		this.hoaDon = hoaDon;
 	}
 
-	public ArrayList<ChiTietDonDoiTra> getDsChiTietDonDoiTra() {
+	public List<ChiTietDonDoiTra> getDsChiTietDonDoiTra() {
 		return dsChiTietDonDoiTra;
 	}
 
-	public void setDsChiTietDonDoiTra(ArrayList<ChiTietDonDoiTra> dsChiTietDonDoiTra) {
+	public void setDsChiTietDonDoiTra(List<ChiTietDonDoiTra> dsChiTietDonDoiTra) {
 		this.dsChiTietDonDoiTra = dsChiTietDonDoiTra;
 	}
 
@@ -86,14 +93,23 @@ public class DonDoiTra {
 		this.diemHoanTra = diemHoanTra;
 	}
 
+	public int getSoLuongSPDoiHang() {
+		return soLuongSPDoiHang;
+	}
+
+	public float getTienHoanTra() {
+		return tienHoanTra;
+	}
+
+
+
 	public DonDoiTra(String maDonDoiTra, LocalDate ngayDoiTra, String phuongThucDoiTra, int diemHoanTra, HoaDon hoaDon, NhanVien nhanVien, ArrayList<ChiTietDonDoiTra> dsChiTietDonDoiTra) {
 		this.maDonDoiTra = maDonDoiTra;
 		this.ngayDoiTra = ngayDoiTra;
 		this.phuongThucDoiTra = phuongThucDoiTra;
 		this.diemHoanTra = diemHoanTra;
-		this.hoaDon = hoaDon;
-		this.nhanVien = nhanVien;
-		this.dsChiTietDonDoiTra = dsChiTietDonDoiTra;
+		this.soLuongSPDoiHang = tinhSoLuongDoiHang();
+		this.tienHoanTra = tinhTienCanTra();
 	}
 
 	public DonDoiTra() {
@@ -106,19 +122,19 @@ public class DonDoiTra {
 	}
 
 	public float tinhTienCanTra() {
-		if(phuongThucDoiTra.equals("Đổi Hàng")) {
+		if (phuongThucDoiTra.equals("Đổi Hàng")) {
 			return 0;
 		}
 		float tongTien = 0;
 		for (ChiTietDonDoiTra ctddt : dsChiTietDonDoiTra) {
-			tongTien +=ctddt.getGiaBan()*ctddt.getSoLuongTra();
+			tongTien += ctddt.getGiaBan() * ctddt.getSoLuongTra();
 		}
-		return tongTien-diemHoanTra*10000;
+		return tongTien - diemHoanTra * 10000;
 	}
 
 	public int tinhSoLuongDoiHang() {
 		int tongSoLuong = 0;
-		for(ChiTietDonDoiTra ctddt: dsChiTietDonDoiTra) {
+		for (ChiTietDonDoiTra ctddt : dsChiTietDonDoiTra) {
 			tongSoLuong += ctddt.getSoLuongTra();
 		}
 		return tongSoLuong;
@@ -136,20 +152,16 @@ public class DonDoiTra {
 		return Objects.equals(maDonDoiTra, other.maDonDoiTra);
 	}
 
-
-
-
 	@Override
 	public String toString() {
-		return "DonDoiTra [maDonDoiTra=" + maDonDoiTra + ", ngayDoiTra=" + ngayDoiTra + ", dsChiTietDonDoiTra="
-				+ dsChiTietDonDoiTra + ", hoaDon=" + hoaDon + ", nhanVien=" + nhanVien + ", phuongThucDoiTra="
-				+ phuongThucDoiTra + ", diemHoanTra=" + diemHoanTra + "]";
+		return "DonDoiTra{" +
+				"maDonDoiTra='" + maDonDoiTra + '\'' +
+				", ngayDoiTra=" + ngayDoiTra +
+				", phuongThucDoiTra='" + phuongThucDoiTra + '\'' +
+				", diemHoanTra=" + diemHoanTra +
+				", soLuongSPDoiHang=" + soLuongSPDoiHang +
+				", tienHoanTra=" + tienHoanTra +
+				'}';
 	}
-
-
-
-
-
-
-
 }
+

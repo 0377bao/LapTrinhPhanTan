@@ -1,7 +1,7 @@
 package bus.Impl;
 
 import bus.DonGiaoHangBus;
-import dao.Ipml.DonGiaoHangDaoImpl;
+import dao.impl.DonGiaoHangDaoImpl;
 import entity.DonGiaoHang;
 
 import javax.swing.*;

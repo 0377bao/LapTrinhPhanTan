@@ -1,10 +1,11 @@
-package dao.Ipml;
+package dao.impl;
 
 import dao.DonDoiTraDao;
 import entity.DonDoiTra;
 import entity.HoaDon;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import tool.Tool;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,7 +14,7 @@ public class DonDoiTraDaoImpl implements DonDoiTraDao {
     private EntityManagerFactory emf;
 
     public DonDoiTraDaoImpl() {
-        emf = tool.unitServer();
+        emf = Tool.initServer();
     }
 
     @Override
@@ -126,6 +127,25 @@ public class DonDoiTraDaoImpl implements DonDoiTraDao {
             try {
                 return em.createNamedQuery("DonDoiTra.fineByPhone", DonDoiTra.class)
                         .setParameter("sdt", sdt)
+                        .getResultList().stream().toList();
+            } finally {
+                em.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<DonDoiTra> layDonDoiTraTheoNhanVien(String maNhanVien, LocalDate date1, LocalDate date2) {
+        try {
+            EntityManager em = emf.createEntityManager();
+            try {
+                return em.createNamedQuery("DonDoiTra.findByNhanVien", DonDoiTra.class)
+                        .setParameter("maNhanVien", maNhanVien)
+                        .setParameter("date1", date1)
+                        .setParameter("date2", date2)
                         .getResultList().stream().toList();
             } finally {
                 em.close();

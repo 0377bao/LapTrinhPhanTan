@@ -1,4 +1,4 @@
-package dao.Ipml;
+package dao.impl;
 
 //import bus.BUSDanhMuc;
 //import bus.BUSNhaCungCap;
@@ -6,10 +6,7 @@ package dao.Ipml;
 
 import dao.SanPhamDao;
 import entity.*;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 import tool.Tool;
 
 import java.util.List;
@@ -19,7 +16,7 @@ public class SanPhamDaoImpl implements SanPhamDao {
     private EntityManagerFactory emf;
 
     public SanPhamDaoImpl() {
-        this.emf = Tool.initDriver();
+        this.emf = Tool.initServer();
     }
 
 
@@ -137,7 +134,7 @@ public class SanPhamDaoImpl implements SanPhamDao {
         }
     }
 
-	public boolean capNhatSoLuongTonSanPham(SanPham sp) {
+    public boolean capNhatSoLuongTonSanPham(SanPham sp) {
         EntityManager em = emf.createEntityManager();
         try {
             EntityTransaction tx = em.getTransaction();
@@ -152,6 +149,73 @@ public class SanPhamDaoImpl implements SanPhamDao {
             e.printStackTrace();
             return false;
         }
-	}
+    }
 
+    @Override
+    public Long timMaxSoLuongSanPhamTheoLoai(String loai) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Query q = em.createQuery("select count(sp) from SanPham sp where sp.maSanPham like :loai");
+            q.setParameter("loai", loai);
+            return (Long) q.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1L;
+        }
+
+    }
+
+    @Override
+    public List<SanPham> layDSSanPhamTheoTrangThai(String trangThai, String loai) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Query q = em.createQuery("select sp from SanPham sp where sp.maSanPham like :loai and sp.trangThai = :trangThai");
+            q.setParameter("loai", loai);
+            q.setParameter("trangThai", Boolean.parseBoolean(trangThai));
+            return q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<SanPham> layDSSanPhamTheoNCC(String dieuKien, String loai) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Query q = em.createQuery("select sp from SanPham sp where sp.maSanPham like :loai and sp.nhaCungCap.id = :dieuKien");
+            q.setParameter("loai", loai);
+            q.setParameter("dieuKien", dieuKien);
+            return q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<SanPham> layDSSachGanHet() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Query q = em.createQuery("select sp from Sach sp where sp.soLuongTon < 10 and sp.trangThai = :trangThai");
+            q.setParameter("trangThai", "Đang bán");
+            return q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<SanPham> layDSSanPhamConBan() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Query q = em.createQuery("select sp from SanPham sp where sp.trangThai = :isStatus");
+            q.setParameter("isStatus", true);
+            return q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

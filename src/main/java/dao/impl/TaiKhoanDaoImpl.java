@@ -1,4 +1,4 @@
-package dao.Ipml;
+package dao.impl;
 
 import dao.TaiKhoanDao;
 import entity.TaiKhoan;
@@ -10,7 +10,7 @@ public class TaiKhoanDaoImpl implements TaiKhoanDao {
     private EntityManager em;
 
     public TaiKhoanDaoImpl() {
-        this.emf = Tool.innitServer();
+        this.emf = Tool.initServer();
         this.em = emf.createEntityManager();
     }
 

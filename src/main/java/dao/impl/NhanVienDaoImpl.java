@@ -1,4 +1,4 @@
-package dao.Ipml;
+package dao.impl;
 
 import dao.NhanVienDao;
 import entity.NhanVien;

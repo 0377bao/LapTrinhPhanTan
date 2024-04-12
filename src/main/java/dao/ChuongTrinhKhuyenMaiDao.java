@@ -1,6 +1,6 @@
 package dao;
 
-import dao.Ipml.ChuongTrinhKhuyenMaiDaoImpl;
+import dao.impl.ChuongTrinhKhuyenMaiDaoImpl;
 import entity.ChuongTrinhKhuyenMai;
 
 import java.util.List;
@@ -11,4 +11,6 @@ public interface ChuongTrinhKhuyenMaiDao {
     public List<ChuongTrinhKhuyenMai> layDSChuongTrinhKhuyenMai();
     public boolean themChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm);
     public boolean capNhatTrangThaiChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm, ChuongTrinhKhuyenMaiDaoImpl.SaleProgramStatus status);
+    public boolean capNhatChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm);
+    public void tatTrangThaiChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm);
 }

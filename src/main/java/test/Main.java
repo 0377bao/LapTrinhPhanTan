@@ -2,15 +2,10 @@ package test;
 
 import bus.Impl.DonGiaoHangBusImpl;
 import bus.Impl.KhachHangBusImpl;
-import dao.Ipml.DonGiaoHangDaoImpl;
-import dao.Ipml.KhachHangDaoImpl;
-import dao.Ipml.NhanVienDaoImpl;
-import dao.Ipml.SanPhamDaoImpl;
+import dao.impl.DonGiaoHangDaoImpl;
+import dao.impl.NhanVienDaoImpl;
+import dao.impl.SanPhamDaoImpl;
 import entity.*;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
 
 import java.time.LocalDate;
 import java.util.List;
