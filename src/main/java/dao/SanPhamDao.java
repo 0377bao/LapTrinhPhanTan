@@ -16,4 +16,9 @@ public interface SanPhamDao {
     public boolean capNhatSach(Sach sachSua);
     public boolean capNhatVanPhongPham(VanPhongPham vppSua);
     public boolean capNhatSoLuongTonSanPham(SanPham sp);
+    public List<SanPham> layDSSanPhamConBan();
+    public Long timMaxSoLuongSanPhamTheoLoai(String loai);
+    public List<SanPham> layDSSanPhamTheoTrangThai(String trangThai, String loai);
+    public List<SanPham> layDSSanPhamTheoNCC(String dieuKien, String loai);
+    public List<SanPham> layDSSachGanHet();
 }
