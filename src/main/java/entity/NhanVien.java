@@ -10,6 +10,9 @@ import java.util.Objects;
 		@NamedQuery(name = "NhanVien.layDSNhanVien", query = "SELECT nv FROM NhanVien nv"),
 		@NamedQuery(name = "NhanVien.layNhanVienTheoMa", query = "SELECT nv FROM NhanVien nv where nv.maNhanVien = :maNhanVien"),
 		@NamedQuery(name = "NhanVien.capNhatMatKhauNV", query = "UPDATE TaiKhoan tk SET tk.matKhau = :matKhau WHERE tk.nhanVien.maNhanVien = :maNhanVien"),
+		@NamedQuery(name = "NhanVien.locNVTheoChucVu", query = "SELECT nv FROM NhanVien nv where nv.chucVu = :chucVu"),
+		@NamedQuery(name = "NhanVien.locNVTheoGioiTinh", query = "SELECT nv FROM NhanVien nv where nv.gioiTinh = :gioiTinh"),
+		@NamedQuery(name = "NhanVien.locNVTheoTrangThai", query = "SELECT nv FROM NhanVien nv where nv.trangThai = :trangThai")
 })
 public class NhanVien {
 	@Id
