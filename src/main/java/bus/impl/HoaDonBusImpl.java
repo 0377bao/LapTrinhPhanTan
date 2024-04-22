@@ -120,4 +120,9 @@ public class HoaDonBusImpl implements HoaDonBus {
     public List<HoaDon> layHoaDonTuNgayXDenNgayY(LocalDate ngayX, LocalDate ngayY) {
         return hoaDonDao.layHoaDonTuNgayXDenNgayY(ngayX,ngayY);
     }
+
+    @Override
+    public List<ChiTietHoaDon> layDSChiTietHoaDonTheoMaHD(String maHD) {
+        return hoaDonDao.layDSChiTietHoaDonTheoMaHD(maHD);
+    }
 }

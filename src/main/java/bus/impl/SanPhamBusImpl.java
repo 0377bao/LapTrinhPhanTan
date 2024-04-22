@@ -437,4 +437,9 @@ public class SanPhamBusImpl implements SanPhamBus {
     public boolean capNhatSoLuongTonSanPham(SanPham sp) {
         return sanPhamDao.capNhatSoLuongTonSanPham(sp);
     }
+
+    @Override
+    public List<SanPham> lay10SachBanChayNhat() {
+        return sanPhamDao.lay10SachBanChayNhat();
+    }
 }

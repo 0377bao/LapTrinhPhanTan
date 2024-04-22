@@ -1,25 +1,24 @@
 package test;
 
-import bus.ChuongTrinhKhuyenMaiBus;
-import bus.DonDoiTraBus;
-import bus.HoaDonBus;
-import bus.impl.*;
-import dao.impl.ChuongTrinhKhuyenMaiDaoImpl;
-import dao.impl.DonGiaoHangDaoImpl;
-import dao.impl.NhanVienDaoImpl;
-import dao.impl.SanPhamDaoImpl;
-import entity.*;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.Query;
-import ui.*;
+
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+
+//        NhanVien nv = new NhanVienBusImpl().layNhanVienTheoMa("NV1");
+//
+//        ThongKeGui thongKeGui = new ThongKeGui(nv);
+//        thongKeGui.setVisible(true);
+
+//        KhuyenMaiGui khuyenMaiGui = new KhuyenMaiGui();
+//        khuyenMaiGui.setVisible(true);
+
+//        DangNhapGui dangNhapGui = new DangNhapGui();
+//        dangNhapGui.setVisible(true);
+
 //        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MySql");
 //        EntityManager em = emf.createEntityManager();
 //        EntityTransaction tx = em.getTransaction();
@@ -49,14 +48,19 @@ public class Main {
 //        tim.setSoLuongTon(40);
 //        System.out.println(daoSp.capNhatSoLuongTonSanPham(tim));
 //        NhanVienDaoImpl nhanVienIpml = new NhanVienDaoImpl();
+
 ////        List<NhanVien> dsNhanVien = nhanVienIpml.layDSNhanVien();
 ////        dsNhanVien.forEach(ty -> System.out.println(ty));
+
+//        List<NhanVien> dsNhanVien = nhanVienIpml.layDSNhanVien();
+//        dsNhanVien.forEach(ty -> System.out.println(ty));
+
 //        NhanVien nhanVien = nhanVienIpml.layNhanVienTheoMa("NV001");
 //        nhanVien.setTenNhanVien("bao");
 //        System.out.println(nhanVienIpml.capNhatNV(nhanVien));
 //        System.out.println(nhanVienIpml.layNhanVienTheoMa("NV001"));
 //        System.out.println(nhanVienIpml.layEmailNhanVienTheoMa("NV001"));
-//
+
 //        List<MucKhuyenMai> ds = List.of(
 //                new MucKhuyenMai("Tieu thuyet", 20),
 //                new MucKhuyenMai("Báo chí", 10)
@@ -88,8 +92,9 @@ public class Main {
 //        khthem.setEmail(khthem.getEmail().trim());
 //        System.out.println(new KhachHangBusImpl().themKhachHang(khthem));
 
-        NhanVien nv = new NhanVienBusImpl().layNhanVienTheoMa("NV1");
-        new TrangChu(nv).setVisible(true);
+
+//        NhanVien nv = new NhanVienBusImpl().layNhanVienTheoMa("NV1");
+//        new TrangChu(nv).setVisible(true);
 
 //        new GUIThongKe(nv).setVisible(true);
 //        ThongKeBusImpl thongKeBus = new ThongKeBusImpl();
@@ -116,7 +121,6 @@ public class Main {
 //        ch.themMucKhuyenMaiVaoCTKM("CTKM1", m);
 //        k.setTrangThai(true);
 //        ch.capNhatTrangThaiChuongTrinhKhuyenMai(k, ChuongTrinhKhuyenMaiDaoImpl.SaleProgramStatus.ACTIVE);
-
 
     }
 }

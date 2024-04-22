@@ -4,28 +4,28 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.ThreadFactory;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 
 
 
 import controller.DangXuatController;
-
-
 import controller.TrangChuController;
-
 import customUI.ButtonSidebar;
-import customUI.CustumImage;
+import customUI.CustomImage;
 import customUI.MyButton;
 import entity.HoaDon;
 import entity.NhanVien;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -41,7 +41,7 @@ import java.net.URISyntaxException;
 public class TrangChu extends JFrame{
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	public String indexFrame = "Trang chủ";
@@ -62,22 +62,22 @@ public class TrangChu extends JFrame{
 	private Color colorBtnActive = new Color(10, 110, 227);
 	private JPanel pnlHienTai;
 	private NhanVien nvHienTai = null;
-	private List<HoaDon> dsHoaDonCho = new ArrayList<>();
-//	private GUIThongKe guiTK ;
+	private ArrayList<HoaDon> dsHoaDonCho = new ArrayList<>();
+	private ThongKeGui guiTK ;
 
 	public TrangChu(NhanVien nv) {
 		this.nvHienTai = nv;
 
-//		Thread daemonThread = new Thread(() -> {
-//            guiTK = new GUIThongKe(nvHienTai);
-//        });
+		Thread daemonThread = new Thread(() -> {
+			guiTK = new ThongKeGui(nvHienTai);
+		});
 
-        // Đặt thread là daemon
-//        daemonThread.setDaemon(true);
+		// Đặt thread là daemon
+		daemonThread.setDaemon(true);
 
-        // Bắt đầu thực thi luồng
-//        daemonThread.start();
-        // Bắt đầu thực thi luồng mới
+		// Bắt đầu thực thi luồng
+		daemonThread.start();
+		// Bắt đầu thực thi luồng mới
 
 		this.setTitle("PHẦN MỀM NHÀ SÁCH");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -98,10 +98,10 @@ public class TrangChu extends JFrame{
 		pnlSideBar.setLayout(null);
 
 		int widthLblAvtNhanVien = 130;
-		lblAvtNhanVien = new JLabel(new CustumImage().taoHinhTronAvt(nv.getHinhAnh(), widthLblAvtNhanVien));
+		lblAvtNhanVien = new JLabel(new CustomImage().taoHinhTronAvt(nv.getHinhAnh(), widthLblAvtNhanVien));
 		lblAvtNhanVien.setAlignmentX(Component.CENTER_ALIGNMENT);
 		lblAvtNhanVien.setBounds(0, 0, widthLblAvtNhanVien, widthLblAvtNhanVien);
-		
+
 		btnThongTin = new MyButton("");
 		btnThongTin.setBackground(new Color(97, 166, 247));
 		btnThongTin.add(lblAvtNhanVien);
@@ -197,20 +197,20 @@ public class TrangChu extends JFrame{
 		btnNhanVien.addActionListener(xuLyDieuHuong);
 		btnThongKe.addActionListener(xuLyDieuHuong);
 		btnHoTro.addActionListener(xuLyDieuHuong);
-		
+
 		pnlHienTai = new TrangChuGui();
 		getContentPane().add(pnlHienTai);
-		
+
 		DangXuatController xuLyDangXuat = new DangXuatController(this);
 		btnThongTin.addActionListener(xuLyDangXuat);
-		
+
 	}
-	
+
 //	public void xetMauButton() {
 //		btnThongTin.setBackground(Color.red);
 //	}
-	
-	
+
+
 
 	// Đặt lại màu nền trắng cho tất cả các button control
 	public void datLaiMauNenChoButtonControll() {
@@ -245,15 +245,15 @@ public class TrangChu extends JFrame{
 		if(indexFrame.equals("QL Khách hàng")) {
 			btnKhachHang.setBackground(Color.WHITE);
 			btnKhachHang.setForeground(Color.BLACK);
-		} 
+		}
 		if(indexFrame.equals("QL Nhân viên")) {
 			btnNhanVien.setBackground(Color.WHITE);
 			btnNhanVien.setForeground(Color.BLACK);
-		} 
+		}
 		if(indexFrame.equals("QL Thống kê")) {
 			btnThongKe.setBackground(Color.WHITE);
 			btnThongKe.setForeground(Color.BLACK);
-		} 
+		}
 		if(indexFrame.equals("Hỗ trợ")) {
 			btnHoTro.setBackground(Color.WHITE);
 			btnHoTro.setForeground(Color.BLACK);
@@ -278,7 +278,7 @@ public class TrangChu extends JFrame{
 				btnBanHang.setForeground(Color.white);
 			}
 			if(src.equals("Giao hàng")) {
-//				pnlHienTai = new GUIGiaoHang(null);
+				pnlHienTai = new GiaoHangGui(null);
 				btnGiaoHang.setBackground(colorBtnActive);
 				btnGiaoHang.setForeground(Color.white);
 			}
@@ -293,60 +293,60 @@ public class TrangChu extends JFrame{
 				btnNhaCungCap.setForeground(Color.white);
 			}
 			if(src.equals("QL Khuyến mãi")) {
-//				pnlHienTai = new KhuyenMaiGui();
+				pnlHienTai = new KhuyenMaiGui();
 				btnKhuyenMai.setBackground(colorBtnActive);
 				btnKhuyenMai.setForeground(Color.white);
 			}
 			if(src.equals("QL Sản phẩm")) {
-//				pnlHienTai = new GUISanPham();
+				pnlHienTai = new SanPhamGui();
 				btnSanPham.setBackground(colorBtnActive);
 				btnSanPham.setForeground(Color.white);
 			}
 			if(src.equals("QL Khách hàng")) {
-//				pnlHienTai = new GUIKhachHang();
+//				pnlHienTai = new Khah();
 				btnKhachHang.setBackground(colorBtnActive);
 				btnKhachHang.setForeground(Color.white);
-			} 
+			}
 			if(src.equals("QL Nhân viên")) {
 				pnlHienTai = new NhanVienGui();
 				btnNhanVien.setBackground(colorBtnActive);
 				btnNhanVien.setForeground(Color.white);
-			} 
+			}
 			if(src.equals("QL Thống kê")) {
-//				while(guiTK==null) {
-//					try {
-//			            // Đứng 1 giây (1000 milliseconds)
-//			            Thread.sleep(1000);
-//			        } catch (InterruptedException e) {
-//			            e.printStackTrace();
-//			        }
-//				}
-//				pnlHienTai = guiTK;
+				while(guiTK==null) {
+					try {
+						// Đứng 1 giây (1000 milliseconds)
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				pnlHienTai = guiTK;
 //				guiTK.xoaTabCaNhan();
 //				guiTK.taoTabCaNhan();
-//
+
 				btnThongKe.setBackground(colorBtnActive);
 				btnThongKe.setForeground(Color.white);
-			} 
+			}
 			getContentPane().add(pnlHienTai);
 			this.revalidate();
 			this.repaint();
 		}
 	}
-	
+
 	// mở web
 	private static void openWebLink(String url) {
-        if (Desktop.isDesktopSupported()) {
-            Desktop desktop = Desktop.getDesktop();
-            try {
-                desktop.browse(new URI(url));
-            } catch (IOException | URISyntaxException e) {
-                e.printStackTrace();
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Máy tính không hỗ trợ");
-        }
-    }
+		if (Desktop.isDesktopSupported()) {
+			Desktop desktop = Desktop.getDesktop();
+			try {
+				desktop.browse(new URI(url));
+			} catch (IOException | URISyntaxException e) {
+				e.printStackTrace();
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Máy tính không hỗ trợ");
+		}
+	}
 	// phần xủ lý đăng xuất
 	public void xuLyDangXuat(ActionEvent e) {
 		Object o = e.getSource();
@@ -354,9 +354,9 @@ public class TrangChu extends JFrame{
 			new ThongTinNhanVienGui(nvHienTai, this).setVisible(true);;
 		}
 	}
-	
-	
-	
+
+
+
 	// phần xử lý đóng các chức năng theo chức vụ
 	public void xuLyTinhNangTheoChucVuCuaNhanVien() {
 		btnNhanVien.setEnabled(false);
@@ -364,12 +364,12 @@ public class TrangChu extends JFrame{
 		btnKhuyenMai.setEnabled(false);
 		btnNhaCungCap.setEnabled(false);
 	}
-	
+
 	public void chuyenHoaDonQuaGiaoHang(HoaDon hoaDon) {
 		datLaiMauNenChoButtonControll();
 		indexFrame = "Giao hàng";
 		this.remove(pnlHienTai);
-//		pnlHienTai = new GUIGiaoHang(hoaDon);
+		pnlHienTai = new GiaoHangGui(hoaDon);
 		btnGiaoHang.setBackground(colorBtnActive);
 		btnGiaoHang.setForeground(Color.white);
 		getContentPane().add(pnlHienTai);

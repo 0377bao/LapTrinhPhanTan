@@ -7,7 +7,9 @@ import java.awt.Image;
 
 import javax.swing.*;
 
-import customUI.CustumImage;
+import customUI.CustomImage;
+
+
 
 public class TrangChuGui extends JPanel {
 	public TrangChuGui() {
@@ -29,7 +31,9 @@ public class TrangChuGui extends JPanel {
         lblBgrTrangChu.setIcon(iconLblBgr);
 		this.add(lblBgrTrangChu);
 //		gán hình logo vào
-		JLabel lblImgBrand = new JLabel(new CustumImage().taoHinhTronAvt("src\\main\\java\\image\\imagepanel\\logobrand.jpg", 100));
+
+		JLabel lblImgBrand = new JLabel(new CustomImage().taoHinhTronAvt("src\\main\\java\\image\\imagepanel\\logobrand.jpg", 100));
+
 		lblImgBrand.setAlignmentX(Component.CENTER_ALIGNMENT);
 		lblImgBrand.setBounds(1088, 53, 100, 100);
 		this.add(lblImgBrand);

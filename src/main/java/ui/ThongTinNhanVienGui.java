@@ -7,7 +7,7 @@ import javax.swing.border.EmptyBorder;
 import bus.NhanVienBus;
 import bus.impl.NhanVienBusImpl;
 
-import customUI.CustumImage;
+import customUI.CustomImage;
 import customUI.MyButton;
 import entity.NhanVien;
 
@@ -79,7 +79,7 @@ public class ThongTinNhanVienGui extends JFrame implements ActionListener{
 		panel.setLayout(null);
 		
 		int widthLblAvtNhanVien = 130;
-		lblAvtNhanVien = new JLabel(new CustumImage().taoHinhTronAvt(nv.getHinhAnh(), widthLblAvtNhanVien));
+		lblAvtNhanVien = new JLabel(new CustomImage().taoHinhTronAvt(nv.getHinhAnh(), widthLblAvtNhanVien));
 		lblAvtNhanVien.setAlignmentX(Component.CENTER_ALIGNMENT);
 		lblAvtNhanVien.setBounds(190, 15, widthLblAvtNhanVien, widthLblAvtNhanVien);
 		panel.add(lblAvtNhanVien);

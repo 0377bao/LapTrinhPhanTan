@@ -1,9 +1,10 @@
 package controller;
 
+import ui.DangNhapGui;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import ui.DangNhapGui;
 
 public class DangNhapController implements ActionListener{
 	private DangNhapGui view;

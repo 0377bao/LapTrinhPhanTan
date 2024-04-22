@@ -1,5 +1,6 @@
 package dao;
 
+import entity.NhaCungCap;
 import entity.Sach;
 import entity.SanPham;
 import entity.VanPhongPham;
@@ -21,4 +22,9 @@ public interface SanPhamDao {
     public List<SanPham> layDSSanPhamTheoTrangThai(String trangThai, String loai);
     public List<SanPham> layDSSanPhamTheoNCC(String dieuKien, String loai);
     public List<SanPham> layDSSachGanHet();
+    public List<SanPham> layDSVPPGanHet();
+    public List<SanPham> layDSSachConBan();
+    public List<SanPham> layDSVPPConBan();
+  public List<SanPham> lay10SachBanChayNhat();
+
 }

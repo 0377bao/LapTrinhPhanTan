@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
-public class CustumImage {
+public class CustomImage {
 	// Hàm chuyển ảnh thành hình tròn để làm avt
 		public static ImageIcon taoHinhTronAvt(String fileName, int randius) {
 			ImageIcon icon = new ImageIcon(fileName);

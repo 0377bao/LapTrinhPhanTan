@@ -23,14 +23,18 @@
         <class>entity.VanPhongPham</class>
         <properties>
             <property name="jakarta.persistence.jdbc.url"
+<<<<<<< HEAD
                       value="jdbc:sqlserver://localhost:1433;databaseName=NhaSachTest;trustServerCertificate=true" />
+=======
+                      value="jdbc:sqlserver://localhost:1433;databaseName=NhaSachHBDK;trustServerCertificate=true" />
+>>>>>>> d9fd6970ca51dd51c011fecff038a59e66ffd4c6
             <property name="jakarta.persistence.jdbc.user" value="sa" />
             <property name="jakarta.persistence.jdbc.password"
                       value="sapassword" />
             <property name="jakarta.persistence.jdbc.driver"
                       value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
             <property name="jakarta.persistence.jdbc.dialect"
-                      value="org.hibernate.dialect.SQLServer2012Dialect" />
+                      value="org.hibernate.dialect.SQLServerDialect" />
             <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.format_sql" value="true" />
             <property name="hibernate.hbm2ddl.auto" value="update" />

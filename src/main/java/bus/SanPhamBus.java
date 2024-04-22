@@ -30,4 +30,5 @@ public interface SanPhamBus {
     public boolean validDataVPP(String maSanPham, String tenSanPham, String ncc, String soLuongTon, String giaNhap,
                                 String theLoai, String ke, String hinhAnh, String thue, String loiNhuan, String chatLieu);
     public boolean capNhatSoLuongTonSanPham(SanPham sp);
+    public List<SanPham> lay10SachBanChayNhat();
 }

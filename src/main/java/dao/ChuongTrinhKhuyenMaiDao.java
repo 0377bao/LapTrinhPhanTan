@@ -11,13 +11,17 @@ public interface ChuongTrinhKhuyenMaiDao {
     public ChuongTrinhKhuyenMai timChuongTrinhKhuyenMaiDangSuDung(boolean isStatus);
     public List<ChuongTrinhKhuyenMai> layDSChuongTrinhKhuyenMai();
     public boolean themChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm);
-    public boolean capNhatTrangThaiChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm, ChuongTrinhKhuyenMaiDaoImpl.SaleProgramStatus status);
+    public boolean capNhatTrangThaiChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm, boolean status);
     public boolean capNhatChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm);
     public void tatTrangThaiChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm);
 
     public List<MucKhuyenMai> layDSMucKhuyenMaiCuaCTKM(String ma);
+
+    List<MucKhuyenMai> timMucKhuyenMaiTheoMaCTKM(String maCTKM);
+
     public boolean themMucKhuyenMaiVaoCTKM(String maCTKM, MucKhuyenMai mucKhuyenMai);
     public boolean xoaMucKhuyenMaiCuaCTKM(String maCTKM, MucKhuyenMai mucKhuyenMai);
     public boolean capNhatMucKhuyenMaiCuaCTKM(String maCTKM, MucKhuyenMai mucKhuyenMai);
+    public boolean kiemTraTenChuongTrinhKhuyenMai(String ten);
 
 }

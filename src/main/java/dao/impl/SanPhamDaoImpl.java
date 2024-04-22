@@ -171,7 +171,7 @@ public class SanPhamDaoImpl implements SanPhamDao {
         try {
             Query q = em.createQuery("select sp from SanPham sp where sp.maSanPham like :loai and sp.trangThai = :trangThai");
             q.setParameter("loai", loai);
-            q.setParameter("trangThai", Boolean.parseBoolean(trangThai) ? "1" : "0");
+            q.setParameter("trangThai", trangThai);
             return q.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
@@ -205,6 +205,62 @@ public class SanPhamDaoImpl implements SanPhamDao {
         }
         return null;
     }
+
+    @Override
+
+    public List<SanPham> layDSVPPGanHet() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Query q = em.createQuery("select sp from VanPhongPham sp where sp.soLuongTon < 10 and sp.trangThai = :trangThai");
+            q.setParameter("trangThai", "Đang bán");
+            return q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    @Override
+    public List<SanPham> lay10SachBanChayNhat() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Query q = em.createQuery("SELECT ct.sanPham, ct.soLuongMua AS n " +
+                    "FROM ChiTietHoaDon ct GROUP BY ct.sanPham.id ORDER BY n desc");
+            q.setMaxResults(10);
+
+            return q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+
+    public List<SanPham> layDSSachConBan() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Query q = em.createQuery("select sp from Sach sp where sp.trangThai = :trangThai");
+            q.setParameter("trangThai", "Đang bán");
+            return q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<SanPham> layDSVPPConBan() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Query q = em.createQuery("select sp from VanPhongPham sp where sp.trangThai = :trangThai");
+            q.setParameter("trangThai", "Đang bán");
+            return q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     @Override
     public List<SanPham> layDSSanPhamConBan() {

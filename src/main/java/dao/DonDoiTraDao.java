@@ -1,5 +1,6 @@
 package dao;
 
+import entity.ChiTietDonDoiTra;
 import entity.DonDoiTra;
 import entity.HoaDon;
 
@@ -22,4 +23,6 @@ public interface DonDoiTraDao {
     public List<DonDoiTra> timKiemBangSDT(String sdt);
 
     public List<DonDoiTra> layDonDoiTraTheoNhanVien(String maNhanVien, LocalDate date1, LocalDate date2);
+
+    public List<ChiTietDonDoiTra> layChiTietDonDoiTraTheoMaDonDoiTra(String maDonDoiTra);
 }

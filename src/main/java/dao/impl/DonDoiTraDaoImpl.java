@@ -1,6 +1,7 @@
 package dao.impl;
 
 import dao.DonDoiTraDao;
+import entity.ChiTietDonDoiTra;
 import entity.DonDoiTra;
 import entity.HoaDon;
 import jakarta.persistence.EntityManager;
@@ -122,6 +123,23 @@ public class DonDoiTraDaoImpl implements DonDoiTraDao {
                         .setParameter("date1", date1)
                         .setParameter("date2", date2)
                         .getResultList().stream().toList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<ChiTietDonDoiTra> layChiTietDonDoiTraTheoMaDonDoiTra(String maDonDoiTra) {
+        try {
+            EntityManager em = emf.createEntityManager();
+            try {
+                return em.createQuery("SELECT ct FROM ChiTietDonDoiTra ct WHERE ct.donDoiTra.maDonDoiTra = :maDonDoiTra", ChiTietDonDoiTra.class)
+                        .setParameter("maDonDoiTra", maDonDoiTra)
+                        .getResultList().stream().toList();
+            } finally {
+                em.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

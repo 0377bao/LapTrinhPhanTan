@@ -7,6 +7,7 @@ import entity.ChuongTrinhKhuyenMai;
 import entity.MucKhuyenMai;
 import jakarta.persistence.Query;
 
+
 import java.util.List;
 
 public class ChuongTrinhKhuyenMaiBusImpl implements ChuongTrinhKhuyenMaiBus {
@@ -43,7 +44,7 @@ public class ChuongTrinhKhuyenMaiBusImpl implements ChuongTrinhKhuyenMaiBus {
     }
 
     @Override
-    public void capNhatTrangThaiChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm, ChuongTrinhKhuyenMaiDaoImpl.SaleProgramStatus status) {
+    public void capNhatTrangThaiChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm, boolean status) {
         ctkmDao.capNhatTrangThaiChuongTrinhKhuyenMai(ctkm, status);
     }
 
@@ -87,10 +88,15 @@ public class ChuongTrinhKhuyenMaiBusImpl implements ChuongTrinhKhuyenMaiBus {
     }
 
     @Override
-    public String taoMaChuongTrinhKhuyenMai(){
-        int max = layDSChuongTrinhKhuyenMai().size() + 1;
-        return "CTKM" + max;
+    public List<MucKhuyenMai> timMucKhuyenMaiTheoMaCTKM(String maCTKM) {
+        return ctkmDao.timMucKhuyenMaiTheoMaCTKM(maCTKM);
     }
+
+    @Override
+    public String taoMa() {
+        return "CTKM" + (ctkmDao.layDSChuongTrinhKhuyenMai().size() + 1);
+    }
+
 
     @Override
     public boolean themMucKhuyenMaiVaoCTKM(String maCTKM, MucKhuyenMai mucKhuyenMai) {
@@ -106,4 +112,5 @@ public class ChuongTrinhKhuyenMaiBusImpl implements ChuongTrinhKhuyenMaiBus {
     public boolean capNhatMucKhuyenMaiCuaCTKM(String maCTKM, MucKhuyenMai mucKhuyenMai) {
         return ctkmDao.capNhatMucKhuyenMaiCuaCTKM(maCTKM, mucKhuyenMai);
     }
+
 }

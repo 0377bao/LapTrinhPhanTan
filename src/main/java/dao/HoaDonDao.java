@@ -1,5 +1,6 @@
 package dao;
 
+import entity.ChiTietHoaDon;
 import entity.HoaDon;
 
 import java.time.LocalDate;
@@ -21,4 +22,5 @@ public interface HoaDonDao {
     public double tongDoanhThuTheoNhanVien(String maNV, LocalDate date1, LocalDate date2);
 
     public int tongSanPhamTheoNhanVien(String maNV, LocalDate date1, LocalDate date2);
+    public List<ChiTietHoaDon> layDSChiTietHoaDonTheoMaHD(String maHD);
 }

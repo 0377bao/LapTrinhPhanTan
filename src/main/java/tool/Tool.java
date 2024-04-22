@@ -1,20 +1,4 @@
 
-//
-//import jakarta.persistence.EntityManagerFactory;
-//import jakarta.persistence.Persistence;
-//
-//public class Tool {
-//
-//	public static EntityManagerFactory initServer() {
-//		return Persistence.createEntityManagerFactory("MySql");
-//	}
-//
-//	public static String dinhDangTien(double tien) {
-//		return String.format("%,.0f VND", tien);
-//	}
-//
-//}
-
 package tool;
 
 import java.io.FileOutputStream;
@@ -50,6 +34,7 @@ import entity.DonGiaoHang;
 import entity.HoaDon;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+
 
 public class Tool {
 	public static EntityManagerFactory initServer() {
@@ -410,6 +395,10 @@ public class Tool {
 		}
 		return messageSuccess;
 	}
+
+    public static String dinhDangTien(double tien) {
+        return String.format("%,.0f VND", tien);
+    }
 
 
 }

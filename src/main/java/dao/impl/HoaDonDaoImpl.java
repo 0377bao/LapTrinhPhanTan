@@ -2,6 +2,7 @@ package dao.impl;
 
 
 import dao.HoaDonDao;
+import entity.ChiTietHoaDon;
 import entity.HoaDon;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -96,12 +97,12 @@ public class HoaDonDaoImpl implements HoaDonDao {
     public double tongDoanhThuTheoNhanVien(String maNV, LocalDate date1, LocalDate date2) {
         EntityManager em = emf.createEntityManager();
         try {
-            return em.createQuery("SELECT SUM(hd.thanhTien) FROM HoaDon hd WHERE hd.nhanVien.maNhanVien = :maNhanVien AND hd.ngayLap BETWEEN :date1 AND :date2", Double.class)
+            return em.createQuery("SELECT SUM(hd.thanhTien) FROM HoaDon hd " +
+                            "WHERE hd.nhanVien.maNhanVien = :maNhanVien AND hd.ngayLap BETWEEN :date1 AND :date2", Double.class)
                     .setParameter("maNhanVien", maNV)
                     .setParameter("date1", date1)
                     .setParameter("date2", date2).getSingleResult();
         } catch (Exception e) {
-//            e.printStackTrace();
         }
         return 0;
     }
@@ -109,17 +110,32 @@ public class HoaDonDaoImpl implements HoaDonDao {
     @Override
     public int tongSanPhamTheoNhanVien(String maNV, LocalDate date1, LocalDate date2) {
         EntityManager em = emf.createEntityManager();
+        Long result;
         try {
-            return em.createQuery("SELECT SUM(cthd.soLuongMua) FROM ChiTietHoaDon cthd WHERE cthd.hoaDon.nhanVien.id = :maNhanVien AND cthd.hoaDon.ngayLap BETWEEN :date1 AND :date2", Integer.class)
+            result = em.createQuery("SELECT SUM(cthd.soLuongMua) FROM ChiTietHoaDon cthd JOIN cthd.hoaDon hd " +
+                            "WHERE hd.nhanVien.maNhanVien = :maNhanVien AND hd.ngayLap BETWEEN :date1 AND :date2", Long.class)
                     .setParameter("maNhanVien", maNV)
                     .setParameter("date1", date1)
                     .setParameter("date2", date2).getSingleResult();
+            return result == null ? 0 : result.intValue();
         } catch (Exception e) {
-//            e.printStackTrace();
+
+        }
+        return 0;
+    }
+
+    @Override
+    public List<ChiTietHoaDon> layDSChiTietHoaDonTheoMaHD(String maHD) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createQuery("SELECT cthd FROM ChiTietHoaDon cthd JOIN cthd.hoaDon hd WHERE hd.maHoaDon = :maHoaDon", ChiTietHoaDon.class)
+                    .setParameter("maHoaDon", maHD).getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             em.close();
         }
-        return 0;
+        return null;
     }
 
 }

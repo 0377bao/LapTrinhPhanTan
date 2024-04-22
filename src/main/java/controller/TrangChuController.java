@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import ui.TrangChu;
 
+
 public class TrangChuController implements ActionListener {
 
 	private TrangChu view;

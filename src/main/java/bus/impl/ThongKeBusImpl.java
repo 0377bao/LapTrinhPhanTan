@@ -278,7 +278,7 @@ public class ThongKeBusImpl implements ThongKeBus {
 
         for (NhanVien nv : nhanVienDao.layDSNhanVien()) {
             for (HoaDon hd : dsHDTheoNV(nv, x, y)) {
-                for (ChiTietHoaDon cthd : hd.getDsChiTietHoaDon()) {
+                for (ChiTietHoaDon cthd : new HoaDonBusImpl().layDSChiTietHoaDonTheoMaHD(hd.getMaHoaDon())) {
                     for (int i = 0; i < SP.size(); ++i) {
                         if (i == 0 && SP.size() == 1) {
                             SP.set(i, cthd.getSanPham().getMaSanPham());
@@ -304,6 +304,9 @@ public class ThongKeBusImpl implements ThongKeBus {
             }
         }
 
+        if (SP.size() == 1) {
+            return;
+        }
         SP.remove(1);
         SL.remove(1);
 
@@ -329,9 +332,9 @@ public class ThongKeBusImpl implements ThongKeBus {
                 }
             }
 
-//            SanPham sp = sanPhamDao.timKiemSanPham(SP.get(node));
+            SanPham sp = new SanPhamBusImpl().timKiemSanPham(SP.get(node));
 
-            SanPham sp = null;
+//            SanPham sp = null;
             if (sp.getMaSanPham().toUpperCase().startsWith("SPS"))
                 sp = sanPhamDao.timSachTheoMa(SP.get(node));
             else
@@ -358,6 +361,7 @@ public class ThongKeBusImpl implements ThongKeBus {
                 SL.remove(node);
             }
         }
+
     }
 
     @Override
@@ -371,7 +375,7 @@ public class ThongKeBusImpl implements ThongKeBus {
         for (NhanVien nv : nhanVienDao.layDSNhanVien()) {
 
             for (DonDoiTra ddt : dsDDTTheoNV(nv, x, y)) {
-                for (ChiTietDonDoiTra ctddt : ddt.getDsChiTietDonDoiTra()) {
+                for (ChiTietDonDoiTra ctddt : new DonDoiTraBusImpl().layChiTietDonDoiTraTheoMaDonDoiTra(ddt.getMaDonDoiTra())) {
                     for (int i = 0; i < SP.size(); ++i) {
                         if (i == 0 && SP.size() == 1) {
                             SP.set(i, ctddt.getSanPham().getMaSanPham());
@@ -410,9 +414,8 @@ public class ThongKeBusImpl implements ThongKeBus {
                     max = SL.get(i);
                     node = i;
                 }
-//                SanPham sp = busSP.timKiemSanPham(SP.get(node));
+                SanPham sp = new SanPhamBusImpl().timKiemSanPham(SP.get(node));
 
-                SanPham sp = null;
                 if (sp.getMaSanPham().toUpperCase().startsWith("SPS"))
                     sp = sanPhamDao.timSachTheoMa(SP.get(node));
                 else
