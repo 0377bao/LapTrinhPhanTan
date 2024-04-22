@@ -20,6 +20,6 @@ public interface NhanVienBus {
     public List<NhanVien> locNVTheoChucVu(String chucVu);
     public List<NhanVien> locNVTheoGioiTinh(boolean gt);
     public List<NhanVien> locNVTheoTrangThai(String trangThai);
-    public void timNVTheoSdt(ArrayList<NhanVien> ds, String sdt);
-    public void timNVTheoTen(ArrayList<NhanVien> ds, String ten);
+    public void timNVTheoSdt(List<NhanVien> ds, String sdt);
+    public void timNVTheoTen(List<NhanVien> ds, String ten);
 }

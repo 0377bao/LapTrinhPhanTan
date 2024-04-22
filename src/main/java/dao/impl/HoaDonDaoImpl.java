@@ -20,15 +20,7 @@ public class HoaDonDaoImpl implements HoaDonDao {
 
     public List<HoaDon> layHetDSHoaDon() {
         EntityManager em = emf.createEntityManager();
-        try {
-            return em.createNamedQuery("HoaDon.findAll", HoaDon.class).getResultList().stream().toList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            em.close();
-            emf.close();
-        }
-        return null;
+        return em.createNamedQuery("HoaDon.findAll", HoaDon.class).getResultList().stream().toList();
     }
 
     public HoaDon layHoaDonTheoMa(String maHoaDon) {
@@ -37,9 +29,6 @@ public class HoaDonDaoImpl implements HoaDonDao {
             return em.createNamedQuery("HoaDon.findByMaHoaDon", HoaDon.class).setParameter("maHoaDon", maHoaDon).getSingleResult();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            em.close();
-            emf.close();
         }
         return null;
     }
@@ -59,9 +48,6 @@ public class HoaDonDaoImpl implements HoaDonDao {
         } catch (Exception e) {
             e.printStackTrace();
             tx.rollback();
-        } finally {
-            em.close();
-            emf.close();
         }
         return false;
     }
@@ -86,9 +72,6 @@ public class HoaDonDaoImpl implements HoaDonDao {
             return em.createNamedQuery("HoaDon.findByNgayLap", HoaDon.class).setParameter("ngayBD", ngayX).setParameter("ngayKT", ngayY).getResultList().stream().toList();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            em.close();
-            emf.close();
         }
         return null;
     }
@@ -118,7 +101,7 @@ public class HoaDonDaoImpl implements HoaDonDao {
                     .setParameter("date1", date1)
                     .setParameter("date2", date2).getSingleResult();
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return 0;
     }
@@ -127,12 +110,12 @@ public class HoaDonDaoImpl implements HoaDonDao {
     public int tongSanPhamTheoNhanVien(String maNV, LocalDate date1, LocalDate date2) {
         EntityManager em = emf.createEntityManager();
         try {
-            return em.createQuery("SELECT SUM(cthd.soLuongMua) FROM ChiTietHoaDon cthd JOIN HoaDon hd ON cthd.hoaDon.id = hd.id WHERE hd.nhanVien.maNhanVien = :maNhanVien AND hd.ngayLap BETWEEN :date1 AND :date2", Integer.class)
+            return em.createQuery("SELECT SUM(cthd.soLuongMua) FROM ChiTietHoaDon cthd WHERE cthd.hoaDon.nhanVien.id = :maNhanVien AND cthd.hoaDon.ngayLap BETWEEN :date1 AND :date2", Integer.class)
                     .setParameter("maNhanVien", maNV)
                     .setParameter("date1", date1)
                     .setParameter("date2", date2).getSingleResult();
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         } finally {
             em.close();
         }

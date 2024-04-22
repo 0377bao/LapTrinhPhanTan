@@ -6,6 +6,7 @@ import entity.TaiKhoan;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
+import tool.Tool;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class NhanVienDaoImpl implements NhanVienDao {
     private EntityManagerFactory emf;
 
     public NhanVienDaoImpl() {
-        this.emf = tool.unitServer();
+        this.emf = Tool.initServer();
     }
     @Override
     public List<NhanVien> layDSNhanVien() {

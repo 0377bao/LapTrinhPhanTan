@@ -171,7 +171,7 @@ public class SanPhamDaoImpl implements SanPhamDao {
         try {
             Query q = em.createQuery("select sp from SanPham sp where sp.maSanPham like :loai and sp.trangThai = :trangThai");
             q.setParameter("loai", loai);
-            q.setParameter("trangThai", Boolean.parseBoolean(trangThai));
+            q.setParameter("trangThai", Boolean.parseBoolean(trangThai) ? "1" : "0");
             return q.getResultList();
         } catch (Exception e) {
             e.printStackTrace();

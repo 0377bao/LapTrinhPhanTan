@@ -15,4 +15,12 @@ public interface ChuongTrinhKhuyenMaiBus {
     public boolean themChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm);
     public boolean capNhatChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm);
     public boolean validateChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm);
+    public String getMessage();
+
+    public List<MucKhuyenMai> layDSMucKhuyenMaiCuaCTKM(String ma);
+
+    public String taoMaChuongTrinhKhuyenMai();
+    public boolean themMucKhuyenMaiVaoCTKM(String maCTKM, MucKhuyenMai mucKhuyenMai);
+    public boolean xoaMucKhuyenMaiCuaCTKM(String maCTKM, MucKhuyenMai mucKhuyenMai);
+    public boolean capNhatMucKhuyenMaiCuaCTKM(String maCTKM, MucKhuyenMai mucKhuyenMai);
 }
