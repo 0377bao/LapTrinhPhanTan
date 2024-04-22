@@ -52,12 +52,12 @@ public class MapGui extends JFrame {
 		this.setBounds(100, 100, 1075, 698);
 		this.setLocationRelativeTo(null);
 		even = this.getEven();
-		
+
 		//xét logo
 				ImageIcon logoFrame = new ImageIcon(new ImageIcon("src\\image\\logodangnhap\\logo.png").getImage()
 						.getScaledInstance(70, 70, Image.SCALE_SMOOTH));
 				this.setIconImage(logoFrame.getImage());
-		
+
 		MyWayPoint wayPoint = new MyWayPoint(new GeoPosition(10.822065, 106.686810), MyWayPoint.PointType.START, even, "Nơi giao hàng");
 		addWaypoint(wayPoint);
 
@@ -192,9 +192,9 @@ public class MapGui extends JFrame {
 					return;
 				}else {
 					guiGH.hoanThanhKM(textField_1.getText());
-					guiGH.layDiaChi(textField.getText());
+//					guiGH.layDiaChi(textField.getText());
 				}
-                guiGH.kiemTraDeDongMap(e.getActionCommand(), frame);
+//                guiGH.kiemTraDeDongMap(e.getActionCommand(), frame);
                 guiGH.tinhThanhTienDH();
 			}
 		});
@@ -394,7 +394,7 @@ public class MapGui extends JFrame {
 		}
 		return toaDo;
 	}
-	
 
-	
+
+
 }

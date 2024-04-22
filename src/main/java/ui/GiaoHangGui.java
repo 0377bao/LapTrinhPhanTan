@@ -797,14 +797,14 @@ public class GiaoHangGui extends JPanel implements MouseListener{
 	    	txtSoKM.setText(km);
 	    }
 	    
-	    public void layDiaChi(String diaDiem) {
-	    	txtDiaChi.setText(diaDiem);	
-	    }
-	    public void kiemTraDeDongMap(String src, MapGui map) {
-	    	if(src.equals("Hoàn tất")) { 		
-	    		map.setVisible(false);
-	    	}
-	    }
+//	    public void layDiaChi(String diaDiem) {
+//	    	txtDiaChi.setText(diaDiem);
+//	    }
+//	    public void kiemTraDeDongMap(String src, MapGui map) {
+//	    	if(src.equals("Hoàn tất")) {
+//	    		map.setVisible(false);
+//	    	}
+//	    }
 	    
 	    public void tinhThanhTienDH() {
 	    	

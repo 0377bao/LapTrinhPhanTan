@@ -31,7 +31,7 @@ public class HoaDon {
 	private int diemGiamGia;
 	@Column(columnDefinition = "float", nullable = false)
 	private float giamGia;
-	@ManyToOne()
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "maNhanVien")
 	private NhanVien nhanVien;
 	@ManyToOne(fetch = FetchType.LAZY)

@@ -442,4 +442,14 @@ public class SanPhamBusImpl implements SanPhamBus {
     public List<SanPham> lay10SachBanChayNhat() {
         return sanPhamDao.lay10SachBanChayNhat();
     }
+
+    @Override
+    public List<SanPham> layDSVPPConBan() {
+        return sanPhamDao.layDSSanPhamConBan();
+    }
+
+    @Override
+    public List<SanPham> layDSVPPGanHet() {
+        return sanPhamDao.layDSVPPGanHet();
+    }
 }

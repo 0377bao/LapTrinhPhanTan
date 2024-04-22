@@ -21,6 +21,15 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/org.json/json
+    implementation 'org.json:json:20231013'
+    // https://mvnrepository.com/artifact/com.graphhopper/graphhopper-web-api
+    implementation 'com.graphhopper:graphhopper-web-api:5.3'
+// https://mvnrepository.com/artifact/com.graphhopper/graphhopper-core
+    implementation 'com.graphhopper:graphhopper-core:5.3'
+    // https://mvnrepository.com/artifact/org.jxmapviewer/jxmapviewer2
+    implementation 'org.jxmapviewer:jxmapviewer2:2.6'
+
     // https://mvnrepository.com/artifact/javax.activation/javax.activation-api
     implementation 'javax.activation:javax.activation-api:1.2.0'
     // https://mvnrepository.com/artifact/com.sun.mail/javax.mail
@@ -28,12 +37,9 @@ dependencies {
     // https://mvnrepository.com/artifact/javax.mail/javax.mail-api
     implementation 'javax.mail:javax.mail-api:1.6.2'
 
-<<<<<<< HEAD
     // https://mvnrepository.com/artifact/com.itextpdf/itextpdf
     implementation 'com.itextpdf:itextpdf:5.5.9'
 
-=======
->>>>>>> d9fd6970ca51dd51c011fecff038a59e66ffd4c6
     // https://mvnrepository.com/artifact/com.google.zxing/core
     implementation 'com.google.zxing:core:3.3.3'
     // https://mvnrepository.com/artifact/com.github.sarxos/webcam-capture

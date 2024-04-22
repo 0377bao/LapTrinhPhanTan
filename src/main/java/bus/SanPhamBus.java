@@ -31,4 +31,6 @@ public interface SanPhamBus {
                                 String theLoai, String ke, String hinhAnh, String thue, String loiNhuan, String chatLieu);
     public boolean capNhatSoLuongTonSanPham(SanPham sp);
     public List<SanPham> lay10SachBanChayNhat();
+    public List<SanPham> layDSVPPConBan();
+    public List<SanPham> layDSVPPGanHet();
 }

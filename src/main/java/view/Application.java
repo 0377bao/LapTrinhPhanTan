@@ -1,6 +1,7 @@
 package view;
 
 import bus.impl.SanPhamBusImpl;
+import ui.DangNhapGui;
 import ui.SanPhamGui;
 
 public class Application {
@@ -12,8 +13,8 @@ public class Application {
             e.printStackTrace();
         }
         //new GUIGiaoHang(new HoaDonBusImpl().TimHoaDonTheoMa("HD01")).setVisible(true);
-//        new GUIDangNhap().setVisible(true);
-            new SanPhamGui().setVisible(true);
-        new SanPhamBusImpl().layDSSachConBan().forEach(System.out::println);
+        new DangNhapGui().setVisible(true);
+//            new SanPhamGui().setVisible(true);
+//        new SanPhamBusImpl().layDSSachConBan().forEach(System.out::println);
     }
 }

@@ -2,6 +2,9 @@ package test;
 
 
 
+import ui.DangNhapGui;
+import ui.KhuyenMaiGui;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -13,8 +16,8 @@ public class Main {
 //        ThongKeGui thongKeGui = new ThongKeGui(nv);
 //        thongKeGui.setVisible(true);
 
-//        KhuyenMaiGui khuyenMaiGui = new KhuyenMaiGui();
-//        khuyenMaiGui.setVisible(true);
+        KhuyenMaiGui khuyenMaiGui = new KhuyenMaiGui();
+        khuyenMaiGui.setVisible(true);
 
 //        DangNhapGui dangNhapGui = new DangNhapGui();
 //        dangNhapGui.setVisible(true);

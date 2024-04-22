@@ -666,7 +666,7 @@ public class DoiTraHangGui extends JPanel {
 				"Tên khách hàng", "Ngày lập", "Tổng số lượng SP" }, 0);
 
 		// lấy dánh sách đơn đổi trả từ dữ liệu
-//		busDDT.layDanhSachDonDoiTraVaoTable(modelDonDoiTraQL, dsDonDoiTra);
+		busDDT.layDanhSachDonDoiTraVaoTable(modelDonDoiTraQL, dsDonDoiTra);
 		tbDonDoiTraQL = new MyTable(modelDonDoiTraQL);
 		tbDonDoiTraQL.setName("tbDonDoiTraQL");
 
