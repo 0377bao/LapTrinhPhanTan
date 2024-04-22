@@ -7,26 +7,29 @@ import entity.DanhMuc;
 import java.util.List;
 
 public class DanhMucBusImpl implements DanhMucBus {
-    private DanhMucDaoImpl danhMucDao = new DanhMucDaoImpl();
+    private DanhMucDaoImpl danhMucDaoImpl ;
+    public DanhMucBusImpl(){
+        danhMucDaoImpl = new DanhMucDaoImpl();
+    }
     public String mes = "";
     @Override
     public List<DanhMuc> layDSDanhMuc() {
-        return danhMucDao.layDSDanhMuc();
+        return danhMucDaoImpl.layDSDanhMuc();
     }
 
     @Override
     public DanhMuc timDanhMucTheoMa(String maDanhMuc) {
-        return danhMucDao.timDanhMucTheoMa(maDanhMuc);
+        return danhMucDaoImpl.timDanhMucTheoMa(maDanhMuc);
     }
 
     @Override
     public boolean themDanhMuc(DanhMuc dm) {
-        return danhMucDao.taoDanhMuc(dm);
+        return danhMucDaoImpl.taoDanhMuc(dm);
     }
 
     @Override
     public String taoMa() {
-        int max = danhMucDao.layDSDanhMuc().size() + 1;
+        int max = danhMucDaoImpl.layDSDanhMuc().size() + 1;
         return "DM" + max;
     }
 
@@ -48,6 +51,6 @@ public class DanhMucBusImpl implements DanhMucBus {
 
     @Override
     public DanhMuc timDanhMucTheoTen(String ten) {
-        return danhMucDao.timDanhMucTheoTen(ten);
+        return danhMucDaoImpl.timDanhMucTheoTen(ten);
     }
 }

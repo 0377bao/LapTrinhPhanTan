@@ -81,7 +81,7 @@ public class NhanVienBusImpl implements NhanVienBus {
                         return false;
                     }
                 }
-            }else {
+            } else {
                 return true;
             }
         }
@@ -122,7 +122,7 @@ public class NhanVienBusImpl implements NhanVienBus {
             mes = "Vui lòng nhập mật khẩu để tạo tài khoản";
             return false;
         } else {
-            if (!(taiKhoan.matches("^[A-Z][a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':"+"\\|,.<>\\/?]*.{7,}$"))) {
+            if (!(taiKhoan.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*]).{8,}$"))) {
                 mes = "Mật khẩu ít nhất 8 ký tự bao gồm chữ hoa, chữ thường, ký tự đặc biệt và số";
                 return false;
             }
@@ -157,7 +157,7 @@ public class NhanVienBusImpl implements NhanVienBus {
 
     @Override
     public void timNVTheoSdt(List<NhanVien> ds, String sdt) {
-        List<NhanVien> dsNV = new ArrayList<>();
+        ArrayList<NhanVien> dsNV = new ArrayList<>();
         Pattern p = Pattern.compile(sdt);
         for (NhanVien nv : layDSNhanVien()) {
             Matcher m = p.matcher(nv.getSdt());
@@ -171,7 +171,7 @@ public class NhanVienBusImpl implements NhanVienBus {
 
     @Override
     public void timNVTheoTen(List<NhanVien> ds, String ten) {
-        List<NhanVien> dsNV = new ArrayList<>();
+        ArrayList<NhanVien> dsNV = new ArrayList<>();
         Pattern p = Pattern.compile(ten, Pattern.CASE_INSENSITIVE);
         for (NhanVien nv : layDSNhanVien()) {
             Matcher m = p.matcher(nv.getTenNhanVien());

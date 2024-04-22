@@ -83,10 +83,12 @@ public class KhachHang {
 		this.diemTichLuy = diemTichLuy;
 	}
 
-
-
 	public float getTongTienMua() {
 		return tongTienMua;
+	}
+
+	public void setTongTienMua(float tongTienMua) {
+		this.tongTienMua = tongTienMua;
 	}
 
 	public void congDiemTichLuy(int diemTichLuy) {

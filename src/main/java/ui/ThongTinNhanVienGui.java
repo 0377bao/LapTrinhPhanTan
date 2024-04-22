@@ -1,33 +1,22 @@
 package ui;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import bus.NhanVienBus;
 import bus.impl.NhanVienBusImpl;
-
-import customUI.CustomImage;
+import customUI.CustumImage;
 import customUI.MyButton;
 import entity.NhanVien;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-import java.awt.Font;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import java.awt.Color;
-import java.awt.Component;
-import javax.swing.JPasswordField;
 
 public class ThongTinNhanVienGui extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lblAvtNhanVien;
-    private NhanVienBus busNV = new NhanVienBusImpl();
+    private NhanVienBusImpl busNV = new NhanVienBusImpl();
     private JPasswordField passwordField;
     private MyButton btnDangXuat, btnDoiMatKhau;
     private NhanVien nv;
@@ -79,7 +68,7 @@ public class ThongTinNhanVienGui extends JFrame implements ActionListener{
 		panel.setLayout(null);
 		
 		int widthLblAvtNhanVien = 130;
-		lblAvtNhanVien = new JLabel(new CustomImage().taoHinhTronAvt(nv.getHinhAnh(), widthLblAvtNhanVien));
+		lblAvtNhanVien = new JLabel(new CustumImage().taoHinhTronAvt(nv.getHinhAnh(), widthLblAvtNhanVien));
 		lblAvtNhanVien.setAlignmentX(Component.CENTER_ALIGNMENT);
 		lblAvtNhanVien.setBounds(190, 15, widthLblAvtNhanVien, widthLblAvtNhanVien);
 		panel.add(lblAvtNhanVien);

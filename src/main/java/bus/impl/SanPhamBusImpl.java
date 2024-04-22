@@ -255,6 +255,16 @@ public class SanPhamBusImpl implements SanPhamBus {
     }
 
     @Override
+    public List<SanPham> layDSVPPGanHet() {
+        return sanPhamDao.layDSVPPGanHet();
+    }
+
+    @Override
+    public List<SanPham> layDSVPPConBan() {
+        return sanPhamDao.layDSVPPConBan();
+    }
+
+    @Override
     public List<SanPham> locVPPTheoNCC(String maNCC) {
         return sanPhamDao.layDSSanPhamTheoNCC(maNCC, MAVPP_STARTWITH);
     }

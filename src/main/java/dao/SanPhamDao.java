@@ -25,6 +25,5 @@ public interface SanPhamDao {
     public List<SanPham> layDSVPPGanHet();
     public List<SanPham> layDSSachConBan();
     public List<SanPham> layDSVPPConBan();
-  public List<SanPham> lay10SachBanChayNhat();
-
+    public List<SanPham> lay10SachBanChayNhat();
 }

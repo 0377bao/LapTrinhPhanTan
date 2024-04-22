@@ -273,7 +273,7 @@ public class TrangChu extends JFrame{
 				btnTrangChu.setForeground(Color.white);
 			}
 			if(src.equals("Bán hàng")) {
-//				pnlHienTai = new GUIBanHang(this, dsHoaDonCho, nvHienTai);
+				pnlHienTai = new BanHangGui(this, dsHoaDonCho, nvHienTai);
 				btnBanHang.setBackground(colorBtnActive);
 				btnBanHang.setForeground(Color.white);
 			}
@@ -303,7 +303,7 @@ public class TrangChu extends JFrame{
 				btnSanPham.setForeground(Color.white);
 			}
 			if(src.equals("QL Khách hàng")) {
-//				pnlHienTai = new Khah();
+				pnlHienTai = new KhachHangGui();
 				btnKhachHang.setBackground(colorBtnActive);
 				btnKhachHang.setForeground(Color.white);
 			}

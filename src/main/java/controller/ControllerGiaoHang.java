@@ -1,6 +1,7 @@
 package controller;
 
 import ui.GiaoHangGui;
+import ui.GiaoHangGui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +12,7 @@ public class ControllerGiaoHang implements ActionListener, KeyListener{
 	private GiaoHangGui view;
 	public ControllerGiaoHang(GiaoHangGui view) {
 		this.view = view;
-   }
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -23,13 +24,13 @@ public class ControllerGiaoHang implements ActionListener, KeyListener{
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
