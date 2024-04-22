@@ -4,7 +4,7 @@ import dao.NhaCungCapDao;
 import entity.NhaCungCap;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import tool.Tool;
+import Tool.Tool;
 
 import java.util.List;
 

@@ -1,5 +1,6 @@
 package dao.impl;
 
+import Tool.Tool;
 import dao.NhanVienDao;
 import entity.NhanVien;
 import entity.TaiKhoan;
@@ -13,7 +14,7 @@ public class NhanVienDaoImpl implements NhanVienDao {
     private EntityManagerFactory emf;
 
     public NhanVienDaoImpl() {
-        this.emf = tool.unitServer();
+        this.emf = Tool.initServer();
     }
     @Override
     public List<NhanVien> layDSNhanVien() {

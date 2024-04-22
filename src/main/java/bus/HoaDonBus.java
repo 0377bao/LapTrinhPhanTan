@@ -1,5 +1,6 @@
 package bus;
 
+import entity.ChiTietHoaDon;
 import entity.ChuongTrinhKhuyenMai;
 import entity.HoaDon;
 import entity.SanPham;
@@ -19,4 +20,5 @@ public interface HoaDonBus {
     List<HoaDon> layLichSuGiaoDichKhachHang(String maKhachHang, int soGD);
 
     List<HoaDon> layHoaDonTuNgayXDenNgayY(LocalDate ngayX, LocalDate ngayY);
+    public List<ChiTietHoaDon> layDSChiTietHoaDonTheoMaHD(String maHD);
 }

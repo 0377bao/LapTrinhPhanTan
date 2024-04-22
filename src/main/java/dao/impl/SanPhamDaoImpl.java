@@ -7,7 +7,7 @@ package dao.impl;
 import dao.SanPhamDao;
 import entity.*;
 import jakarta.persistence.*;
-import tool.Tool;
+import Tool.Tool;
 
 import java.util.List;
 
@@ -171,7 +171,7 @@ public class SanPhamDaoImpl implements SanPhamDao {
         try {
             Query q = em.createQuery("select sp from SanPham sp where sp.maSanPham like :loai and sp.trangThai = :trangThai");
             q.setParameter("loai", loai);
-            q.setParameter("trangThai", Boolean.parseBoolean(trangThai));
+            q.setParameter("trangThai", trangThai);
             return q.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
@@ -199,6 +199,20 @@ public class SanPhamDaoImpl implements SanPhamDao {
         try {
             Query q = em.createQuery("select sp from Sach sp where sp.soLuongTon < 10 and sp.trangThai = :trangThai");
             q.setParameter("trangThai", "Đang bán");
+            return q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<SanPham> lay10SachBanChayNhat() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Query q = em.createQuery("SELECT ct.sanPham, ct.soLuongMua AS n " +
+                    "FROM ChiTietHoaDon ct GROUP BY ct.sanPham.id ORDER BY n desc");
+            q.setMaxResults(10);
             return q.getResultList();
         } catch (Exception e) {
             e.printStackTrace();

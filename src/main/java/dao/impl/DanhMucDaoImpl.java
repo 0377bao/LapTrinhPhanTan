@@ -4,7 +4,7 @@ import dao.DanhMucDao;
 import entity.DanhMuc;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import tool.Tool;
+import Tool.Tool;
 
 import java.util.List;
 

@@ -21,4 +21,5 @@ public interface SanPhamDao {
     public List<SanPham> layDSSanPhamTheoTrangThai(String trangThai, String loai);
     public List<SanPham> layDSSanPhamTheoNCC(String dieuKien, String loai);
     public List<SanPham> layDSSachGanHet();
+    public List<SanPham> lay10SachBanChayNhat();
 }
