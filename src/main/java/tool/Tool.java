@@ -1,4 +1,4 @@
-package Tool;
+package tool;
 
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -67,4 +67,5 @@ public class Tool {
         }
         return messageSuccess;
     }
+
 }

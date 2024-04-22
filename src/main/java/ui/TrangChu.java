@@ -1,15 +1,18 @@
 package ui;
 
+
 import controller.DangXuatController;
 import controller.TrangChuController;
 import customUI.ButtonSidebar;
 import customUI.CustomImage;
+
 import customUI.MyButton;
 import entity.HoaDon;
 import entity.NhanVien;
 
 import javax.swing.*;
 import java.awt.*;
+
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URI;
@@ -49,9 +52,6 @@ public class TrangChu extends JFrame {
     public TrangChu(NhanVien nv) {
         this.nvHienTai = nv;
 
-//		Thread daemonThread = new Thread(() -> {
-//            guiTK = new GUIThongKe(nvHienTai);
-//        });
 
         // Đặt thread là daemon
 //        daemonThread.setDaemon(true);
@@ -259,7 +259,7 @@ public class TrangChu extends JFrame {
                 btnBanHang.setForeground(Color.white);
             }
             if (src.equals("Giao hàng")) {
-//				pnlHienTai = new GUIGiaoHang(null);
+				pnlHienTai = new GiaoHangGui(null);
                 btnGiaoHang.setBackground(colorBtnActive);
                 btnGiaoHang.setForeground(Color.white);
             }
@@ -279,7 +279,7 @@ public class TrangChu extends JFrame {
                 btnKhuyenMai.setForeground(Color.white);
             }
             if (src.equals("QL Sản phẩm")) {
-//				pnlHienTai = new GUISanPham();
+				pnlHienTai = new SanPhamGui();
                 btnSanPham.setBackground(colorBtnActive);
                 btnSanPham.setForeground(Color.white);
             }
@@ -305,6 +305,7 @@ public class TrangChu extends JFrame {
 //				pnlHienTai = guiTK;
 //				guiTK.xoaTabCaNhan();
 //				guiTK.taoTabCaNhan();
+
 
                 btnThongKe.setBackground(colorBtnActive);
                 btnThongKe.setForeground(Color.white);
@@ -359,4 +360,5 @@ public class TrangChu extends JFrame {
 
     }
 }
+
 

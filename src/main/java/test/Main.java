@@ -20,16 +20,16 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        NhanVien nv = new NhanVienBusImpl().layNhanVienTheoMa("NV1");
-
-        ThongKeGui thongKeGui = new ThongKeGui(nv);
-        thongKeGui.setVisible(true);
+//        NhanVien nv = new NhanVienBusImpl().layNhanVienTheoMa("NV1");
+//
+//        ThongKeGui thongKeGui = new ThongKeGui(nv);
+//        thongKeGui.setVisible(true);
 
 //        KhuyenMaiGui khuyenMaiGui = new KhuyenMaiGui();
 //        khuyenMaiGui.setVisible(true);
 
-//        DangNhapGui dangNhapGui = new DangNhapGui();
-//        dangNhapGui.setVisible(true);
+        DangNhapGui dangNhapGui = new DangNhapGui();
+        dangNhapGui.setVisible(true);
 
 //        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MySql");
 //        EntityManager em = emf.createEntityManager();

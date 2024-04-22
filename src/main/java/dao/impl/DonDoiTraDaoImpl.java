@@ -6,7 +6,7 @@ import entity.DonDoiTra;
 import entity.HoaDon;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import Tool.Tool;
+import tool.Tool;
 
 import java.time.LocalDate;
 import java.util.List;

@@ -3,7 +3,7 @@ package ui;
 import controller.QuenMatKhauNhapMaController;
 import customUI.CustomImage;
 import customUI.MyButton;
-import Tool.PhanLuong;
+import tool.PhanLuong;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;

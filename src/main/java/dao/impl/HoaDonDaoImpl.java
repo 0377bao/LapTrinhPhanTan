@@ -7,7 +7,7 @@ import entity.HoaDon;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import Tool.Tool;
+import tool.Tool;
 
 import java.time.LocalDate;
 import java.util.List;

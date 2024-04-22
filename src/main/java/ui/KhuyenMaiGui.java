@@ -14,7 +14,7 @@ import entity.ChuongTrinhKhuyenMai;
 import entity.DanhMuc;
 import entity.KhachHang;
 import entity.MucKhuyenMai;
-import Tool.PhanLuong;
+import tool.PhanLuong;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;

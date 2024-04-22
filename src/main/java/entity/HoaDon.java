@@ -1,6 +1,7 @@
 package entity;
 
 //import bus.BUSHoaDon;
+import bus.impl.HoaDonBusImpl;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -31,7 +32,7 @@ public class HoaDon {
 	private int diemGiamGia;
 	@Column(columnDefinition = "float", nullable = false)
 	private float giamGia;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne()
 	@JoinColumn(name = "maNhanVien")
 	private NhanVien nhanVien;
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -185,31 +186,31 @@ public class HoaDon {
 		return result;
 	}
 
-//	public float tinhGiamGia() {
-//		float result = 0;
-//		for(ChiTietHoaDon cthd : dsChiTietHoaDon) {
-//			float giamGia = new BUSHoaDon().hamLayGiamGiaCuaChiTietHoaDon(this.ctkm, cthd.getSanPham());
-//			result += cthd.tinhThanhTien() * giamGia / 100;
-//		}
-//		return result;
-//	}
-//
-//	public float getThanhTien() {
-//		return tinhTongTien() - tinhGiamGia() - (diemGiamGia * 10000) + tinhThue();
-//	}
-//
-//	public float tinhTienThua() {
-//		return this.tienKhachDua - getThanhTien();
-//	}
+	public float tinhGiamGia() {
+		float result = 0;
+		for(ChiTietHoaDon cthd : dsChiTietHoaDon) {
+			float giamGia = new HoaDonBusImpl().hamLayGiamGiaCuaChiTietHoaDon(this.ctkm, cthd.getSanPham());
+			result += cthd.tinhThanhTien() * giamGia / 100;
+		}
+		return result;
+	}
 
-//	public float tinhThue() {
-//		float result = 0;
-//		for(ChiTietHoaDon cthd : dsChiTietHoaDon) {
-//			result += cthd.getGiaBan() * cthd.getSanPham().getThue() / 100 * cthd.getSoLuongMua();
-//
-//		}
-//		return result;
-//	}
+	public float getThanhTien() {
+		return tinhTongTien() - tinhGiamGia() - (diemGiamGia * 10000) + tinhThue();
+	}
+
+	public float tinhTienThua() {
+		return this.tienKhachDua - getThanhTien();
+	}
+
+	public float tinhThue() {
+		float result = 0;
+		for(ChiTietHoaDon cthd : dsChiTietHoaDon) {
+			result += cthd.getGiaBan() * cthd.getSanPham().getThue() / 100 * cthd.getSoLuongMua();
+
+		}
+		return result;
+	}
 
 	@Override
 	public String toString() {

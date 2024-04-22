@@ -6,7 +6,7 @@ import entity.MucKhuyenMai;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Query;
-import Tool.Tool;
+import tool.Tool;
 
 import java.util.List;
 
