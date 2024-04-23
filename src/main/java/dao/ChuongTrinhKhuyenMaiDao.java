@@ -11,7 +11,7 @@ public interface ChuongTrinhKhuyenMaiDao {
     public ChuongTrinhKhuyenMai timChuongTrinhKhuyenMaiDangSuDung(boolean isStatus);
     public List<ChuongTrinhKhuyenMai> layDSChuongTrinhKhuyenMai();
     public boolean themChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm);
-    public boolean capNhatTrangThaiChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm, ChuongTrinhKhuyenMaiDaoImpl.SaleProgramStatus status);
+    public boolean capNhatTrangThaiChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm, boolean status);
     public boolean capNhatChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm);
     public void tatTrangThaiChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm);
     public boolean kiemTraTenChuongTrinhKhuyenMai(String ten);

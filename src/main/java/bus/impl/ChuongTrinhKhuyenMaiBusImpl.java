@@ -42,7 +42,7 @@ public class ChuongTrinhKhuyenMaiBusImpl implements ChuongTrinhKhuyenMaiBus {
     }
 
     @Override
-    public void capNhatTrangThaiChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm, ChuongTrinhKhuyenMaiDaoImpl.SaleProgramStatus status) {
+    public void capNhatTrangThaiChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm, boolean status) {
         ctkmDao.capNhatTrangThaiChuongTrinhKhuyenMai(ctkm, status);
     }
 

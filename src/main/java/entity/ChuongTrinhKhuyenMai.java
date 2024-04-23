@@ -11,7 +11,7 @@ import java.util.Objects;
 	@NamedQuery(name = "ChuongTrinhKhuyenMai.layDSChuongTrinhKhuyenMai", query = "select ctkm from ChuongTrinhKhuyenMai ctkm"),
 	@NamedQuery(name = "ChuongTrinhKhuyenMai.timChuongTrinhKhuyenMaiTheoId", query = "select ctkm from ChuongTrinhKhuyenMai ctkm where ctkm.maCTKM = :id"),
 	@NamedQuery(name = "ChuongTrinhKhuyenMai. timChuongTrinhKhuyenMaiDangSuDung", query = "select ctkm from ChuongTrinhKhuyenMai ctkm where ctkm.trangThai = :status"),
-	@NamedQuery(name ="ChuongTrinhKhuyenMai.capNhatTrangThaiChuongTrinhKhuyenMai", query = "update ChuongTrinhKhuyenMai ctkm set ctkm.trangThai = :code where ctkm.id = :id")
+	@NamedQuery(name = "ChuongTrinhKhuyenMai.capNhatTrangThaiChuongTrinhKhuyenMai", query = "update ChuongTrinhKhuyenMai ctkm set ctkm.trangThai = :code where ctkm.id = :id")
 
 })
 public class ChuongTrinhKhuyenMai {

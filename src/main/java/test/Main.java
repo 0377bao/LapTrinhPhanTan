@@ -22,11 +22,11 @@ public class Main {
 
         NhanVien nv = new NhanVienBusImpl().layNhanVienTheoMa("NV1");
 
-        ThongKeGui thongKeGui = new ThongKeGui(nv);
-        thongKeGui.setVisible(true);
+//        ThongKeGui thongKeGui = new ThongKeGui(nv);
+//        thongKeGui.setVisible(true);
 
-//        KhuyenMaiGui khuyenMaiGui = new KhuyenMaiGui();
-//        khuyenMaiGui.setVisible(true);
+        KhuyenMaiGui khuyenMaiGui = new KhuyenMaiGui();
+        khuyenMaiGui.setVisible(true);
 
 //        DangNhapGui dangNhapGui = new DangNhapGui();
 //        dangNhapGui.setVisible(true);

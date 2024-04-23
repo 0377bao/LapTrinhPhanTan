@@ -1,5 +1,6 @@
 package ui;
 
+import Tool.PhanLuong;
 import bus.ChuongTrinhKhuyenMaiBus;
 import bus.DanhMucBus;
 import bus.impl.ChuongTrinhKhuyenMaiBusImpl;
@@ -9,12 +10,10 @@ import controller.KhuyenMaiController;
 import customUI.MyButton;
 import customUI.MyCombobox;
 import customUI.MyTable;
-import dao.impl.ChuongTrinhKhuyenMaiDaoImpl;
 import entity.ChuongTrinhKhuyenMai;
 import entity.DanhMuc;
 import entity.KhachHang;
 import entity.MucKhuyenMai;
-import Tool.PhanLuong;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -29,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-//public class KhuyenMaiGui extends JPanel implements MouseListener{
 public class KhuyenMaiGui extends JFrame {
     private final DefaultTableModel modelMucKhuyenMai;
     private final DefaultTableModel modelDSKhuyenMai;
@@ -449,8 +447,7 @@ public class KhuyenMaiGui extends JFrame {
             txtMaCTKM.setText(modelDSKhuyenMai.getValueAt(viTri, 1).toString());
             txtAreaTenCTKM.setText(modelDSKhuyenMai.getValueAt(viTri, 2).toString());
             txtTrangThai.setText(modelDSKhuyenMai.getValueAt(viTri, 3).toString());
-            txtAreaTenCTKM.setEditable(false);
-            txtAreaTenCTKM.setEnabled(false);
+
             List<MucKhuyenMai> ds = ctkmBus.timChuongTrinhKhuyenMaiTheoMa(modelDSKhuyenMai.getValueAt(viTri, 1).toString()).getDsMucKhuyenMai();
             dsMucKhuyenMaiDangTao.clear();
             dsMucKhuyenMaiDangTao.addAll(ds);
@@ -607,9 +604,6 @@ public class KhuyenMaiGui extends JFrame {
                 dsMucKhuyenMaiDangTao.clear();
                 modelDSKhuyenMai.setRowCount(0);
                 loadDSKhuyenMai();
-
-//                loadDSKhuyenMai();
-//                capNhatTrangThaiBangDSKhuyenMai();
                 modelMucKhuyenMai.setRowCount(0);
                 xoaTrangTextField();
                 btnXoa.setEnabled(false);
@@ -617,8 +611,6 @@ public class KhuyenMaiGui extends JFrame {
 
                 // gửi chương trình khuyến mãi cho tất cả khách hàng
                 if (JOptionPane.showConfirmDialog(this, "Bạn có muốn gửi chương trình khuyến mãi này cho khách hàng không?", "Có", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-//                		String userMail = "thuykieu.13032003@gmail.com";
-//                		String password = "tirfdrdpsbjxqemq";
                     String subject = "Chương trình khuyến mãi tri ân khách hàng của hiệu sách HBDK";
                     String message = "Chào quý khách hàng thân mến, những người đã và đang mua hàng tại hiệu sách chúng tôi.\n" + "Nhân dịp " + "'" + ctkm.getTenCTKM() + "'" + " hiệu sách của chúng tôi sẽ áp dụng ưu đãi cho những sản phẩm sau:\n"
                             + listItem + "\n" + "Cảm ơn bạn đã ủng hộ hiệu sách của chúng tôi!\n" + "Trân trọng";
@@ -642,11 +634,6 @@ public class KhuyenMaiGui extends JFrame {
         }
         return message;
     }
-
-//    public void capNhatTrangThaiBangDSKhuyenMai() {
-//        modelDSKhuyenMai.setRowCount(0);
-//        loadDSKhuyenMai();
-//    }
 
     public void capNhatMucKhuyenMai() {
         int index = tbMucKhuyenMai.getSelectedRow();
@@ -676,7 +663,7 @@ public class KhuyenMaiGui extends JFrame {
             tenMucKhuyenMai = cboTheLoai.getSelectedItem().toString();
             modelMucKhuyenMai.setValueAt(tenMucKhuyenMai, index, 0);
         }
-        MucKhuyenMai m = new MucKhuyenMai(tenMucKhuyenMai.equals(" ") ? modelMucKhuyenMai.getValueAt(index, 0).toString() : tenMucKhuyenMai, phanTram);
+        MucKhuyenMai m = new MucKhuyenMai(!tenMucKhuyenMai.equals(" ") ? modelMucKhuyenMai.getValueAt(index, 0).toString() : tenMucKhuyenMai, phanTram);
         dsMucKhuyenMaiDangTao.set(index, m);
         if (checkBoxChinhSuaMKM.isSelected()) {
             txtAreaTenCTKM.setEditable(false);
@@ -692,14 +679,12 @@ public class KhuyenMaiGui extends JFrame {
 
     public void xoaMucKhuyenMai() {
         int index = tbMucKhuyenMai.getSelectedRow();
-        System.out.println("vi tri " + index);
         if (index == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn mục khuyến mãi cần xóa");
         } else {
             if (JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa mục khuyến mãi này không", "Yes", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 modelMucKhuyenMai.removeRow(index);
                 dsMucKhuyenMaiDaBiXoa.add(dsMucKhuyenMaiDangTao.get(index));
-                System.out.println(dsMucKhuyenMaiDaBiXoa.get(0));
                 dsMucKhuyenMaiDangTao.remove(index);
                 cboSanPham.setEnabled(true);
                 cboTheLoai.setEnabled(true);
@@ -713,14 +698,10 @@ public class KhuyenMaiGui extends JFrame {
         String mes = "";
         ChuongTrinhKhuyenMai ctkm_ht = new ChuongTrinhKhuyenMaiBusImpl().timChuongTrinhKhuyenMaiTheoMa(txtMaCTKM.getText());
         // xu ly cap nhat muc khuyen mai cua chuong trinh khuyen mai
-        System.out.println(soLuongMucKhuyenMaiHienTai);
-        System.out.println("-------------------");
-        System.out.println(dsMucKhuyenMaiDangTao.size());
         if (soLuongMucKhuyenMaiHienTai < dsMucKhuyenMaiDangTao.size()) {
             int dem = soLuongMucKhuyenMaiHienTai;
             for (int i = dem; i < dsMucKhuyenMaiDangTao.size(); i++) {
                 flag = new ChuongTrinhKhuyenMaiBusImpl().themMucKhuyenMaiVaoCTKM(ctkm_ht.getMaCTKM(), dsMucKhuyenMaiDangTao.get(i));
-                System.out.println(i);
             }
         } else if (soLuongMucKhuyenMaiHienTai == dsMucKhuyenMaiDangTao.size()) {
             for (MucKhuyenMai m : dsMucKhuyenMaiDangTao) {
@@ -746,12 +727,13 @@ public class KhuyenMaiGui extends JFrame {
             JOptionPane.showMessageDialog(this, "Cập nhật thành công mục khuyến mãi của chương trình này");
             xoaTrangToanBo();
             btnCapNhat.setEnabled(false);
+            btnXoa.setEnabled(false);
             dsMucKhuyenMaiDangTao.clear();
+
             checkBoxChinhSuaMKM.setSelected(false);
         } else {
-            // JOptionPane.showMessageDialog(this, "Cập nhật không thành công mục khuyến mãi vì trùng khóa");
+            JOptionPane.showMessageDialog(this, "Cập nhật không thành công mục khuyến mãi vì trùng khóa");
             JOptionPane.showMessageDialog(this, mes);
-            return;
         }
     }
 
@@ -764,6 +746,8 @@ public class KhuyenMaiGui extends JFrame {
                 btnXoa.setEnabled(true);
                 btnLuu.setEnabled(false);
                 btnTaoMaCTKM.setEnabled(false);
+                txtAreaTenCTKM.setEditable(false);
+                txtAreaTenCTKM.setEnabled(false);
             } else {
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn chương trình khuyến mãi có mục khuyến mãi cần chỉnh sửa");
                 checkBoxChinhSuaMKM.setSelected(false);
@@ -778,6 +762,8 @@ public class KhuyenMaiGui extends JFrame {
             txtPhanTram.setText("");
             btnLuu.setEnabled(true);
             btnTaoMaCTKM.setEnabled(true);
+            txtAreaTenCTKM.setEditable(true);
+            txtAreaTenCTKM.setEnabled(true);
         }
     }
 
@@ -787,23 +773,20 @@ public class KhuyenMaiGui extends JFrame {
         // chuyển trạng thái cái sản phẩm về false hết
         List<ChuongTrinhKhuyenMai> ds = ctkmBus.layDSChuongTrinhKhuyenMai();
         for (ChuongTrinhKhuyenMai ctkm : ds) {
-            ctkmBus.capNhatTrangThaiChuongTrinhKhuyenMai(ctkm, ChuongTrinhKhuyenMaiDaoImpl.SaleProgramStatus.INACTIVE);
+            ctkmBus.capNhatTrangThaiChuongTrinhKhuyenMai(ctkm, false);
         }
 
         // cập nhật chương trình khuyến mãi chuẩn bị áp dụng
         ChuongTrinhKhuyenMai temp = ctkmBus.timChuongTrinhKhuyenMaiTheoMa(ma);
         temp.setTrangThai(true);
-        ctkmBus.capNhatTrangThaiChuongTrinhKhuyenMai(temp, ChuongTrinhKhuyenMaiDaoImpl.SaleProgramStatus.INACTIVE);
-        ;
+        ctkmBus.capNhatTrangThaiChuongTrinhKhuyenMai(temp, true);
 
         // load lại dữ liệu
-//        modelDSKhuyenMai.setRowCount(0);
         loadDSKhuyenMai();
         tbDSKhuyenMai.getSelectionModel().setSelectionInterval(viTriDongDuocChon, viTriDongDuocChon);
 
 
     }
-
 
     public void locTheoTenMucKhuyenMai(String ten, List<MucKhuyenMai> ds, DefaultTableModel model) {
         model.setRowCount(0);
@@ -936,6 +919,7 @@ public class KhuyenMaiGui extends JFrame {
         cboSanPham.setEnabled(true);
         cboTheLoai.setEnabled(true);
         txtAreaTenCTKM.setEditable(true);
+        txtAreaTenCTKM.setEnabled(true);
         tbDSKhuyenMai.clearSelection();
         txtPhanTram.setText("");
         modelChiTietKM.setRowCount(0);
@@ -1046,7 +1030,6 @@ public class KhuyenMaiGui extends JFrame {
             btnXoa.setEnabled(true);
             btnCapNhat.setEnabled(true);
         }
-
     }
 
 }
