@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id "java-library"
 }
 
 group 'com.example'
@@ -19,8 +20,15 @@ targetCompatibility = '17'
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
+tasks{
+    jar{
+        archiveBaseName = "server-bus-dao-entity"
+        version = "1.0"
+    }
+}
 
 dependencies {
+    implementation("com.google.code.gson:gson:2.10")
     // https://mvnrepository.com/artifact/org.json/json
     implementation 'org.json:json:20231013'
     // https://mvnrepository.com/artifact/com.graphhopper/graphhopper-web-api
@@ -36,12 +44,18 @@ dependencies {
     implementation 'com.sun.mail:javax.mail:1.6.2'
     // https://mvnrepository.com/artifact/javax.mail/javax.mail-api
     implementation 'javax.mail:javax.mail-api:1.6.2'
+    implementation 'org.json:json:20240303'
+    // https://mvnrepository.com/artifact/org.jxmapviewer/jxmapviewer2
+    implementation 'org.jxmapviewer:jxmapviewer2:2.8'
+// https://mvnrepository.com/artifact/com.graphhopper/graphhopper-core
+    implementation 'com.graphhopper:graphhopper-core:9.0-pre1'
 
     // https://mvnrepository.com/artifact/com.itextpdf/itextpdf
     implementation 'com.itextpdf:itextpdf:5.5.9'
 
     // https://mvnrepository.com/artifact/com.google.zxing/core
     implementation 'com.google.zxing:core:3.3.3'
+    implementation 'com.google.zxing:javase:1.7'
     // https://mvnrepository.com/artifact/com.github.sarxos/webcam-capture
     implementation 'com.github.sarxos:webcam-capture:0.3.12'
     // https://mvnrepository.com/artifact/com.toedter/jcalendar

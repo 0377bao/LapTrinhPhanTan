@@ -9,46 +9,53 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class DonGiaoHangBusImpl implements DonGiaoHangBus {
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+public class DonGiaoHangBusImpl extends UnicastRemoteObject implements DonGiaoHangBus {
     private DonGiaoHangDaoImpl dghDI = new DonGiaoHangDaoImpl();
+
+    public DonGiaoHangBusImpl() throws RemoteException {
+        super();
+    }
     private String mes = "";
 
     public String getMessgage() {
         return mes;
     }
     @Override
-    public List<DonGiaoHang> layDSDonGiaoHang() {
+    public List<DonGiaoHang> layDSDonGiaoHang() throws RemoteException {
         return dghDI.layDSDonHang();
     }
 
     @Override
-    public DonGiaoHang timDonHangTheoMaDonHang(String maCTim) {
+    public DonGiaoHang timDonHangTheoMaDonHang(String maCTim) throws RemoteException {
         return dghDI.timDonHangTheoMaDonHang(maCTim);
     }
 
     @Override
-    public DonGiaoHang timDonHangTheoTenKhachHang(String tenKhachHang) {
+    public DonGiaoHang timDonHangTheoTenKhachHang(String tenKhachHang) throws RemoteException {
         return dghDI.timDonHangTheoTenKhachHang(tenKhachHang);
     }
 
     @Override
-    public boolean themDonHangMoi(DonGiaoHang dgh) {
+    public boolean themDonHangMoi(DonGiaoHang dgh) throws RemoteException {
         return dghDI.themDonGiaoHang(dgh);
     }
 
     @Override
-    public String taoMaDonHang() {
+    public String taoMaDonHang() throws RemoteException {
         int maHoaDon = dghDI.tongSoHoaDon() + 1;
         return "DGH" + maHoaDon;
     }
 
     @Override
-    public boolean capNhatThongTinDonHang(DonGiaoHang dgh) {
+    public boolean capNhatThongTinDonHang(DonGiaoHang dgh) throws RemoteException {
         return dghDI.capNhatThongTinDonHang(dgh   );
     }
 
     @Override
-    public List<DonGiaoHang> sapXepTheoTongTienVanChuyenGiamDan(List<DonGiaoHang> ds_one) {
+    public List<DonGiaoHang> sapXepTheoTongTienVanChuyenGiamDan(List<DonGiaoHang> ds_one) throws RemoteException {
         List<DonGiaoHang> ds = ds_one.size() > 0 ? ds_one : dghDI.layDSDonHang();
         Collections.sort(ds,new Comparator<DonGiaoHang>() {
             @Override
@@ -62,7 +69,7 @@ public class DonGiaoHangBusImpl implements DonGiaoHangBus {
     }
 
     @Override
-    public List<DonGiaoHang> sapXepTheoTongTienVanChuyenTangDan(List<DonGiaoHang> ds_one) {
+    public List<DonGiaoHang> sapXepTheoTongTienVanChuyenTangDan(List<DonGiaoHang> ds_one) throws RemoteException {
         List<DonGiaoHang> ds = ds_one.size() > 0 ? ds_one : dghDI.layDSDonHang();
         Collections.sort(ds,new Comparator<DonGiaoHang>() {
 
@@ -77,7 +84,7 @@ public class DonGiaoHangBusImpl implements DonGiaoHangBus {
     }
 
     @Override
-    public boolean validateDuLieu(String maDonHang, String tenKhachHang, String sdt, JTextField soKg, JTextField soKm) {
+    public boolean validateDuLieu(String maDonHang, String tenKhachHang, String sdt, JTextField soKg, JTextField soKm) throws RemoteException {
         if(maDonHang.equals("")) {
             mes = "Vui lòng tạo mã đơn hàng trước";
             return false;
@@ -131,17 +138,22 @@ public class DonGiaoHangBusImpl implements DonGiaoHangBus {
     }
 
     @Override
-    public List<DonGiaoHang> layDSDonHangDangGiao() {
+    public List<DonGiaoHang> layDSDonHangDangGiao() throws RemoteException {
         return dghDI.layDSDonHangDangGiao();
     }
 
     @Override
-    public List<DonGiaoHang> layDSDonHangBiHuy() {
+    public List<DonGiaoHang> layDSDonHangBiHuy() throws RemoteException {
         return dghDI.layDSDonHangBiHuy();
     }
 
     @Override
-    public List<DonGiaoHang> layDSDonHangGiaoThanhCong() {
+    public List<DonGiaoHang> layDSDonHangGiaoThanhCong() throws RemoteException {
         return dghDI.layDSDonHangGiaoThanhCong();
+    }
+
+    @Override
+    public String getMessage() throws RemoteException {
+        return this.mes;
     }
 }

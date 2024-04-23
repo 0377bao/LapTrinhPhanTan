@@ -1,10 +1,12 @@
 package entity;
 
+import java.io.Serializable;
+
 import jakarta.persistence.*;
 
 @Entity
 @DiscriminatorValue("VanPhongPham")
-public class VanPhongPham extends SanPham {
+public class VanPhongPham extends SanPham implements Serializable{
 	@Column(name = "chatLieu", columnDefinition = "nvarchar(50)")
 	private String chatLieu;
 	@ManyToOne

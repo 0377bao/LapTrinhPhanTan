@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 
 
 public class SanPhamDoiTraGui extends JFrame implements ActionListener {
@@ -33,7 +34,7 @@ public class SanPhamDoiTraGui extends JFrame implements ActionListener {
 
 	public SanPhamDoiTraGui(DefaultTableModel model, MyTable tb, String ma, String ten, float gia, int soLuongTrongHD,
 							String phuongThucDoiTra, JTextField tongSoSP, JTextField tongTien, JTextField diemHT, int diemTrongHD,
-							ChuongTrinhKhuyenMai ctkm, JTextField txtTongTienGiam) {
+							ChuongTrinhKhuyenMai ctkm, JTextField txtTongTienGiam) throws RemoteException {
 		getContentPane().setBackground(new Color(255, 255, 255));
 		setBackground(new Color(255, 255, 255));
 		this.setSize(600, 200);
@@ -102,32 +103,42 @@ public class SanPhamDoiTraGui extends JFrame implements ActionListener {
 			if (timSanPhamTrongDonDoiTra() == -1) {
 				model.addRow(new Object[] { ma, ten, Integer.parseInt(textField_1.getText().trim()),
 						new Tool().dinhDangTien(gia), textField_1.getText().trim() + "-" + textField.getText().trim() });
-				thayDoiTienVaSoLuong();
-			} else {
+                try {
+                    thayDoiTienVaSoLuong();
+                } catch (RemoteException ex) {
+                    throw new RuntimeException(ex);
+                }
+            } else {
 
 				if ((Integer.parseInt(tb.getValueAt(timSanPhamTrongDonDoiTra(), 2).toString())
 						+ Integer.parseInt(textField_1.getText().trim())) > soLuongTrongHD) {
 					JOptionPane.showMessageDialog(this, "Số lượng đổi trả phải thấp hơn hoặc bằng số lượng đã mua");
-				} else if ((Integer.parseInt(tb.getValueAt(timSanPhamTrongDonDoiTra(), 2).toString())
-						+ Integer.parseInt(textField_1.getText().trim())) > new SanPhamBusImpl().timKiemSanPham(ma)
-								.getSoLuongTon()) {
-					JOptionPane.showMessageDialog(this, "Số lượng tồn không đủ để thực hiện đổi trả");
 				} else {
-					thayDoiTienVaSoLuong();
-					tb.setValueAt((Integer.parseInt(tb.getValueAt(timSanPhamTrongDonDoiTra(), 2).toString())
-							+ Integer.parseInt(textField_1.getText().trim())), timSanPhamTrongDonDoiTra(), 2);
-					if (!(tb.getValueAt(timSanPhamTrongDonDoiTra(), 4).toString().trim().toUpperCase()
-							.equals(textField.getText().trim().toUpperCase()))) {
-						tb.setValueAt(tb.getValueAt(timSanPhamTrongDonDoiTra(), 4) + ", " + textField_1.getText() + "-"
-								+ textField.getText(), timSanPhamTrongDonDoiTra(), 4);
-					}
-				}
+                    try {
+                        if ((Integer.parseInt(tb.getValueAt(timSanPhamTrongDonDoiTra(), 2).toString())
+                                + Integer.parseInt(textField_1.getText().trim())) > new SanPhamBusImpl().timKiemSanPham(ma)
+                                        .getSoLuongTon()) {
+                            JOptionPane.showMessageDialog(this, "Số lượng tồn không đủ để thực hiện đổi trả");
+                        } else {
+                            thayDoiTienVaSoLuong();
+                            tb.setValueAt((Integer.parseInt(tb.getValueAt(timSanPhamTrongDonDoiTra(), 2).toString())
+                                    + Integer.parseInt(textField_1.getText().trim())), timSanPhamTrongDonDoiTra(), 2);
+                            if (!(tb.getValueAt(timSanPhamTrongDonDoiTra(), 4).toString().trim().toUpperCase()
+                                    .equals(textField.getText().trim().toUpperCase()))) {
+                                tb.setValueAt(tb.getValueAt(timSanPhamTrongDonDoiTra(), 4) + ", " + textField_1.getText() + "-"
+                                        + textField.getText(), timSanPhamTrongDonDoiTra(), 4);
+                            }
+                        }
+                    } catch (RemoteException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
 			}
 		}
 
 	}
 
-	public void thayDoiTienVaSoLuong() {
+	public void thayDoiTienVaSoLuong() throws RemoteException {
 		if (phuongThucDoiTra.equals("Đổi Hàng")) {
 			tongSoSP.setText(Integer.parseInt(tongSoSP.getText()) + Integer.parseInt(textField_1.getText()) + "");
 		} else {

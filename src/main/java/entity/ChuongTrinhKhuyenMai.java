@@ -1,6 +1,8 @@
 package entity;
 
 import jakarta.persistence.*;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +16,7 @@ import java.util.Objects;
 	@NamedQuery(name ="ChuongTrinhKhuyenMai.capNhatTrangThaiChuongTrinhKhuyenMai", query = "update ChuongTrinhKhuyenMai ctkm set ctkm.trangThai = :code where ctkm.id = :id")
 
 })
-public class ChuongTrinhKhuyenMai {
+public class ChuongTrinhKhuyenMai implements Serializable{
 	@Id
 	@Column(columnDefinition = "nvarchar(15)",name="maCTKM", nullable = false, unique = true)
 	private String maCTKM;

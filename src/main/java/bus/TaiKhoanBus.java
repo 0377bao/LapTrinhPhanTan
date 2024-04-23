@@ -2,7 +2,10 @@ package bus;
 
 import entity.TaiKhoan;
 
-public interface TaiKhoanBus {
-    public boolean kiemTraMatKhau(String taiKhoan, String matKhau);
-    public boolean capNhatMatKhau(String tenTK, String mk);
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface TaiKhoanBus extends Remote{
+    public boolean kiemTraMatKhau(String taiKhoan, String matKhau) throws RemoteException;
+    public boolean capNhatMatKhau(String tenTK, String mk) throws RemoteException;
 }

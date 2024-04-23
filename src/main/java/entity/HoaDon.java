@@ -3,6 +3,8 @@ package entity;
 import bus.impl.HoaDonBusImpl;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ import java.util.Objects;
 		@NamedQuery(name = "HoaDon.findByNgayLap", query = "SELECT hd from HoaDon hd WHERE hd.ngayLap between :ngayBD and :ngayKT")
 
 })
-public class HoaDon {
+public class HoaDon implements Serializable{
 	@Id
 	@Column(columnDefinition = "nvarchar(15)", nullable = false)
 	private String maHoaDon;
@@ -50,7 +52,7 @@ public class HoaDon {
 
 	public HoaDon(String maHoaDon, LocalDate ngayLap, String hinhThucThanhToan, String ghiChu, int diemGiamGia,
 				  float giamGia, NhanVien nhanVien, KhachHang khachHang, ChuongTrinhKhuyenMai ctkm,
-				  List<ChiTietHoaDon> dsChiTietHoaDon, float tienKhachDua) {
+				  List<ChiTietHoaDon> dsChiTietHoaDon, float tienKhachDua) throws RemoteException {
 		super();
 		this.maHoaDon = maHoaDon;
 		this.ngayLap = ngayLap;
@@ -185,7 +187,7 @@ public class HoaDon {
 		return result;
 	}
 
-	public float tinhGiamGia() {
+	public float tinhGiamGia() throws RemoteException {
 		float result = 0;
 		for(ChiTietHoaDon cthd : dsChiTietHoaDon) {
 			float giamGia = new HoaDonBusImpl().hamLayGiamGiaCuaChiTietHoaDon(this.ctkm, cthd.getSanPham());
@@ -194,11 +196,11 @@ public class HoaDon {
 		return result;
 	}
 
-	public float getThanhTien() {
+	public float getThanhTien() throws RemoteException {
 		return tinhTongTien() - tinhGiamGia() - (diemGiamGia * 10000) + tinhThue();
 	}
 
-	public float tinhTienThua() {
+	public float tinhTienThua() throws RemoteException {
 		return this.tienKhachDua - getThanhTien();
 	}
 

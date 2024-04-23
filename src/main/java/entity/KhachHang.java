@@ -2,7 +2,7 @@ package entity;
 
 import jakarta.persistence.*;
 
-
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
@@ -14,7 +14,7 @@ import java.util.Objects;
 		@NamedQuery(name = "Customer.filterCustomerByNameAndSdt", query = "select kh from KhachHang kh where lower(kh.tenKhachHang) like lower(:tenKhachHang) and kh.sdt like :sdt"),
 		@NamedQuery(name = "Customer.sortCustomerByTotalPurchase", query = "select kh from KhachHang kh order by kh.tongTienMua desc")
 })
-public class KhachHang {
+public class KhachHang implements Serializable{
 	@Id
     @Column(columnDefinition = "nvarchar(15)",name="maKhachHang", nullable = false, unique = true)
 	private String maKhachHang;
@@ -83,10 +83,12 @@ public class KhachHang {
 		this.diemTichLuy = diemTichLuy;
 	}
 
-
-
 	public float getTongTienMua() {
 		return tongTienMua;
+	}
+
+	public void setTongTienMua(float tongTienMua) {
+		this.tongTienMua = tongTienMua;
 	}
 
 	public void congDiemTichLuy(int diemTichLuy) {

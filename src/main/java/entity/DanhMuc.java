@@ -2,7 +2,7 @@ package entity;
 
 import jakarta.persistence.*;
 
-
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
@@ -12,7 +12,7 @@ import java.util.Objects;
 		@NamedQuery(name = "DanhMuc.findByName", query = "SELECT d FROM DanhMuc d WHERE d.tenDanhMuc = :tenDanhMuc"),
 		@NamedQuery(name = "DanhMuc.findById", query = "SELECT d FROM DanhMuc d WHERE d.maDanhMuc = :maDanhMuc"),
 })
-public class DanhMuc {
+public class DanhMuc implements Serializable{
 	@Id
 	@Column(name = "maDanhMuc", columnDefinition = "nvarchar(15)", nullable = false, unique = true)
 	private String maDanhMuc;

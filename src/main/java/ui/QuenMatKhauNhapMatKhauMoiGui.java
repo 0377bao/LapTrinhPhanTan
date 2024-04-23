@@ -20,6 +20,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
+import java.rmi.RemoteException;
 
 public class QuenMatKhauNhapMatKhauMoiGui extends JFrame {
     private JPanel contentPane;
@@ -30,7 +31,7 @@ public class QuenMatKhauNhapMatKhauMoiGui extends JFrame {
     private NhanVienBusImpl nhanVienBus = new NhanVienBusImpl();
     private QuenMatKhauNhapMatKhauMoiController ctrNhapMatKhau = new QuenMatKhauNhapMatKhauMoiController(this);
 
-    public QuenMatKhauNhapMatKhauMoiGui(String maNhanVien) {
+    public QuenMatKhauNhapMatKhauMoiGui(String maNhanVien) throws RemoteException {
         this.maNhanVien = maNhanVien;
         this.setTitle("ĐĂNG NHẬP PHẦN MỀM");
         this.setResizable(false);
@@ -118,7 +119,7 @@ public class QuenMatKhauNhapMatKhauMoiGui extends JFrame {
         txtNhapLaiMatKhau.addActionListener(ctrNhapMatKhau);
     }
 
-    public void xuLyXacNhan() {
+    public void xuLyXacNhan() throws RemoteException {
         String matKhau = txtMatKhau.getText();
         String xacNhanMatKhau = txtNhapLaiMatKhau.getText();
 

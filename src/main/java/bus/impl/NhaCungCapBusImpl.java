@@ -4,40 +4,46 @@ import bus.NhaCungCapBus;
 import dao.impl.NhaCungCapDaoImpl;
 import entity.NhaCungCap;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class NhaCungCapBusImpl implements NhaCungCapBus {
+public class NhaCungCapBusImpl extends UnicastRemoteObject implements NhaCungCapBus {
     private NhaCungCapDaoImpl nhaCungCapDao = new NhaCungCapDaoImpl();
+
+    public NhaCungCapBusImpl() throws RemoteException {
+        super();
+    }
     public String mes = "";
     @Override
-    public boolean themNCC(NhaCungCap nhaCungCap) {
+    public boolean themNCC(NhaCungCap nhaCungCap) throws RemoteException {
         return nhaCungCapDao.themNCC(nhaCungCap);
     }
 
     @Override
-    public boolean capNhatNCC(NhaCungCap nhaCungCap) {
+    public boolean capNhatNCC(NhaCungCap nhaCungCap) throws RemoteException {
         return nhaCungCapDao.capNhatNCC(nhaCungCap);
     }
 
     @Override
-    public NhaCungCap timNhaCungCapTheoMa(String maNCC) {
+    public NhaCungCap timNhaCungCapTheoMa(String maNCC) throws RemoteException {
         return nhaCungCapDao.timNhaCungCapTheoMa(maNCC);
     }
 
     @Override
-    public NhaCungCap timNCCTheoTen(String tenNCC) {
+    public NhaCungCap timNCCTheoTen(String tenNCC) throws RemoteException {
         return nhaCungCapDao.timNCCTheoTen(tenNCC);
     }
 
     @Override
-    public List<NhaCungCap> layDSNhaCungCap() {
+    public List<NhaCungCap> layDSNhaCungCap() throws RemoteException {
         return nhaCungCapDao.layDSNhaCungCap();
     }
 
     @Override
-    public boolean validData(String maNhaCungCap, String tenNhaCungCap, String diaChi, String sdt, String email) {
+    public boolean validData(String maNhaCungCap, String tenNhaCungCap, String diaChi, String sdt, String email) throws RemoteException {
         if(maNhaCungCap.isEmpty()){
             mes = "Vui lòng nhập mã nhà cung cấp";
             return false;
@@ -66,8 +72,8 @@ public class NhaCungCapBusImpl implements NhaCungCapBus {
             mes = "Vui lòng nhập email";
             return false;
         } else if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z.-]+\\.[a-zA-Z]{2,}$")) {
-                mes = "Email không hợp lệ";
-                return false;
+            mes = "Email không hợp lệ";
+            return false;
         }
         if(diaChi.isEmpty()) {
             mes = "Vui lòng nhập địa chỉ nhà cung cấp";
@@ -80,13 +86,13 @@ public class NhaCungCapBusImpl implements NhaCungCapBus {
     }
 
     @Override
-    public String taoMa() {
+    public String taoMa() throws RemoteException {
         int max = nhaCungCapDao.layDSNhaCungCap().size() + 1;
         return "NCC" + max;
     }
 
     @Override
-    public void locNCCTheoSdt(List<NhaCungCap> ds, String sdt) {
+    public void locNCCTheoSdt(List<NhaCungCap> ds, String sdt) throws RemoteException {
         List<NhaCungCap> dsNcc = new ArrayList<>();
         // chuyển sdt thành pattern để so khớp
         Pattern p = Pattern.compile(sdt, Pattern.CASE_INSENSITIVE);
@@ -100,7 +106,7 @@ public class NhaCungCapBusImpl implements NhaCungCapBus {
     }
 
     @Override
-    public void locNCCTheoTen(List<NhaCungCap> ds, String ten) {
+    public void locNCCTheoTen(List<NhaCungCap> ds, String ten) throws RemoteException {
         List<NhaCungCap> dsNcc = new ArrayList<>();
         // chuyển ten thành pattern để so khớp
         Pattern p = Pattern.compile(ten, Pattern.CASE_INSENSITIVE);
@@ -114,7 +120,7 @@ public class NhaCungCapBusImpl implements NhaCungCapBus {
     }
 
     @Override
-    public void locNCCTheoDiaChi(List<NhaCungCap> ds, String diaChi) {
+    public void locNCCTheoDiaChi(List<NhaCungCap> ds, String diaChi) throws RemoteException {
         List<NhaCungCap> dsNcc = new ArrayList<>();
         // chuyển diaChi thành pattern để so khớp
         Pattern p = Pattern.compile(diaChi, Pattern.CASE_INSENSITIVE);
@@ -130,5 +136,10 @@ public class NhaCungCapBusImpl implements NhaCungCapBus {
             ds.clear();
             ds.addAll(dsNcc);
         }
+    }
+
+    @Override
+    public String getMes() throws RemoteException {
+        return this.mes;
     }
 }

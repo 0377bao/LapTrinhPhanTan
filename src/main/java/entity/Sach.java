@@ -1,12 +1,14 @@
 package entity;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("Sach")
-public class Sach extends SanPham {
+public class Sach extends SanPham implements Serializable{
 	@Column(name = "tacGia", columnDefinition = "nvarchar(50)")
 	private String tacGia;
 	@Column(name = "nhaXuatBan", columnDefinition = "nvarchar(50)")

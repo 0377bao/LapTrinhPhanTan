@@ -5,54 +5,56 @@ import dao.impl.NhanVienDaoImpl;
 import entity.NhanVien;
 import entity.TaiKhoan;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class NhanVienBusImpl implements NhanVienBus {
+public class NhanVienBusImpl extends UnicastRemoteObject implements NhanVienBus {
     private NhanVienDaoImpl nhanVienDaoImpl;
     public String mes="";
-    public NhanVienBusImpl(){
+    public NhanVienBusImpl() throws RemoteException {
         nhanVienDaoImpl = new NhanVienDaoImpl();
     }
     @Override
-    public boolean themNhanVien(NhanVien nv, TaiKhoan tk) {
+    public boolean themNhanVien(NhanVien nv, TaiKhoan tk) throws RemoteException {
         return nhanVienDaoImpl.themNhanVien(nv, tk);
     }
 
     @Override
-    public boolean capNhatNV(NhanVien nv) {
+    public boolean capNhatNV(NhanVien nv) throws RemoteException {
         return nhanVienDaoImpl.capNhatNV(nv);
     }
 
     @Override
-    public List<NhanVien> layDSNhanVien() {
+    public List<NhanVien> layDSNhanVien() throws RemoteException {
         return nhanVienDaoImpl.layDSNhanVien();
     }
 
     @Override
-    public NhanVien layNhanVienTheoMa(String maNV) {
+    public NhanVien layNhanVienTheoMa(String maNV) throws RemoteException {
         return nhanVienDaoImpl.layNhanVienTheoMa(maNV);
     }
 
     @Override
-    public boolean capNhatMatKhauNhanVien(String maNV, String matKhau) {
+    public boolean capNhatMatKhauNhanVien(String maNV, String matKhau) throws RemoteException {
         return nhanVienDaoImpl.capNhatMatKhauNV(maNV, matKhau);
     }
 
     @Override
-    public String layEmailNhanVienTheoMa(String maNV) {
+    public String layEmailNhanVienTheoMa(String maNV) throws RemoteException {
         return nhanVienDaoImpl.layEmailNhanVienTheoMa(maNV);
     }
 
     @Override
-    public String layMatKhauNhanVienTheoMa(String ma) {
+    public String layMatKhauNhanVienTheoMa(String ma) throws RemoteException {
         return nhanVienDaoImpl.layMatKhauNhanVienTheoMa(ma);
     }
 
     @Override
-    public boolean validData(String maNhanVien, String tenNhanVien, String sdt, String email, String hinhAnh, String diaChi, String cCCD, String taiKhoan) {
+    public boolean validData(String maNhanVien, String tenNhanVien, String sdt, String email, String hinhAnh, String diaChi, String cCCD, String taiKhoan) throws RemoteException {
         if (maNhanVien.equals("")) {
             mes = "Vui lòng nhấn chọn Tạo mã";
             return false;
@@ -81,7 +83,7 @@ public class NhanVienBusImpl implements NhanVienBus {
                         return false;
                     }
                 }
-            }else {
+            } else {
                 return true;
             }
         }
@@ -122,7 +124,7 @@ public class NhanVienBusImpl implements NhanVienBus {
             mes = "Vui lòng nhập mật khẩu để tạo tài khoản";
             return false;
         } else {
-            if (!(taiKhoan.matches("^[A-Z][a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':"+"\\|,.<>\\/?]*.{7,}$"))) {
+            if (!(taiKhoan.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*]).{8,}$"))) {
                 mes = "Mật khẩu ít nhất 8 ký tự bao gồm chữ hoa, chữ thường, ký tự đặc biệt và số";
                 return false;
             }
@@ -135,29 +137,29 @@ public class NhanVienBusImpl implements NhanVienBus {
     }
 
     @Override
-    public String taoMaNV() {
+    public String taoMaNV() throws RemoteException {
         int max = layDSNhanVien().size() + 1;
         return "NV" + max;
     }
 
     @Override
-    public List<NhanVien> locNVTheoChucVu(String chucVu) {
+    public List<NhanVien> locNVTheoChucVu(String chucVu) throws RemoteException {
         return nhanVienDaoImpl.locNVTheoChucVu(chucVu);
     }
 
     @Override
-    public List<NhanVien> locNVTheoGioiTinh(boolean gt) {
+    public List<NhanVien> locNVTheoGioiTinh(boolean gt) throws RemoteException {
         return nhanVienDaoImpl.locNVTheoGioiTinh(gt);
     }
 
     @Override
-    public List<NhanVien> locNVTheoTrangThai(String trangThai) {
+    public List<NhanVien> locNVTheoTrangThai(String trangThai) throws RemoteException {
         return nhanVienDaoImpl.locNVTheoTrangThai(trangThai);
     }
 
     @Override
-    public void timNVTheoSdt(List<NhanVien> ds, String sdt) {
-        List<NhanVien> dsNV = new ArrayList<>();
+    public void timNVTheoSdt(List<NhanVien> ds, String sdt) throws RemoteException {
+        ArrayList<NhanVien> dsNV = new ArrayList<>();
         Pattern p = Pattern.compile(sdt);
         for (NhanVien nv : layDSNhanVien()) {
             Matcher m = p.matcher(nv.getSdt());
@@ -170,8 +172,8 @@ public class NhanVienBusImpl implements NhanVienBus {
     }
 
     @Override
-    public void timNVTheoTen(List<NhanVien> ds, String ten) {
-        List<NhanVien> dsNV = new ArrayList<>();
+    public void timNVTheoTen(List<NhanVien> ds, String ten) throws RemoteException {
+        ArrayList<NhanVien> dsNV = new ArrayList<>();
         Pattern p = Pattern.compile(ten, Pattern.CASE_INSENSITIVE);
         for (NhanVien nv : layDSNhanVien()) {
             Matcher m = p.matcher(nv.getTenNhanVien());
@@ -183,5 +185,10 @@ public class NhanVienBusImpl implements NhanVienBus {
             ds.clear();
             ds.addAll(dsNV);
         }
+    }
+
+    @Override
+    public String getMes() throws RemoteException {
+        return this.mes;
     }
 }

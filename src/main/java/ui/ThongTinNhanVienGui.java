@@ -1,33 +1,23 @@
 package ui;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import bus.NhanVienBus;
 import bus.impl.NhanVienBusImpl;
-
-import customUI.CustomImage;
+import customUI.CustumImage;
 import customUI.MyButton;
 import entity.NhanVien;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-import java.awt.Font;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import java.awt.Color;
-import java.awt.Component;
-import javax.swing.JPasswordField;
+import java.rmi.RemoteException;
 
 public class ThongTinNhanVienGui extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lblAvtNhanVien;
-    private NhanVienBus busNV = new NhanVienBusImpl();
+    private NhanVienBusImpl busNV = new NhanVienBusImpl();
     private JPasswordField passwordField;
     private MyButton btnDangXuat, btnDoiMatKhau;
     private NhanVien nv;
@@ -59,7 +49,7 @@ public class ThongTinNhanVienGui extends JFrame implements ActionListener{
 	/**
 	 * Create the frame.
 	 */
-	public ThongTinNhanVienGui(NhanVien nvHienTai, TrangChu view) {
+	public ThongTinNhanVienGui(NhanVien nvHienTai, TrangChu view) throws RemoteException {
 		this.setTitle("Thông tin nhân viên");
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -79,7 +69,7 @@ public class ThongTinNhanVienGui extends JFrame implements ActionListener{
 		panel.setLayout(null);
 		
 		int widthLblAvtNhanVien = 130;
-		lblAvtNhanVien = new JLabel(new CustomImage().taoHinhTronAvt(nv.getHinhAnh(), widthLblAvtNhanVien));
+		lblAvtNhanVien = new JLabel(new CustumImage().taoHinhTronAvt(nv.getHinhAnh(), widthLblAvtNhanVien));
 		lblAvtNhanVien.setAlignmentX(Component.CENTER_ALIGNMENT);
 		lblAvtNhanVien.setBounds(190, 15, widthLblAvtNhanVien, widthLblAvtNhanVien);
 		panel.add(lblAvtNhanVien);
@@ -170,8 +160,12 @@ public class ThongTinNhanVienGui extends JFrame implements ActionListener{
 		Object o = e.getSource();
 		if(o.equals(btnDangXuat)) {
 			if(JOptionPane.showConfirmDialog(this, "Bạn có muốn đăng xuất không?", "Thông báo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				new DangNhapGui().setVisible(true);
-				this.setVisible(false);
+                try {
+                    new DangNhapGui().setVisible(true);
+                } catch (RemoteException ex) {
+                    throw new RuntimeException(ex);
+                }
+                this.setVisible(false);
 				viewTC.setVisible(false);
 			}
 		}

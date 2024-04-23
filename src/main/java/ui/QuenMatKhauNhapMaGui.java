@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.rmi.RemoteException;
 import java.util.Random;
 
 public class QuenMatKhauNhapMaGui extends JFrame {
@@ -138,7 +139,7 @@ public class QuenMatKhauNhapMaGui extends JFrame {
         new PhanLuong(popup, email, "Nhà sách HBDK gửi mã xác nhận 4 số", "Mã xác nhận quên mật khẩu của bạn là " + maXacNhan, "Hệ thống vừa gửi mã xác nhận gồm 4 số về email").execute();
     }
 
-    public void xuLyXacNhan() {
+    public void xuLyXacNhan() throws RemoteException {
         if (maXacNhan.equals("")) {
             JOptionPane.showMessageDialog(this, "Vui lòng gửi mã xác nhận về email trước");
         } else {

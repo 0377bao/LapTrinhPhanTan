@@ -4,6 +4,7 @@ import ui.NhaCungCapGui;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.rmi.RemoteException;
 
 public class NhaCungCapController implements ActionListener, MouseListener, FocusListener, KeyListener {
 	private NhaCungCapGui guiNCC;
@@ -18,18 +19,38 @@ public class NhaCungCapController implements ActionListener, MouseListener, Focu
 	public void actionPerformed(ActionEvent e) {
 		String btn = e.getActionCommand();
 		if (btn.equals("btnTaoMa")) {
-			guiNCC.taoMa();
-		} else if (btn.equals("btnXoaTrang")) {
+            try {
+                guiNCC.taoMa();
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
+        } else if (btn.equals("btnXoaTrang")) {
 			guiNCC.xoaTrang();
 		} else if (btn.equals("btnThemNCC")) {
-			guiNCC.themNCC();
-		} else if (btn.equals("btnCapNhat")) {
-			guiNCC.CapNhatNCC();
-		} else if (btn.equals("btnTaiLai")) {
-			guiNCC.taiLai();
-		} else if (btn.equals("cboDiaChi")) {
-			guiNCC.xuLyTimKiem();
-		}
+            try {
+                guiNCC.themNCC();
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
+        } else if (btn.equals("btnCapNhat")) {
+            try {
+                guiNCC.CapNhatNCC();
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
+        } else if (btn.equals("btnTaiLai")) {
+            try {
+                guiNCC.taiLai();
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
+        } else if (btn.equals("cboDiaChi")) {
+            try {
+                guiNCC.xuLyTimKiem();
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
 	}
 
 	@Override
@@ -96,6 +117,10 @@ public class NhaCungCapController implements ActionListener, MouseListener, Focu
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		guiNCC.xuLyTimKiem();
-	}
+        try {
+            guiNCC.xuLyTimKiem();
+        } catch (RemoteException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 }

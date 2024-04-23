@@ -2,6 +2,7 @@ package entity;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.Objects;
 		@NamedQuery(name = "DonDoiTra.fineByPhone", query = "SELECT d FROM DonDoiTra d WHERE d.hoaDon.khachHang.sdt like :sdt"),
 		@NamedQuery(name = "DonDoiTra.findByNhanVien", query = "SELECT d FROM DonDoiTra d WHERE d.nhanVien.maNhanVien = :maNhanVien AND d.ngayDoiTra BETWEEN :date1 AND :date2"),
 })
-public class DonDoiTra {
+public class DonDoiTra implements Serializable{
 	@Id
 	@Column(columnDefinition = "nvarchar(15)", nullable = false, unique = true)
 	private String maDonDoiTra;

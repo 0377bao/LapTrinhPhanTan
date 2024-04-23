@@ -6,35 +6,41 @@ import entity.Sach;
 import entity.SanPham;
 import entity.VanPhongPham;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SanPhamBusImpl implements SanPhamBus {
+public class SanPhamBusImpl extends UnicastRemoteObject implements SanPhamBus {
     public String mes ="";
     private final String MASACH_STARTWITH = "%SPS%";
     private final String MAVPP_STARTWITH = "%SPVPP%";
     private SanPhamDaoImpl sanPhamDao = new SanPhamDaoImpl();
+
+    public SanPhamBusImpl() throws RemoteException {
+        super();
+    }
     @Override
-    public List<SanPham> layDSSanPham() {
+    public List<SanPham> layDSSanPham() throws RemoteException {
         return sanPhamDao.layDSSanPham();
     }
 
     @Override
-    public List<SanPham> layDSSachConBan() {
+    public List<SanPham> layDSSachConBan() throws RemoteException {
         return sanPhamDao.layDSSanPhamConBan();
     }
 
     @Override
-    public String taoMaSach() {
+    public String taoMaSach() throws RemoteException {
         long max = sanPhamDao.timMaxSoLuongSanPhamTheoLoai("%S%") + 1;
         return "SPS" + max;
     }
 
     @Override
-    public boolean validDataSach(String maSanPham, String tenSanPham, String ncc, String soLuongTon, String giaNhap, String theLoai, String ke, String hinhAnh, String thue, String loiNhuan, String tacGia, String nhaXB, String namXB) {
+    public boolean validDataSach(String maSanPham, String tenSanPham, String ncc, String soLuongTon, String giaNhap, String theLoai, String ke, String hinhAnh, String thue, String loiNhuan, String tacGia, String nhaXB, String namXB) throws RemoteException {
         if(maSanPham.isEmpty()) {
             mes = "Vui lòng nhấn chọn Tạo mã";
             return false;
@@ -52,8 +58,8 @@ public class SanPhamBusImpl implements SanPhamBus {
             mes = "Vui lòng nhập thể loại";
             return false;
         } else if (!theLoai.matches("[\\p{L}0-9/.,' -]+")) {
-                mes = "Thể loại không chứa ký tự đặc biệt";
-                return false;
+            mes = "Thể loại không chứa ký tự đặc biệt";
+            return false;
         }
         if (!soLuongTon.isEmpty()) {
             try {
@@ -119,8 +125,8 @@ public class SanPhamBusImpl implements SanPhamBus {
             mes = "Vui lòng nhập tên kệ";
             return false;
         } else if (!ke.matches("^[A-C]\\d+$")) {
-                mes = "Tên kệ bắt đầu là A hoặc B hoặc C theo sau là số";
-                return false;
+            mes = "Tên kệ bắt đầu là A hoặc B hoặc C theo sau là số";
+            return false;
         }
         if (!namXB.isEmpty()) {
             try {
@@ -143,8 +149,8 @@ public class SanPhamBusImpl implements SanPhamBus {
             mes = "Vui lòng nhập tác giả";
             return false;
         } else if (!tacGia.matches("[\\p{L}0-9/.,' -]+")) {
-                mes = "Tác giả không chứa ký tự đặc biệt";
-                return false;
+            mes = "Tác giả không chứa ký tự đặc biệt";
+            return false;
         }
         if (nhaXB.isEmpty()) {
             mes = "Vui lòng nhập tên nhà xuất bản";
@@ -158,28 +164,28 @@ public class SanPhamBusImpl implements SanPhamBus {
     }
 
     @Override
-    public boolean themSanPham(SanPham sp) {
+    public boolean themSanPham(SanPham sp) throws RemoteException {
         return sp.getMaSanPham().toUpperCase().startsWith("SPS") ? sanPhamDao.themSanPham((Sach) sp) : sanPhamDao.themSanPham((VanPhongPham) sp);
     }
 
     @Override
-    public List<SanPham> kiemTraTrangThaiSach(String trangThai) {
+    public List<SanPham> kiemTraTrangThaiSach(String trangThai) throws RemoteException {
 
         return sanPhamDao.layDSSanPhamTheoTrangThai(trangThai, MASACH_STARTWITH);
     }
 
     @Override
-    public boolean capNhatSanPham(SanPham sp) {
+    public boolean capNhatSanPham(SanPham sp) throws RemoteException {
         return  sp.getMaSanPham().toUpperCase().startsWith("SPS") ? sanPhamDao.capNhatSach((Sach) sp) : sanPhamDao.capNhatVanPhongPham((VanPhongPham) sp);
     }
 
     @Override
-    public SanPham timKiemSanPham(String maSP) {
+    public SanPham timKiemSanPham(String maSP) throws RemoteException {
         return sanPhamDao.timSachTheoMa(maSP.toUpperCase()) != null ? sanPhamDao.timSachTheoMa(maSP.toUpperCase()) : sanPhamDao.timVanPhongPhamTheoMa(maSP.toUpperCase());
     }
 
     @Override
-    public List<SanPham> locSachTheoTen(List<SanPham> ds, String ten) {
+    public List<SanPham> locSachTheoTen(List<SanPham> ds, String ten) throws RemoteException {
         List<SanPham> temp = new ArrayList<>();
         Pattern p = Pattern.compile(ten, Pattern.CASE_INSENSITIVE);
         for (SanPham sanPham : ds) {
@@ -196,12 +202,12 @@ public class SanPhamBusImpl implements SanPhamBus {
     }
 
     @Override
-    public List<SanPham> locSachTheoNCC(String maNCC) {
+    public List<SanPham> locSachTheoNCC(String maNCC) throws RemoteException {
         return sanPhamDao.layDSSanPhamTheoNCC(maNCC, MASACH_STARTWITH);
     }
 
     @Override
-    public List<SanPham> locSachTheoNamXB(List<SanPham> ds, int namXB) {
+    public List<SanPham> locSachTheoNamXB(List<SanPham> ds, int namXB) throws RemoteException {
         ArrayList<SanPham> temp = new ArrayList<>();
         for (SanPham sanPham : ds) {
             if(sanPham instanceof Sach){
@@ -216,7 +222,7 @@ public class SanPhamBusImpl implements SanPhamBus {
     }
 
     @Override
-    public List<SanPham> locSachTheoTheLoai(List<SanPham> ds, String theLoai) {
+    public List<SanPham> locSachTheoTheLoai(List<SanPham> ds, String theLoai) throws RemoteException {
         ArrayList<SanPham> temp = new ArrayList<>();
         Pattern p = Pattern.compile(theLoai, Pattern.CASE_INSENSITIVE);
         for (SanPham sanPham : ds) {
@@ -233,7 +239,7 @@ public class SanPhamBusImpl implements SanPhamBus {
     }
 
     @Override
-    public List<SanPham> locSachTheoTacGia(List<SanPham> ds, String tacGia) {
+    public List<SanPham> locSachTheoTacGia(List<SanPham> ds, String tacGia) throws RemoteException {
         ArrayList<SanPham> temp = new ArrayList<>();
         Pattern p = Pattern.compile(tacGia, Pattern.CASE_INSENSITIVE);
         for (SanPham sanPham : ds) {
@@ -250,17 +256,17 @@ public class SanPhamBusImpl implements SanPhamBus {
     }
 
     @Override
-    public List<SanPham> layDSSachGanHet() {
+    public List<SanPham> layDSSachGanHet() throws RemoteException {
         return sanPhamDao.layDSSachGanHet();
     }
 
     @Override
-    public List<SanPham> locVPPTheoNCC(String maNCC) {
+    public List<SanPham> locVPPTheoNCC(String maNCC) throws RemoteException {
         return sanPhamDao.layDSSanPhamTheoNCC(maNCC, MAVPP_STARTWITH);
     }
 
     @Override
-    public List<SanPham> locVPPTheoDanhMuc(String danhMuc, List<SanPham> dsVPP) {
+    public List<SanPham> locVPPTheoDanhMuc(String danhMuc, List<SanPham> dsVPP) throws RemoteException {
         List<SanPham> temp = new ArrayList<>();
         for (SanPham sanPham : dsVPP) {
             if (sanPham.getMaSanPham().startsWith(MAVPP_STARTWITH) && danhMuc.equals("Tất cả")) {
@@ -278,7 +284,7 @@ public class SanPhamBusImpl implements SanPhamBus {
     }
 
     @Override
-    public List<SanPham> locVPPTheoTheLoai(List<SanPham> ds, String theLoai) {
+    public List<SanPham> locVPPTheoTheLoai(List<SanPham> ds, String theLoai) throws RemoteException {
         List<SanPham> temp = new ArrayList<>();
         Pattern p = Pattern.compile(theLoai, Pattern.CASE_INSENSITIVE);
         for (SanPham sanPham : ds) {
@@ -296,7 +302,7 @@ public class SanPhamBusImpl implements SanPhamBus {
     }
 
     @Override
-    public List<SanPham> kiemTraTrangThaiVPP(String trangThai) {
+    public List<SanPham> kiemTraTrangThaiVPP(String trangThai) throws RemoteException {
         return sanPhamDao.layDSSanPhamTheoTrangThai(trangThai, MAVPP_STARTWITH);
     }
 
@@ -319,13 +325,13 @@ public class SanPhamBusImpl implements SanPhamBus {
     }
 
     @Override
-    public String taoMaVPP() {
+    public String taoMaVPP() throws RemoteException {
         long max = sanPhamDao.timMaxSoLuongSanPhamTheoLoai("%VPP%") + 1;
         return "SPVPP" + max;
     }
 
     @Override
-    public boolean validDataVPP(String maSanPham, String tenSanPham, String ncc, String soLuongTon, String giaNhap, String theLoai, String ke, String hinhAnh, String thue, String loiNhuan, String chatLieu) {
+    public boolean validDataVPP(String maSanPham, String tenSanPham, String ncc, String soLuongTon, String giaNhap, String theLoai, String ke, String hinhAnh, String thue, String loiNhuan, String chatLieu) throws RemoteException {
         if (maSanPham.isEmpty()) {
             mes = "Vui lòng nhấn chọn Tạo mã";
             return false;
@@ -434,22 +440,27 @@ public class SanPhamBusImpl implements SanPhamBus {
     }
 
     @Override
-    public boolean capNhatSoLuongTonSanPham(SanPham sp) {
+    public boolean capNhatSoLuongTonSanPham(SanPham sp) throws RemoteException {
         return sanPhamDao.capNhatSoLuongTonSanPham(sp);
     }
 
     @Override
-    public List<SanPham> lay10SachBanChayNhat() {
+    public List<SanPham> lay10SachBanChayNhat() throws RemoteException {
         return sanPhamDao.lay10SachBanChayNhat();
     }
 
     @Override
-    public List<SanPham> layDSVPPConBan() {
+    public List<SanPham> layDSVPPConBan() throws RemoteException {
         return sanPhamDao.layDSSanPhamConBan();
     }
 
     @Override
-    public List<SanPham> layDSVPPGanHet() {
+    public List<SanPham> layDSVPPGanHet() throws RemoteException {
         return sanPhamDao.layDSVPPGanHet();
+    }
+
+    @Override
+    public String getMes() throws RemoteException {
+        return this.mes;
     }
 }

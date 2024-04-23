@@ -19,6 +19,7 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 
 public class ThongKeGui extends JPanel {
@@ -66,7 +67,7 @@ public class ThongKeGui extends JPanel {
     private JPanel pnlCaNhan;
     private JTabbedPane tabbedPane;
 
-    public ThongKeGui(NhanVien nv) {
+    public ThongKeGui(NhanVien nv) throws RemoteException {
         this.setBackground(new Color(240, 240, 240));
         this.setBounds(250, 0, 1285, 800);
         setLayout(null);
@@ -657,7 +658,7 @@ public class ThongKeGui extends JPanel {
     }
 
     // Hàm thêm dữ liệu bảng và biểu đồ dữ liệu thống kê theo tuần của nhân viên
-    public void thayDoiDuLieuBangVaBieuDoTheoComBoBoxTKTheoTuan() {
+    public void thayDoiDuLieuBangVaBieuDoTheoComBoBoxTKTheoTuan() throws RemoteException {
         modelThongKeChiTietCuaNVTheoTuan.setRowCount(0);
         busTK.layDuLieuThongKeChiTietCuaNVTheoTuan(modelThongKeChiTietCuaNVTheoTuan, cbmodelThongKeTheoTuan, nv);
         datasetThongKeDoanhThuNVTrongTuan.clear();
@@ -666,7 +667,7 @@ public class ThongKeGui extends JPanel {
     }
 
     // Hàm thêm dữ liệu bảng và biểu đồ dữ liệu thống kê theo quý của cửa hàng
-    public void thayDoiDuLieuBangVaBieuDoTheoQuyCuaCH() {
+    public void thayDoiDuLieuBangVaBieuDoTheoQuyCuaCH() throws RemoteException {
         modelThongKeDoanhThuCacQuy.setRowCount(0);
         datasetThongKeTheoQuy.clear();
         busTK.thongKeThongTinCuaHangTheoQuy(cbmodelThongKeCuaHangTheoQuy.getSelectedItem().toString(), modelThongKeDoanhThuCacQuy, datasetThongKeTheoQuy);
@@ -674,30 +675,30 @@ public class ThongKeGui extends JPanel {
     }
 
     // Hàm thêm dữ liệu vào bảng và panel thống kê trong tháng của cửa hàng
-    public void thayDoiDuLieuBangVaPanelTrongThangCuaCH() {
+    public void thayDoiDuLieuBangVaPanelTrongThangCuaCH() throws RemoteException {
         modelThongKeThanhPhanTrongThang.setRowCount(0);
         busTK.thongKeCuaHangTrongThang(cboThongKeThangCH.getSelectedItem().toString(), lblSoHoaDonCH, lblTDoanhThuCH, lblSoLuongSPCH, lblSoLuongDDTCH, modelThongKeThanhPhanTrongThang);
     }
 
     //Hàm thêm dữ liệu vào bảng thống kê sản phẩm
-    public void thayDoiDuLieuBangThongKeSanPham() {
+    public void thayDoiDuLieuBangThongKeSanPham() throws RemoteException {
         busTK.ThongKeSanPham(cbThongKeTrangThaiSanPham.getSelectedItem().toString(), cbThongKeSanPhamTrongQuy.getSelectedItem().toString(), modelDanhSachTop10SachTrongQuy, modelDanhSachTop10VPPTrongQuy);
     }
 
     //Hàm thống kê sản phẩm bị đổi trả
-    public void thongKeSanPhamBiDoiTra() {
+    public void thongKeSanPhamBiDoiTra() throws RemoteException {
         busTK.lay10SPBiDoiTraNhieuNhat(modelDanhSachSanPhamDoiTra, LocalDate.of(LocalDate.now().getYear(), 1, 1), LocalDate.of(LocalDate.now().getYear(), 12, 31));
     }
 
     // Hàm thống kê số liệu nhân viên
-    public void thayDoiDuLieuNhanVien() {
+    public void thayDoiDuLieuNhanVien() throws RemoteException {
         modelThongKeNhanVien.setRowCount(0);
         datasetThongKeDoanhThuNV.clear();
         busTK.hienSoLieuCuaNhanVienTrongThang(cbThongKeNhanVien.getSelectedItem().toString(), modelThongKeNhanVien, datasetThongKeDoanhThuNV);
     }
 
     // Tạo tab thống kê cá nhân cập nhập mỗi lần ấn vào
-    public void taoTabCaNhan() {
+    public void taoTabCaNhan() throws RemoteException {
         pnlCaNhan = new JPanel();
         tabbedPane.insertTab("Cá nhân", null, pnlCaNhan, null, 0);
         pnlCaNhan.setLayout(null);

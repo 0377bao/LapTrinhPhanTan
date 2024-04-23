@@ -14,31 +14,34 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class HoaDonBusImpl implements HoaDonBus {
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+public class HoaDonBusImpl extends UnicastRemoteObject  implements HoaDonBus {
 
     HoaDonDaoImpl hoaDonDao;
     KhachHangDaoImpl khachHangDao;
-    public HoaDonBusImpl(){
+    public HoaDonBusImpl() throws RemoteException{
         hoaDonDao = new HoaDonDaoImpl();
         khachHangDao = new KhachHangDaoImpl();
     }
     @Override
-    public List<HoaDon> layHetDSHoaDon() {
+    public List<HoaDon> layHetDSHoaDon() throws RemoteException {
         return hoaDonDao.layHetDSHoaDon();
     }
 
     @Override
-    public HoaDon TimHoaDonTheoMa(String maHoaDon) {
+    public HoaDon TimHoaDonTheoMa(String maHoaDon) throws RemoteException {
         return hoaDonDao.layHoaDonTheoMa(maHoaDon);
     }
 
     @Override
-    public boolean themHoaDon(HoaDon hd) {
+    public boolean themHoaDon(HoaDon hd) throws RemoteException {
         return hoaDonDao.themHoaDon(hd);
     }
 
     @Override
-    public float hamLayGiamGiaCuaChiTietHoaDon(ChuongTrinhKhuyenMai ctkm, SanPham sp) {
+    public float hamLayGiamGiaCuaChiTietHoaDon(ChuongTrinhKhuyenMai ctkm, SanPham sp) throws RemoteException {
         String theLoai = "";
         if(sp instanceof Sach) theLoai = sp.getTheLoai();
         else if(sp instanceof VanPhongPham){
@@ -52,13 +55,13 @@ public class HoaDonBusImpl implements HoaDonBus {
     }
 
     @Override
-    public String taoMaHoaDon() {
+    public String taoMaHoaDon() throws RemoteException {
         long timestamp = Instant.now().toEpochMilli();
         String maHoaDon = String.valueOf(timestamp % 1000000);
         return "HD" + maHoaDon;
     }
     @Override
-    public ArrayList<HoaDon> locHoaDonQLHD(String maHD, String maNV, String sdt, String httt, Date tuNgay, Date denNgay, String tongTien) {
+    public ArrayList<HoaDon> locHoaDonQLHD(String maHD, String maNV, String sdt, String httt, Date tuNgay, Date denNgay, String tongTien) throws RemoteException {
         ArrayList<HoaDon> ds = new ArrayList<>();
         for (HoaDon hoaDon : layHetDSHoaDon()) {
             if(kiemTraHoaDonLocQLHD(hoaDon, maHD, maNV, sdt, httt, tuNgay, denNgay, tongTien)) ds.add(hoaDon);
@@ -68,7 +71,7 @@ public class HoaDonBusImpl implements HoaDonBus {
 
 
     @Override
-    public boolean kiemTraHoaDonLocQLHD(HoaDon hd, String maHD, String maNV, String sdt, String httt, Date tuNgay, Date denNgay, String tongTien) {
+    public boolean kiemTraHoaDonLocQLHD(HoaDon hd, String maHD, String maNV, String sdt, String httt, Date tuNgay, Date denNgay, String tongTien) throws RemoteException {
         Pattern pmaHD = Pattern.compile(maHD,Pattern.CASE_INSENSITIVE);
         Matcher mmaHD = pmaHD.matcher(hd.getMaHoaDon());
         if(!mmaHD.find()) return false;
@@ -106,23 +109,23 @@ public class HoaDonBusImpl implements HoaDonBus {
     }
 
     @Override
-    public int layTongSoHoaDonTrongHeThong() {
+    public int layTongSoHoaDonTrongHeThong() throws RemoteException {
         return hoaDonDao.tongSoHoaDon();
     }
 
 
     @Override
-    public List<HoaDon> layLichSuGiaoDichKhachHang(String maKhachHang, int soGD) {
+    public List<HoaDon> layLichSuGiaoDichKhachHang(String maKhachHang, int soGD) throws RemoteException {
         return khachHangDao.layLichSuGiaoDichKhachHang(maKhachHang,soGD);
     }
 
     @Override
-    public List<HoaDon> layHoaDonTuNgayXDenNgayY(LocalDate ngayX, LocalDate ngayY) {
+    public List<HoaDon> layHoaDonTuNgayXDenNgayY(LocalDate ngayX, LocalDate ngayY) throws RemoteException {
         return hoaDonDao.layHoaDonTuNgayXDenNgayY(ngayX,ngayY);
     }
 
     @Override
-    public List<ChiTietHoaDon> layDSChiTietHoaDonTheoMaHD(String maHD) {
+    public List<ChiTietHoaDon> layDSChiTietHoaDonTheoMaHD(String maHD) throws RemoteException {
         return hoaDonDao.layDSChiTietHoaDonTheoMaHD(maHD);
     }
 }

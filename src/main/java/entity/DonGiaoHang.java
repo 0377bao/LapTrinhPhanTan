@@ -2,6 +2,8 @@ package entity;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.Objects;
 
 @Entity
@@ -14,7 +16,7 @@ import java.util.Objects;
 		@NamedQuery(name = "DonGiaoHang.layDSDonHangBiHuy", query = "SELECT dgh FROM DonGiaoHang dgh WHERE dgh.trangThai = false AND dgh.ghiChu <> ''"),
 		@NamedQuery(name = "DonGiaoHang.layDSDonHangGiaoThanhCong", query = "SELECT dgh FROM DonGiaoHang dgh WHERE dgh.trangThai = true"),
 })
-public class DonGiaoHang {
+public class DonGiaoHang implements Serializable{
 	@Id
 	@Column(name = "maDonGiaoHang", columnDefinition = "nvarchar(15)", nullable = false, unique = true)
 	private String maDonGiaoHang;
@@ -152,7 +154,7 @@ public class DonGiaoHang {
 		return this.soKm;
 	}
 
-	public float tinhTienVanChuyen() {
+	public float tinhTienVanChuyen() throws RemoteException {
 		float result = 0;
 		// trường hợp giao hàng miễn phí
 		if (hoaDon.getThanhTien() >= 3000000) {

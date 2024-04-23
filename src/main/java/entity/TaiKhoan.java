@@ -2,6 +2,7 @@ package entity;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
@@ -11,7 +12,7 @@ import java.util.Objects;
 		@NamedQuery(name = "TaiKhoan.kiemTraMatKhau", query = "select tk from TaiKhoan tk where tk.nhanVien.maNhanVien = :username and tk.matKhau = :password")
 
 })
-public class TaiKhoan {
+public class TaiKhoan implements Serializable{
 	@Id
 	@OneToOne
 	@JoinColumn(name = "tenTaiKhoan", columnDefinition = "nvarchar(15)", nullable = false)

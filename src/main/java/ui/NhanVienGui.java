@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.rmi.RemoteException;
 import java.util.List;
 
 public class NhanVienGui extends JPanel {
@@ -53,7 +54,7 @@ public class NhanVienGui extends JPanel {
 	private TaiKhoanBusImpl busTaiKhoan = new TaiKhoanBusImpl();
 	private List<NhanVien> dsNV = busNhanVien.layDSNhanVien();
 
-	public NhanVienGui() {
+	public NhanVienGui() throws RemoteException {
 		this.setBackground(new Color(255, 255, 255));
 		this.setBounds(250, 0, 1285, 800);
 		setLayout(null);
@@ -408,7 +409,7 @@ public class NhanVienGui extends JPanel {
 	}
 
 	// lọc nhân viên theo trạng thái
-	public void locNVTheoTrangThai() {
+	public void locNVTheoTrangThai() throws RemoteException {
 		String trangThai = null;
 		if (chkTrangThai.isSelected()) {
 			trangThai = "Đang làm";
@@ -420,12 +421,12 @@ public class NhanVienGui extends JPanel {
 	}
 
 	// tìm nhân viên theo sdt hoặc tên
-	public void timNVTheoSdt_Ten() {
+	public void timNVTheoSdt_Ten() throws RemoteException {
 		xuLyTimTheoSdt_Ten(busNhanVien.layDSNhanVien());
 	}
 
 	// xử lý tìm nhân viên theo sdt hoặc tên
-	public void xuLyTimTheoSdt_Ten(List<NhanVien> ds) {
+	public void xuLyTimTheoSdt_Ten(List<NhanVien> ds) throws RemoteException {
 		String txt = txtTimTheoSdt_Ten.getText().trim();
 		busNhanVien.timNVTheoSdt(ds, txt);
 		busNhanVien.timNVTheoTen(ds, txt);
@@ -434,7 +435,7 @@ public class NhanVienGui extends JPanel {
 	}
 
 	// tìm nhân viên theo mã
-	public void timNVTheoMa() {
+	public void timNVTheoMa() throws RemoteException {
 		String maNV = txtTimNVTheoMa.getText().trim();
 		if (maNV.isEmpty() || maNV.equals("Nhập mã nhân viên cần tìm")) {
 			JOptionPane.showMessageDialog(this, "Vui lòng nhập mã nhân viên cần tìm");
@@ -452,7 +453,7 @@ public class NhanVienGui extends JPanel {
 	}
 
 	// tải lại danh sách
-	public void taiLai() {
+	public void taiLai() throws RemoteException {
 		radNam.setSelected(true);
 		cboChucVu.setSelectedIndex(0);
 		chkTrangThai.setSelected(true);
@@ -465,14 +466,14 @@ public class NhanVienGui extends JPanel {
 	}
 
 	// lọc nhân viên theo chức vụ
-	public void locNVTheoChucVu() {
+	public void locNVTheoChucVu() throws RemoteException {
 		String chucVu = cboChucVu.getSelectedItem().toString();
 		xoaDuLieuBang();
 		hienThiDS(busNhanVien.locNVTheoChucVu(chucVu));
 	}
 
 	// lọc nhân viên theo giới tính
-	public void locNVTheoGioiTinh() {
+	public void locNVTheoGioiTinh() throws RemoteException {
 		boolean trangThaiGioiTinh;
 		if (radNam.isSelected()) {
 			trangThaiGioiTinh = true;
@@ -492,7 +493,7 @@ public class NhanVienGui extends JPanel {
 	}
 
 	// cập nhật
-	public void capNhatNV() {
+	public void capNhatNV() throws RemoteException {
 		int r = table.getSelectedRow();
 		if (r < 0) {
 			JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng cần sửa");
@@ -543,7 +544,7 @@ public class NhanVienGui extends JPanel {
 	}
 
 	// thêm nhân viên
-	public void themNhanVien() {
+	public void themNhanVien() throws RemoteException {
 		String maNV = txtMaNV.getText().trim();
 		String tenNV = txtTenNV.getText().trim();
 		String sdt = txtSdt.getText().trim();
@@ -586,7 +587,7 @@ public class NhanVienGui extends JPanel {
 	}
 
 	// tạo mã
-	public void taoMa() {
+	public void taoMa() throws RemoteException {
 		txtMaNV.setText(busNhanVien.taoMaNV());
 		txtTenTK.setText(busNhanVien.taoMaNV());
 	}
@@ -608,7 +609,7 @@ public class NhanVienGui extends JPanel {
 	}
 
 	// chọn thông tin trong bảng hiện lên
-	public void chonThongTin() {
+	public void chonThongTin() throws RemoteException {
 		int r = table.getSelectedRow();
 		if (r != -1) {
 			NhanVien nvTemp =  busNhanVien.layNhanVienTheoMa(modelNV.getValueAt(r, 0).toString());

@@ -2,12 +2,13 @@ package entity;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 @Entity
 
 @Table(name= "MucKhuyenMai")
-public class MucKhuyenMai {
+public class MucKhuyenMai implements Serializable{
 	@Id
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "maCTKM", columnDefinition = "nvarchar(15)", nullable = false)

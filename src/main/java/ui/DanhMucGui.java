@@ -10,6 +10,7 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 import java.util.List;
 
 public class DanhMucGui extends JFrame implements ActionListener {
@@ -21,7 +22,7 @@ public class DanhMucGui extends JFrame implements ActionListener {
 
 	DanhMucBusImpl busDanhMuc = new DanhMucBusImpl();
 
-	public DanhMucGui(MyCombobox cboDanhMuc) {
+	public DanhMucGui(MyCombobox cboDanhMuc) throws RemoteException {
 		this.cboDanhMuc = cboDanhMuc;
 		this.setSize(600, 200);
 		this.setTitle("Thêm danh mục");
@@ -71,11 +72,11 @@ public class DanhMucGui extends JFrame implements ActionListener {
 
 	}
 
-	public void taoMa() {
+	public void taoMa() throws RemoteException {
 		txtMaDanhMuc.setText(busDanhMuc.taoMa());
 	}
 
-	public void themDanhMuc() {
+	public void themDanhMuc() throws RemoteException {
 		String ma = txtMaDanhMuc.getText().trim();
 		String ten = txtTenDanhMuc.getText().trim();
 		if (busDanhMuc.validData(ma, ten)) {
@@ -100,9 +101,17 @@ public class DanhMucGui extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o.equals(btnTaoMa)) {
-			taoMa();
-		} else if (o.equals(btnThemDanhMuc)) {
-			themDanhMuc();
-		}
+            try {
+                taoMa();
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
+        } else if (o.equals(btnThemDanhMuc)) {
+            try {
+                themDanhMuc();
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
 	}
 }

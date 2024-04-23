@@ -1,10 +1,10 @@
 package tool;
 
 
+import ui.PopUp;
+
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
-
-import ui.PopUp;
 
 public class PhanLuong extends SwingWorker<Void, Void> {
     private PopUp frame;

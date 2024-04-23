@@ -3,6 +3,7 @@ package ui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadFactory;
 
@@ -69,8 +70,12 @@ public class TrangChu extends JFrame{
 		this.nvHienTai = nv;
 
 		Thread daemonThread = new Thread(() -> {
-			guiTK = new ThongKeGui(nvHienTai);
-		});
+            try {
+                guiTK = new ThongKeGui(nvHienTai);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
 		// Đặt thread là daemon
 		daemonThread.setDaemon(true);
@@ -260,7 +265,7 @@ public class TrangChu extends JFrame{
 		}
 	}
 	// phần sử lý điều hướng ứng dụng
-	public void xuLyDieuHuong(String src) {
+	public void xuLyDieuHuong(String src) throws Exception {
 		if(src.equals("Hỗ trợ")) {
 			openWebLink("https://0377bao.github.io/huongdanwebbansach/");
 		} else {
@@ -273,7 +278,7 @@ public class TrangChu extends JFrame{
 				btnTrangChu.setForeground(Color.white);
 			}
 			if(src.equals("Bán hàng")) {
-//				pnlHienTai = new GUIBanHang(this, dsHoaDonCho, nvHienTai);
+				pnlHienTai = new BanHangGui(this, dsHoaDonCho, nvHienTai);
 				btnBanHang.setBackground(colorBtnActive);
 				btnBanHang.setForeground(Color.white);
 			}
@@ -303,7 +308,7 @@ public class TrangChu extends JFrame{
 				btnSanPham.setForeground(Color.white);
 			}
 			if(src.equals("QL Khách hàng")) {
-//				pnlHienTai = new Khah();
+				pnlHienTai = new KhachHangGui();
 				btnKhachHang.setBackground(colorBtnActive);
 				btnKhachHang.setForeground(Color.white);
 			}
@@ -348,7 +353,7 @@ public class TrangChu extends JFrame{
 		}
 	}
 	// phần xủ lý đăng xuất
-	public void xuLyDangXuat(ActionEvent e) {
+	public void xuLyDangXuat(ActionEvent e) throws RemoteException {
 		Object o = e.getSource();
 		if(o.equals(btnThongTin)) {
 			new ThongTinNhanVienGui(nvHienTai, this).setVisible(true);;
@@ -365,7 +370,7 @@ public class TrangChu extends JFrame{
 		btnNhaCungCap.setEnabled(false);
 	}
 
-	public void chuyenHoaDonQuaGiaoHang(HoaDon hoaDon) {
+	public void chuyenHoaDonQuaGiaoHang(HoaDon hoaDon) throws RemoteException {
 		datLaiMauNenChoButtonControll();
 		indexFrame = "Giao hàng";
 		this.remove(pnlHienTai);

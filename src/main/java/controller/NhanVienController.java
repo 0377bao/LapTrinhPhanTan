@@ -4,6 +4,7 @@ import ui.NhanVienGui;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.rmi.RemoteException;
 
 public class NhanVienController implements ActionListener, MouseListener, FocusListener, KeyListener {
 	private NhanVienGui guiNV;
@@ -21,28 +22,64 @@ public class NhanVienController implements ActionListener, MouseListener, FocusL
 		} else if (btn.equals("btnXoaTrang")) {
 			guiNV.xoaTrang();
 		} else if (btn.equals("btnTaoMa")) {
-			guiNV.taoMa();
-		} else if (btn.equals("btnThemNV")) {
-			guiNV.themNhanVien();
-		} else if (btn.equals("btnCapNhatNV")) {
-			guiNV.capNhatNV();
-		} else if (btn.equals("btnLocGioiTinh")) {
-			guiNV.locNVTheoGioiTinh();
-		} else if (btn.equals("btnLocChucVu")) {
-			guiNV.locNVTheoChucVu();
-		} else if (btn.equals("btnTaiLai")) {
-			guiNV.taiLai();
-		} else if (btn.equals("btnTimTheoMa")) {
-			guiNV.timNVTheoMa();
-		} else if (btn.equals("btnLocTrangThai")) {
-			guiNV.locNVTheoTrangThai();
-		}
+            try {
+                guiNV.taoMa();
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
+        } else if (btn.equals("btnThemNV")) {
+            try {
+                guiNV.themNhanVien();
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
+        } else if (btn.equals("btnCapNhatNV")) {
+            try {
+                guiNV.capNhatNV();
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
+        } else if (btn.equals("btnLocGioiTinh")) {
+            try {
+                guiNV.locNVTheoGioiTinh();
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
+        } else if (btn.equals("btnLocChucVu")) {
+            try {
+                guiNV.locNVTheoChucVu();
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
+        } else if (btn.equals("btnTaiLai")) {
+            try {
+                guiNV.taiLai();
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
+        } else if (btn.equals("btnTimTheoMa")) {
+            try {
+                guiNV.timNVTheoMa();
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
+        } else if (btn.equals("btnLocTrangThai")) {
+            try {
+                guiNV.locNVTheoTrangThai();
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		guiNV.chonThongTin();
-	}
+        try {
+            guiNV.chonThongTin();
+        } catch (RemoteException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -89,8 +126,12 @@ public class NhanVienController implements ActionListener, MouseListener, FocusL
 		JTextField txt = (JTextField) e.getSource();
 		if (txt.getName().equals("txtTimNVTheoMa")) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-				guiNV.timNVTheoMa();
-			}
+                try {
+                    guiNV.timNVTheoMa();
+                } catch (RemoteException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
 		}
 	}
 
@@ -98,8 +139,12 @@ public class NhanVienController implements ActionListener, MouseListener, FocusL
 	public void keyReleased(KeyEvent e) {
 		JTextField txt = (JTextField) e.getSource();
 		if (txt.getName().equals("txtTimTheoSdt_Ten")) {
-			guiNV.timNVTheoSdt_Ten();
-		}
+            try {
+                guiNV.timNVTheoSdt_Ten();
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
 	}
 
 }

@@ -4,34 +4,39 @@ import bus.DanhMucBus;
 import dao.impl.DanhMucDaoImpl;
 import entity.DanhMuc;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
-public class DanhMucBusImpl implements DanhMucBus {
-    private DanhMucDaoImpl danhMucDao = new DanhMucDaoImpl();
+public class DanhMucBusImpl extends UnicastRemoteObject implements DanhMucBus {
+    private DanhMucDaoImpl danhMucDaoImpl ;
+    public DanhMucBusImpl() throws RemoteException {
+        danhMucDaoImpl = new DanhMucDaoImpl();
+    }
     public String mes = "";
     @Override
-    public List<DanhMuc> layDSDanhMuc() {
-        return danhMucDao.layDSDanhMuc();
+    public List<DanhMuc> layDSDanhMuc() throws RemoteException {
+        return danhMucDaoImpl.layDSDanhMuc();
     }
 
     @Override
-    public DanhMuc timDanhMucTheoMa(String maDanhMuc) {
-        return danhMucDao.timDanhMucTheoMa(maDanhMuc);
+    public DanhMuc timDanhMucTheoMa(String maDanhMuc) throws RemoteException {
+        return danhMucDaoImpl.timDanhMucTheoMa(maDanhMuc);
     }
 
     @Override
-    public boolean themDanhMuc(DanhMuc dm) {
-        return danhMucDao.taoDanhMuc(dm);
+    public boolean themDanhMuc(DanhMuc dm) throws RemoteException {
+        return danhMucDaoImpl.taoDanhMuc(dm);
     }
 
     @Override
-    public String taoMa() {
-        int max = danhMucDao.layDSDanhMuc().size() + 1;
+    public String taoMa() throws RemoteException {
+        int max = danhMucDaoImpl.layDSDanhMuc().size() + 1;
         return "DM" + max;
     }
 
     @Override
-    public boolean validData(String ma, String ten) {
+    public boolean validData(String ma, String ten) throws RemoteException{
         if(ma.isEmpty()){
             mes = "Vui lòng nhấn chọn tạo mã";
             return false;
@@ -47,7 +52,12 @@ public class DanhMucBusImpl implements DanhMucBus {
     }
 
     @Override
-    public DanhMuc timDanhMucTheoTen(String ten) {
-        return danhMucDao.timDanhMucTheoTen(ten);
+    public DanhMuc timDanhMucTheoTen(String ten) throws RemoteException {
+        return danhMucDaoImpl.timDanhMucTheoTen(ten);
+    }
+
+    @Override
+    public String getMes() throws RemoteException {
+        return this.mes;
     }
 }

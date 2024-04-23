@@ -17,6 +17,7 @@ import customUI.MyButton;
 import entity.NhanVien;
 
 import java.awt.Color;
+import java.rmi.RemoteException;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
@@ -130,14 +131,18 @@ public class DoiMatKhauGui extends JFrame implements ActionListener{
 				flag = 0;
 				return;
 			}
-			
-			if(!new NhanVienBusImpl().layMatKhauNhanVienTheoMa(nvHienTai.getMaNhanVien()).equals(mkCu)) {
-				JOptionPane.showMessageDialog(this, "Mật khẩu cũ không trùng khớp! Vui lòng nhập lại");
-				flag = 0;
-				return;
-			}
-			
-			String mkMoi = pwdMatKhauMoi.getText();
+
+            try {
+                if(!new NhanVienBusImpl().layMatKhauNhanVienTheoMa(nvHienTai.getMaNhanVien()).equals(mkCu)) {
+                    JOptionPane.showMessageDialog(this, "Mật khẩu cũ không trùng khớp! Vui lòng nhập lại");
+                    flag = 0;
+                    return;
+                }
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            String mkMoi = pwdMatKhauMoi.getText();
 			String xacNhanMk = pwdXacNhanMatKhauMoi.getText();
 			if(mkMoi.equals("")) {
 				JOptionPane.showMessageDialog(this, "Vui lòng nhập mật khẩu mới");
@@ -156,13 +161,17 @@ public class DoiMatKhauGui extends JFrame implements ActionListener{
 				return;
 			}
 			if(flag == 1) {
-				if(new TaiKhoanBusImpl().capNhatMatKhau(textField.getText(), mkMoi)) {
-					JOptionPane.showMessageDialog(this, "Đổi mật khẩu thành công");
-					guiTTNV.setVisible(true);
-				}else {
-					JOptionPane.showMessageDialog(this, "Đổi mật khẩu thất bại");
-				}
-			}
+                try {
+                    if(new TaiKhoanBusImpl().capNhatMatKhau(textField.getText(), mkMoi)) {
+                        JOptionPane.showMessageDialog(this, "Đổi mật khẩu thành công");
+                        guiTTNV.setVisible(true);
+                    }else {
+                        JOptionPane.showMessageDialog(this, "Đổi mật khẩu thất bại");
+                    }
+                } catch (RemoteException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
 		}
 		if(o.equals(btnHuyDoiMatKhau)) {
 			this.setVisible(false);

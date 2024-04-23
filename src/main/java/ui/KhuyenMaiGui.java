@@ -25,6 +25,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -66,7 +67,7 @@ public class KhuyenMaiGui extends JPanel {
 
     private PopUp thongBao = new PopUp("Đang tiến hành gửi thông báo");
 
-    public KhuyenMaiGui() {
+    public KhuyenMaiGui() throws Exception {
         this.setBackground(new Color(255, 255, 255));
         this.setBounds(250, 0, 1250, 800);
         setLayout(null);
@@ -416,7 +417,7 @@ public class KhuyenMaiGui extends JPanel {
     }
 
     /* load danh sách ctkm vào bảng danh sách ctkm */
-    public void loadDSKhuyenMai() {
+    public void loadDSKhuyenMai() throws RemoteException {
         modelDSKhuyenMai.setRowCount(0);
         int stt = 0;
         List<ChuongTrinhKhuyenMai> ds = ctkmBus.layDSChuongTrinhKhuyenMai();
@@ -426,7 +427,7 @@ public class KhuyenMaiGui extends JPanel {
     }
 
     /* load danh sách mục khuyến mãi của 1 ctkm vào bảng chi tiết ctkm  */
-    public void loadChiTietChuongTrinhKhuyenMai() {
+    public void loadChiTietChuongTrinhKhuyenMai() throws RemoteException {
         modelChiTietKM.setRowCount(0);
         int index = tbDSKhuyenMai.getSelectedRow() != -1 ? tbDSKhuyenMai.getSelectedRow() : viTriDongDuocChon;
         viTriDongDuocChon = index;
@@ -442,7 +443,7 @@ public class KhuyenMaiGui extends JPanel {
     }
 
     /* load danh sách mục khuyến mãi của 1 ctkm cần chỉnh sửa vào bảng ds mục khuyến mãi đang tạo */
-    public void loadChuongTrinhKhuyenMaiCanChinhSua() {
+    public void loadChuongTrinhKhuyenMaiCanChinhSua() throws RemoteException {
         if (checkBoxChinhSuaMKM.isSelected()) {
             modelChiTietKM.setRowCount(0);
             int viTri = tbDSKhuyenMai.getSelectedRow();
@@ -481,7 +482,7 @@ public class KhuyenMaiGui extends JPanel {
     }
 
     /* lọc ctkm theo trạng thái */
-    public void xuLySuKienCboTrangThai() {
+    public void xuLySuKienCboTrangThai() throws RemoteException {
         txtMaDuocChon.setText("");
         viTriDongDuocChon = -1;
         int stt = 0;
@@ -513,12 +514,12 @@ public class KhuyenMaiGui extends JPanel {
         }
     }
 
-    public void taoMa() {
+    public void taoMa() throws RemoteException {
         txtMaCTKM.setText(ctkmBus.taoMa());
     }
 
     /* Thêm mục khuyến mãi vào bảng ds mục khuyến mãi */
-    public void themMucKhuyenMai() {
+    public void themMucKhuyenMai() throws RemoteException {
         if (txtPhanTram.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập phần trăm giảm giá cho sản phẩm");
         } else {
@@ -559,7 +560,7 @@ public class KhuyenMaiGui extends JPanel {
     }
 
     // chuyển đổi thể loại sách sang văn phòng phẩm và ngược lại
-    public void chuyenDoiSanPham() {
+    public void chuyenDoiSanPham() throws RemoteException {
         if (cboSanPham.getSelectedIndex() == 0) {
             cboTheLoai.removeAllItems();
             cboTheLoai.addItem("Chính trị");
@@ -594,7 +595,7 @@ public class KhuyenMaiGui extends JPanel {
         return true;
     }
 
-    public void themCTKM() {
+    public void themCTKM() throws RemoteException {
         String maCTKM = txtMaCTKM.getText();
         String tenCTKM = txtAreaTenCTKM.getText();
         boolean trangThai = !txtTrangThai.getText().trim().equals("Không áp dụng");
@@ -708,7 +709,7 @@ public class KhuyenMaiGui extends JPanel {
         }
     }
 
-    public void luuCapNhat() {
+    public void luuCapNhat() throws Exception {
         boolean flag = false;
         String mes = "";
         ChuongTrinhKhuyenMai ctkm_ht = new ChuongTrinhKhuyenMaiBusImpl().timChuongTrinhKhuyenMaiTheoMa(txtMaCTKM.getText());
@@ -755,7 +756,7 @@ public class KhuyenMaiGui extends JPanel {
         }
     }
 
-    public void xuLySuKienCheckBoxChinhSuaMKM() {
+    public void xuLySuKienCheckBoxChinhSuaMKM() throws RemoteException {
         if (checkBoxChinhSuaMKM.isSelected()) {
             if (tbDSKhuyenMai.getSelectedRow() != -1) {
                 loadChuongTrinhKhuyenMaiCanChinhSua();
@@ -782,7 +783,7 @@ public class KhuyenMaiGui extends JPanel {
     }
 
 
-    public void apDungCTKM() {
+    public void apDungCTKM() throws RemoteException {
         String ma = modelDSKhuyenMai.getValueAt(viTriDongDuocChon, 1).toString();
         // chuyển trạng thái cái sản phẩm về false hết
         List<ChuongTrinhKhuyenMai> ds = ctkmBus.layDSChuongTrinhKhuyenMai();
@@ -815,7 +816,7 @@ public class KhuyenMaiGui extends JPanel {
     }
 
     // lấy gmail khách hàng
-    public String layGmailKhachHang() {
+    public String layGmailKhachHang() throws RemoteException {
         String mail = "";
         List<KhachHang> dsKh = new KhachHangBusImpl().layDSKhachHang();
         for (KhachHang kh : dsKh) {
@@ -831,7 +832,7 @@ public class KhuyenMaiGui extends JPanel {
         return mail;
     }
 
-    public void xuLySuKienCboMucKM(Object o) {
+    public void xuLySuKienCboMucKM(Object o) throws Exception {
         if (viTriDongDuocChon == -1 && o.equals(cboMucKM)) {
             JOptionPane.showMessageDialog(this, "Chỉ lọc khi đã chọn chương trình khuyến mãi");
             cboMucKM.setSelectedIndex(0);

@@ -1,9 +1,13 @@
 package controller;
 
 
+import ui.TrangChu;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import ui.TrangChu;
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 public class DangXuatController implements ActionListener{
 	private TrangChu view;
@@ -15,8 +19,12 @@ public class DangXuatController implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		view.xuLyDangXuat(e);
-	}
+        try {
+            view.xuLyDangXuat(e);
+        } catch (RemoteException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 
 	
 

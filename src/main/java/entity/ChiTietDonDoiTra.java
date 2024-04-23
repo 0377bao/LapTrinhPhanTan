@@ -3,12 +3,13 @@ package entity;
 import jakarta.persistence.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 
 @Table(name = "ChiTietDonDoiTra")
-public class ChiTietDonDoiTra {
+public class ChiTietDonDoiTra implements Serializable{
 	@Column(columnDefinition = "int", name = "soLuongTra", nullable = false)
 	private int soLuongTra;
 	@Column(columnDefinition = "nvarchar(50)", name = "lyDo", nullable = false)

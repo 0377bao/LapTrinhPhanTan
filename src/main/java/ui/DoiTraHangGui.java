@@ -19,6 +19,7 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +85,7 @@ public class DoiTraHangGui extends JPanel {
 	private JLabel lblTongTienv;
 	private JTextField txtTongTienGiam;
 	private SanPhamBus sanPhamBus = new SanPhamBusImpl();
-	public DoiTraHangGui(NhanVien nv) {
+	public DoiTraHangGui(NhanVien nv) throws RemoteException {
 		this.setBackground(new Color(255, 255, 255));
 		this.setBounds(250, 0, 1285, 800);
 		setLayout(null);
@@ -666,7 +667,7 @@ public class DoiTraHangGui extends JPanel {
 				"Tên khách hàng", "Ngày lập", "Tổng số lượng SP" }, 0);
 
 		// lấy dánh sách đơn đổi trả từ dữ liệu
-		busDDT.layDanhSachDonDoiTraVaoTable(modelDonDoiTraQL, dsDonDoiTra);
+//		busDDT.layDanhSachDonDoiTraVaoTable(modelDonDoiTraQL, dsDonDoiTra);
 		tbDonDoiTraQL = new MyTable(modelDonDoiTraQL);
 		tbDonDoiTraQL.setName("tbDonDoiTraQL");
 
@@ -712,7 +713,7 @@ public class DoiTraHangGui extends JPanel {
 	}
 
 	// Tìm kiếm hóa đơn của khách hàng trong 7 ngày gần nhất
-	public void timKiemHoaDonCuaKhachHangTrong7Ngay() {
+	public void timKiemHoaDonCuaKhachHangTrong7Ngay() throws RemoteException {
 		if (new KhachHangBusImpl().timKhachHangTheoSDT(txtTimKiemHoaDon.getText()) != null) {
 			System.out.println(txtTimKiemHoaDon.getText());
 			busDDT.layDanhSachHoaDonKhachHangTrong7Ngay(txtTimKiemHoaDon.getText(), modelDanhSachHoaDon);
@@ -722,7 +723,7 @@ public class DoiTraHangGui extends JPanel {
 	}
 
 	// Hiện hóa đơn được chọn lên khung thông tin hóa đơn
-	public void hienThongTinHoaDon() {
+	public void hienThongTinHoaDon() throws RemoteException {
 		int row = tbDanhSachHoaDon.getSelectedRow();
 		HoaDon hd = busHD.TimHoaDonTheoMa(modelDanhSachHoaDon.getValueAt(row,0).toString());
 		lblTenKhachHangv.setText(hd.getKhachHang().getTenKhachHang());
@@ -735,7 +736,7 @@ public class DoiTraHangGui extends JPanel {
 	}
 
 	// Hiện danh sách sản phẩm của hóa đơn được chọn
-	public void hienDSSanPham() {
+	public void hienDSSanPham() throws RemoteException {
 		int row = tbDanhSachHoaDon.getSelectedRow();
 		HoaDon hd = busHD.TimHoaDonTheoMa(modelDanhSachHoaDon.getValueAt(row, 0).toString());
 		hd.getDsChiTietHoaDon().forEach(System.out::println);
@@ -743,7 +744,7 @@ public class DoiTraHangGui extends JPanel {
 	}
 
 	// Tạo đơn đổi trả
-	public void taoDonDoiTra() {
+	public void taoDonDoiTra() throws RemoteException {
 		HoaDon hd = busHD.TimHoaDonTheoMa(lblMaHoaDonv.getText());
 		if (hd != null) {
 			txtMaDonDoiTra.setText(busDDT.taoMaDonDoiTra(hd.getMaHoaDon()));
@@ -759,7 +760,7 @@ public class DoiTraHangGui extends JPanel {
 	}
 
 	// Thêm sản phẩm vào đơn đổi trả
-	public void themSanPhamVaoDonDoiTra() {
+	public void themSanPhamVaoDonDoiTra() throws RemoteException {
 		int row = tbDanhSachSanPham.getSelectedRow();
 		if (maDDTHienTai.equals("")) {
 			JOptionPane.showMessageDialog(this, "Hãy tạo đơn đổi trả trước khi thêm sản phẩm");
@@ -786,7 +787,7 @@ public class DoiTraHangGui extends JPanel {
 	}
 
 	// Xóa sản phẩm ra khỏi đơn đổi trả
-	public void xoaSanPhamRaDonDoiTra() {
+	public void xoaSanPhamRaDonDoiTra() throws RemoteException {
 		int row[] = tbDonDoiTra.getSelectedRows();
 		if (row.length == 0) {
 			JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm cần xóa");
@@ -807,7 +808,7 @@ public class DoiTraHangGui extends JPanel {
 	}
 
 	// Hoàn thành danh sách chi tiết đơn đổi trả
-	public List<ChiTietDonDoiTra> hoanThanhChiTietDonDoiTra() {
+	public List<ChiTietDonDoiTra> hoanThanhChiTietDonDoiTra() throws RemoteException {
 		List<ChiTietDonDoiTra> ds = new ArrayList<ChiTietDonDoiTra>();
 		for (int i = 0; i < tbDonDoiTra.getRowCount(); i++) {
 			int soLuong = Integer.parseInt(tbDonDoiTra.getValueAt(i, 2).toString());
@@ -820,7 +821,7 @@ public class DoiTraHangGui extends JPanel {
 	}
 
 	// Hoàn thành đơn đổi trả
-	public void hoanThanhDonDoiTra() {
+	public void hoanThanhDonDoiTra() throws RemoteException {
 		String maDonDoiTra = txtMaDonDoiTra.getText();
 		LocalDate ngayDoiTra = LocalDate.now();
 		List<ChiTietDonDoiTra> ds = hoanThanhChiTietDonDoiTra();
@@ -844,9 +845,17 @@ public class DoiTraHangGui extends JPanel {
 					// chạy riêng luong
 					Thread t = new Thread(()-> {
 						modelDonDoiTraQL.setRowCount(0);
-						dsDonDoiTra = busDDT.layHetDSDonDoiTra();
-						busDDT.layDanhSachDonDoiTraVaoTable(modelDonDoiTraQL, dsDonDoiTra);
-					});
+                        try {
+                            dsDonDoiTra = busDDT.layHetDSDonDoiTra();
+                        } catch (RemoteException e) {
+                            throw new RuntimeException(e);
+                        }
+                        try {
+                            busDDT.layDanhSachDonDoiTraVaoTable(modelDonDoiTraQL, dsDonDoiTra);
+                        } catch (RemoteException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
 					t.start();
 
 					ddt.getHoaDon().getKhachHang()
@@ -899,7 +908,7 @@ public class DoiTraHangGui extends JPanel {
 	}
 
 	// Hiện thông tin đơn đổi trả được chọn
-	public void hienThongTinDonDoiTra() {
+	public void hienThongTinDonDoiTra() throws RemoteException {
 		int row = tbDonDoiTraQL.getSelectedRow();
 		DonDoiTra ddt = busDDT.layDonDoiTraTheoMa(tbDonDoiTraQL.getValueAt(row, 0).toString());
 		txtMaDonDoiTraQL.setText(ddt.getMaDonDoiTra());
@@ -941,7 +950,7 @@ public class DoiTraHangGui extends JPanel {
 	}
 
 	// Tìm kiếm thông tin đơn đổi trả bằng mã đơn đổi trả, số điện thoại, mã hóa đơn
-	public void timKiemDonDoiTra() {
+	public void timKiemDonDoiTra() throws RemoteException {
 		busDDT.timKiemBangMaDonDoiTra(dsDonDoiTra, txtMaDonDoiTraTimKiemQL.getText());
 		busDDT.timKiemBangSDT(dsDonDoiTra, txtSDTTimKiemQL.getText());
 		busDDT.timKiemBangMaHoaDon(dsDonDoiTra, txtMaHDTimKiemQL.getText());
@@ -951,7 +960,7 @@ public class DoiTraHangGui extends JPanel {
 	}
 
 	// Tải lại danh sách đơn đổi trả sau khi tìm kiếm
-	public void taiLaiDSDDT() {
+	public void taiLaiDSDDT() throws RemoteException {
 		modelDonDoiTraQL.setRowCount(0);
 		busDDT.layDanhSachDonDoiTraVaoTable(modelDonDoiTraQL, dsDonDoiTra);
 		txtMaDonDoiTraTimKiemQL.setText("");

@@ -13,15 +13,22 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class KhachHangBusImpl implements KhachHangBus {
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+public class KhachHangBusImpl extends UnicastRemoteObject implements KhachHangBus {
     private KhachHangDaoImpl khDI = new KhachHangDaoImpl();
+
+    public KhachHangBusImpl() throws RemoteException {
+        super();
+    }
     @Override
-    public List<KhachHang> layDSKhachHang() {
+    public List<KhachHang> layDSKhachHang()  throws RemoteException {
         return khDI.LayDSKhachHang();
     }
 
     @Override
-    public String themKhachHang(KhachHang kh) {
+    public String themKhachHang(KhachHang kh)  throws RemoteException {
         String message = "";
         if(khDI.timKhachHangTheoMa(kh.getMaKhachHang()) != null) {
             message = "Mã khách hàng đã tồn tại";
@@ -44,7 +51,7 @@ public class KhachHangBusImpl implements KhachHangBus {
     }
 
     @Override
-    public String capNhatThongTinKhachHang(KhachHang kh) {
+    public String capNhatThongTinKhachHang(KhachHang kh)  throws RemoteException {
         String message = kiemTraThongTinKhachHangHopLe(kh);
         if(message.equals("success")) {
             KhachHang khsdt = khDI.timKhachHangTheoSDT(kh.getSdt());
@@ -62,22 +69,22 @@ public class KhachHangBusImpl implements KhachHangBus {
     }
 
     @Override
-    public KhachHang timKhachHangTheoSDT(String sdtkh) {
+    public KhachHang timKhachHangTheoSDT(String sdtkh)  throws RemoteException {
         return khDI.timKhachHangTheoSDT(sdtkh);
     }
 
     @Override
-    public List<KhachHang> locKhachHang(String tenTim, String sdtTim) {
+    public List<KhachHang> locKhachHang(String tenTim, String sdtTim)  throws RemoteException {
         return khDI.locKhachHang(tenTim, sdtTim);
     }
 
     @Override
-    public boolean capNhatDiemTichLuyKhachHang(KhachHang kh) {
+    public boolean capNhatDiemTichLuyKhachHang(KhachHang kh)  throws RemoteException {
         return khDI.capNhatDiemTichLuyKhachHang(kh);
     }
 
     @Override
-    public String kiemTraThongTinKhachHangHopLe(KhachHang kh) {
+    public String kiemTraThongTinKhachHangHopLe(KhachHang kh)  throws RemoteException {
         Pattern tenKH = Pattern.compile("^[\\p{L} ]+$");
         Matcher matchTenKh = tenKH.matcher(kh.getTenKhachHang());
         Pattern sdt = Pattern.compile("^(09|08|07|05|03)\\d{8}$");
@@ -103,18 +110,18 @@ public class KhachHangBusImpl implements KhachHangBus {
     }
 
     @Override
-    public List<HoaDon> layLichSuGiaoDichKhachHang(String maKH, int soGD) {
+    public List<HoaDon> layLichSuGiaoDichKhachHang(String maKH, int soGD)  throws RemoteException {
         return khDI.layLichSuGiaoDichKhachHang(maKH, soGD);
     }
 
     @Override
-    public String taoMaKhachHang() {
+    public String taoMaKhachHang()  throws RemoteException {
         int soKhachHang = khDI.getMaKhachHangMax() + 1;
         return "KH" + soKhachHang;
     }
 
     @Override
-    public void sapXepTheoTongTienMua(MyTable tb, DefaultTableModel model) {
+    public void sapXepTheoTongTienMua(MyTable tb, DefaultTableModel model)  throws RemoteException {
         List<KhachHang> ds = khDI.layDsKhachHangSapXepTheoTongTien();
         model.setRowCount(0);
         for(KhachHang kh: ds) {
@@ -124,12 +131,12 @@ public class KhachHangBusImpl implements KhachHangBus {
     }
 
     @Override
-    public KhachHang timKhachHangTheoMa(String maKH) {
+    public KhachHang timKhachHangTheoMa(String maKH)  throws RemoteException {
         return khDI.timKhachHangTheoMa(maKH);
     }
 
     @Override
-    public List<KhachHang> sapXepTheoTongTien(List<KhachHang> ds) {
+    public List<KhachHang> sapXepTheoTongTien(List<KhachHang> ds)  throws RemoteException {
         Collections.sort(ds, new Comparator<KhachHang>() {
             @Override
             public int compare(KhachHang o1, KhachHang o2) {

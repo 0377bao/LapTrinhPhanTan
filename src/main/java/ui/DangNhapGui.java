@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 
 import bus.NhanVienBus;
 import bus.TaiKhoanBus;
@@ -38,7 +39,7 @@ public class DangNhapGui extends JFrame {
     private TaiKhoanBus taiKhoanBus = new TaiKhoanBusImpl();
     private NhanVienBus nhanVienBus = new NhanVienBusImpl();
 
-    public DangNhapGui() {
+    public DangNhapGui() throws RemoteException {
         this.setTitle("ĐĂNG NHẬP PHẦN MỀM");
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -141,7 +142,7 @@ public class DangNhapGui extends JFrame {
         txtMatKhau.addActionListener(ac);
     }
 
-    public void xuLyDangNhap() {
+    public void xuLyDangNhap() throws RemoteException {
         String taiKhoan = txtTenDangNhap.getText().trim();
         String matKhau = txtMatKhau.getText().trim();
 
@@ -173,7 +174,7 @@ public class DangNhapGui extends JFrame {
         }
     }
 
-    public void xuLyQuenMatKhau() {
+    public void xuLyQuenMatKhau() throws RemoteException {
         String taiKhoan = txtTenDangNhap.getText();
         if (taiKhoan.trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập tên tài khoản quên mật khẩu");

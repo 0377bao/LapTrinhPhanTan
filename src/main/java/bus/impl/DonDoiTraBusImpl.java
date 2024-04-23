@@ -11,65 +11,72 @@ import tool.Tool;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DonDoiTraBusImpl implements DonDoiTraBus {
+public class DonDoiTraBusImpl extends UnicastRemoteObject implements DonDoiTraBus {
     DonDoiTraDaoImpl donDoiTraDao;
 
-    public DonDoiTraBusImpl() {
+    public DonDoiTraBusImpl()throws RemoteException {
         donDoiTraDao = new DonDoiTraDaoImpl();
     }
 
     @Override
-    public boolean themDonDoiTra(DonDoiTra donDoiTra) {
+    public boolean themDonDoiTra(DonDoiTra donDoiTra) throws RemoteException {
         return donDoiTraDao.themDonDoiTra(donDoiTra);
     }
 
     @Override
-    public DonDoiTra layDonDoiTraTheoMa(String maDDT) {
+    public DonDoiTra layDonDoiTraTheoMa(String maDDT) throws RemoteException {
         return donDoiTraDao.layDonDoiTraTheoMa(maDDT);
     }
 
     @Override
-    public List<DonDoiTra> layHetDSDonDoiTra() {
+    public List<DonDoiTra> layHetDSDonDoiTra() throws RemoteException {
         return donDoiTraDao.layHetDSDonDoiTra();
     }
 
     @Override
-    public List<DonDoiTra> layDonDoiTraTheoHoaDon(String maHoaDon) {
+    public List<DonDoiTra> layDonDoiTraTheoHoaDon(String maHoaDon) throws RemoteException{
         return donDoiTraDao.layDonDoiTraTheoHoaDon(maHoaDon);
     }
 
     @Override
-    public List<DonDoiTra> layDonDoiTraTuNgayXDenNgayY(LocalDate date1, LocalDate date2) {
+    public List<DonDoiTra> layDonDoiTraTuNgayXDenNgayY(LocalDate date1, LocalDate date2) throws RemoteException{
         return donDoiTraDao.layDonDoiTraTuNgayXDenNgayY(date1, date2);
     }
 
     @Override
-    public void layDanhSachHoaDonKhachHangTrong7Ngay(String sdt,DefaultTableModel model) {
+    public void layDanhSachHoaDonKhachHangTrong7Ngay(String sdt,DefaultTableModel model) throws RemoteException{
         donDoiTraDao.layDanhSachHoaDonKhachHangTrong7Ngay(sdt).forEach(hd -> {
             int soLuongSP = 0;
             for (ChiTietHoaDon cthd : hd.getDsChiTietHoaDon()) {
                 soLuongSP += cthd.getSoLuongMua();
             }
-            model.addRow(new Object[]{hd.getMaHoaDon(), hd.getNgayLap(), hd.getNhanVien().getTenNhanVien(),
-                    soLuongSP, Tool.dinhDangTien(hd.getThanhTien())});
+            try {
+				model.addRow(new Object[]{hd.getMaHoaDon(), hd.getNgayLap(), hd.getNhanVien().getTenNhanVien(),
+				        soLuongSP, Tool.dinhDangTien(hd.getThanhTien())});
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         });
     }
 
     @Override
-    public String taoMaDonDoiTra(String maHoaDon) {
+    public String taoMaDonDoiTra(String maHoaDon) throws RemoteException{
         return "DDT" + maHoaDon.substring(2, maHoaDon.length()) + 'v'
                 + (donDoiTraDao.layDonDoiTraTheoHoaDon(maHoaDon).size() + 1);
 
     }
 
     @Override
-    public void layDanhSachDonDoiTraVaoTable(DefaultTableModel model, List<DonDoiTra> ds) {
+    public void layDanhSachDonDoiTraVaoTable(DefaultTableModel model, List<DonDoiTra> ds) throws RemoteException{
         for (DonDoiTra donDoiTra : ds) {
             int tongSoLuongSP = 0;
             for (int i = 0; i < donDoiTra.getDsChiTietDonDoiTra().size(); i++) {
@@ -82,7 +89,7 @@ public class DonDoiTraBusImpl implements DonDoiTraBus {
     }
 
     @Override
-    public void hienDanhSachSanPhamTrongHoaDon(DefaultTableModel model, String maHoaDon) {
+    public void hienDanhSachSanPhamTrongHoaDon(DefaultTableModel model, String maHoaDon) throws RemoteException{
         model.setRowCount(0);
         for (ChiTietHoaDon cthd : new HoaDonDaoImpl().layHoaDonTheoMa(maHoaDon).getDsChiTietHoaDon()) {
             model.addRow(new Object[] { cthd.getSanPham().getMaSanPham(), cthd.getSanPham().getTenSanPham(),
@@ -91,7 +98,7 @@ public class DonDoiTraBusImpl implements DonDoiTraBus {
     }
 
     @Override
-    public int tinhDiemHoanTra(float tongTien, int diemTrongHD) {
+    public int tinhDiemHoanTra(float tongTien, int diemTrongHD) throws RemoteException{
         int nuaTien = (int) tongTien / 2;
         if (nuaTien / 10000 > diemTrongHD) {
             return diemTrongHD;
@@ -100,7 +107,7 @@ public class DonDoiTraBusImpl implements DonDoiTraBus {
     }
 
     @Override
-    public void timKiemBangMaDonDoiTra(List<DonDoiTra> ds, String maDDT) {
+    public void timKiemBangMaDonDoiTra(List<DonDoiTra> ds, String maDDT) throws RemoteException{
         if (!maDDT.equals("")) {
             ArrayList<DonDoiTra> tam = new ArrayList<>();
             Pattern p = Pattern.compile(maDDT);
@@ -116,7 +123,7 @@ public class DonDoiTraBusImpl implements DonDoiTraBus {
     }
 
     @Override
-    public void timKiemBangMaHoaDon(List<DonDoiTra> ds, String maHD) {
+    public void timKiemBangMaHoaDon(List<DonDoiTra> ds, String maHD) throws RemoteException{
         if (!maHD.equals("")) {
             ArrayList<DonDoiTra> tam = new ArrayList<>();
             Pattern p = Pattern.compile(maHD);
@@ -132,7 +139,7 @@ public class DonDoiTraBusImpl implements DonDoiTraBus {
     }
 
     @Override
-    public void timKiemBangSDT(List<DonDoiTra> ds, String sdt) {
+    public void timKiemBangSDT(List<DonDoiTra> ds, String sdt) throws RemoteException{
 
         if (!sdt.equals("")) {
             ArrayList<DonDoiTra> tam = new ArrayList<>();
@@ -149,7 +156,7 @@ public class DonDoiTraBusImpl implements DonDoiTraBus {
     }
 
     @Override
-    public void tinhTongDDT(String PhuongThucDoiTra, JTable tb, JTextField tongTien, JTextField tongSL, JTextField diemHT, int diemTrongHD, ChuongTrinhKhuyenMai ctkm, JTextField tienGiam) {
+    public void tinhTongDDT(String PhuongThucDoiTra, JTable tb, JTextField tongTien, JTextField tongSL, JTextField diemHT, int diemTrongHD, ChuongTrinhKhuyenMai ctkm, JTextField tienGiam) throws RemoteException{
         if (PhuongThucDoiTra.equals("Đổi Hàng")) {
             int tong = 0;
             for (int i = 0; i < tb.getRowCount(); i++) {
@@ -179,7 +186,7 @@ public class DonDoiTraBusImpl implements DonDoiTraBus {
     }
 
     @Override
-    public List<ChiTietDonDoiTra> layChiTietDonDoiTraTheoMaDonDoiTra(String maDonDoiTra) {
+    public List<ChiTietDonDoiTra> layChiTietDonDoiTraTheoMaDonDoiTra(String maDonDoiTra) throws RemoteException{
         return donDoiTraDao.layChiTietDonDoiTraTheoMaDonDoiTra(maDonDoiTra);
     }
 }

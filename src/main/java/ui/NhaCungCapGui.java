@@ -13,6 +13,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 import java.util.List;
 
 public class NhaCungCapGui extends JPanel {
@@ -35,7 +36,7 @@ public class NhaCungCapGui extends JPanel {
 	private NhaCungCapBusImpl busNCC = new NhaCungCapBusImpl();
 	private List<NhaCungCap> dsNCC = busNCC.layDSNhaCungCap();
 
-	public NhaCungCapGui() {
+	public NhaCungCapGui() throws RemoteException {
 		this.setBackground(new Color(255, 255, 255));
 		this.setBounds(250, 0, 1280, 800);
 		setLayout(null);
@@ -254,7 +255,7 @@ public class NhaCungCapGui extends JPanel {
 	}
 
 	// xử lý tìm kiếm theo nhiều trường
-	public void xuLyTimKiem() {
+	public void xuLyTimKiem() throws RemoteException {
 		String sdt = txtTimTheoMa_Sdt.getText().trim();
 		String ten = txtTimTheoTen.getText().trim();
 		//busNCC.layNCCTheoDiaChi(dsNCC, cboDiaChi.getSelectedItem().toString());
@@ -271,7 +272,7 @@ public class NhaCungCapGui extends JPanel {
 	}
 
 	// tải lại
-	public void taiLai() {
+	public void taiLai() throws RemoteException {
 		List<NhaCungCap> dsNCC = busNCC.layDSNhaCungCap();
 		xoaDuLieuBang();
 		cboDiaChi.setSelectedIndex(0);
@@ -285,7 +286,7 @@ public class NhaCungCapGui extends JPanel {
 	}
 
 	// cập nhật nhà cung cấp
-	public void CapNhatNCC() {
+	public void CapNhatNCC() throws RemoteException {
 		int r = table.getSelectedRow();
 		if (r < 0) {
 			JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng cần sửa");
@@ -316,7 +317,7 @@ public class NhaCungCapGui extends JPanel {
 	}
 
 	// thêm nhà cung cấp
-	public void themNCC() {
+	public void themNCC() throws RemoteException {
 		String ma = txtMaNCC.getText().trim();
 		String ten = txtTenNCC.getText().trim();
 		String sdt = txtSdt.getText().trim();
@@ -345,7 +346,7 @@ public class NhaCungCapGui extends JPanel {
 	}
 
 	// tạo mã
-	public void taoMa() {
+	public void taoMa() throws RemoteException {
 		txtMaNCC.setText(busNCC.taoMa());
 	}
 

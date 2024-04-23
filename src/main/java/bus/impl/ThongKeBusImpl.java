@@ -21,20 +21,27 @@ import org.jfree.data.general.DefaultPieDataset;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ThongKeBusImpl implements ThongKeBus {
-    DonDoiTraDao donDoiTraDao = new DonDoiTraDaoImpl();
-    HoaDonDao hoaDonDao = new HoaDonDaoImpl();
-    NhanVienDao nhanVienDao = new NhanVienDaoImpl();
-    SanPhamDao sanPhamDao = new SanPhamDaoImpl();
-
+public class ThongKeBusImpl extends UnicastRemoteObject implements ThongKeBus {
+    DonDoiTraDao donDoiTraDao;
+    HoaDonDao hoaDonDao;
+    NhanVienDao nhanVienDao;
+    SanPhamDao sanPhamDao;
+    public ThongKeBusImpl() throws RemoteException {
+        donDoiTraDao = new DonDoiTraDaoImpl();
+        hoaDonDao = new HoaDonDaoImpl();
+        nhanVienDao = new NhanVienDaoImpl();
+        sanPhamDao = new SanPhamDaoImpl();
+    }
     // hàm lấy đơn đổi trả trong từ ngày khởi đầu đến ngày kết thúc của nhân viên nv
     @Override
-    public List<DonDoiTra> dsDDTTheoNV(NhanVien nv, LocalDate x, LocalDate y) {
+    public List<DonDoiTra> dsDDTTheoNV(NhanVien nv, LocalDate x, LocalDate y)  throws RemoteException{
         List<DonDoiTra> dsDTTTheoNV = donDoiTraDao.layDonDoiTraTheoNhanVien(nv.getMaNhanVien(), x, y);
         if (dsDTTTheoNV != null) {
             return dsDTTTheoNV;
@@ -44,7 +51,7 @@ public class ThongKeBusImpl implements ThongKeBus {
 
     // hàm lấy số hóa đơn từ ngày khởi đầu đến ngày kết thúc của nhân viên nv
     @Override
-    public List<HoaDon> dsHDTheoNV(NhanVien nv, LocalDate x, LocalDate y) {
+    public List<HoaDon> dsHDTheoNV(NhanVien nv, LocalDate x, LocalDate y) throws RemoteException{
         List<HoaDon> dsHDTheoNV = hoaDonDao.layHoaDonTheoNhanVien(nv.getMaNhanVien(), x, y);
         if (dsHDTheoNV != null) {
             return dsHDTheoNV;
@@ -54,18 +61,18 @@ public class ThongKeBusImpl implements ThongKeBus {
 
     // hàm lấy doanh thu từ ngày khởi đầu đến ngày kết thúc của nhân viên nv
     @Override
-    public double tongDoanhThu(NhanVien nv, LocalDate x, LocalDate y) {
+    public double tongDoanhThu(NhanVien nv, LocalDate x, LocalDate y) throws RemoteException{
         return hoaDonDao.tongDoanhThuTheoNhanVien(nv.getMaNhanVien(), x, y);
     }
 
     // hàm lấy số sản phẩm từ ngày khởi đầu đến ngày kết thúc của nhân viên nv
     @Override
-    public int tongSoSanPham(NhanVien nv, LocalDate x, LocalDate y) {
+    public int tongSoSanPham(NhanVien nv, LocalDate x, LocalDate y) throws RemoteException{
         return hoaDonDao.tongSanPhamTheoNhanVien(nv.getMaNhanVien(), x, y);
     }
 
     @Override
-    public int tinhSoNgayTrongTuanNay() {
+    public int tinhSoNgayTrongTuanNay() throws RemoteException{
         int ngayTrongTuan = 0;
         String thuHT = LocalDate.now().getDayOfWeek().toString();
         switch (thuHT) {
@@ -102,7 +109,7 @@ public class ThongKeBusImpl implements ThongKeBus {
     }
 
     @Override
-    public void taoDuLieuComBoBoxTKCuaNV(DefaultComboBoxModel<String> model) {
+    public void taoDuLieuComBoBoxTKCuaNV(DefaultComboBoxModel<String> model) throws RemoteException{
         int ngayHT = LocalDate.now().getDayOfMonth();
         int ngayTrongTuan = tinhSoNgayTrongTuanNay();
 
@@ -125,7 +132,7 @@ public class ThongKeBusImpl implements ThongKeBus {
     }
 
     @Override
-    public void layDuLieuThongKeChiTietCuaNVTheoTuan(DefaultTableModel model, DefaultComboBoxModel<String> modelCB, NhanVien nv) {
+    public void layDuLieuThongKeChiTietCuaNVTheoTuan(DefaultTableModel model, DefaultComboBoxModel<String> modelCB, NhanVien nv) throws RemoteException{
         String thuTrongTuan[] = {"Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ Nhật"};
         int thu = 0;
         String khoangCach[] = modelCB.getSelectedItem().toString().replace("ngày ", "").split("-");
@@ -150,7 +157,7 @@ public class ThongKeBusImpl implements ThongKeBus {
     }
 
     @Override
-    public void layDuLieuThongKeChiTietCuaNVTheoTuanVaoBieuDo(DefaultComboBoxModel<String> cbmodel, NhanVien nv, DefaultCategoryDataset dataSet) {
+    public void layDuLieuThongKeChiTietCuaNVTheoTuanVaoBieuDo(DefaultComboBoxModel<String> cbmodel, NhanVien nv, DefaultCategoryDataset dataSet) throws RemoteException{
         String thuTrongTuan[] = {"Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ Nhật"};
         int thu = 0;
         String khoangCach[] = cbmodel.getSelectedItem().toString().replace("ngày ", "").split("-");
@@ -167,14 +174,14 @@ public class ThongKeBusImpl implements ThongKeBus {
     }
 
     @Override
-    public void taoDuLieuComBoBoxThongKeCHTheoQuy(DefaultComboBoxModel<String> model) {
+    public void taoDuLieuComBoBoxThongKeCHTheoQuy(DefaultComboBoxModel<String> model) throws RemoteException{
         for (int i = LocalDate.now().getYear(); i >= 2020; i--) {
             model.addElement(i + "");
         }
     }
 
     @Override
-    public void thongKeThongTinCuaHangTheoQuy(String nam, DefaultTableModel model, DefaultPieDataset dataSet) {
+    public void thongKeThongTinCuaHangTheoQuy(String nam, DefaultTableModel model, DefaultPieDataset dataSet) throws RemoteException{
         int namTK = Integer.parseInt(nam);
         LocalDate ngayBDQ1 = LocalDate.of(namTK, 1, 1);
         LocalDate ngayKTQ1 = LocalDate.of(namTK, 3, 31);
@@ -233,7 +240,7 @@ public class ThongKeBusImpl implements ThongKeBus {
     }
 
     @Override
-    public void thongKeCuaHangTrongThang(String thang, JLabel soHD, JLabel doanhThu, JLabel soLuongSP, JLabel soDDT, DefaultTableModel model) {
+    public void thongKeCuaHangTrongThang(String thang, JLabel soHD, JLabel doanhThu, JLabel soLuongSP, JLabel soDDT, DefaultTableModel model) throws RemoteException{
         int thangTK = Integer.parseInt(thang.substring(6));
         int soNgayTrongThang = YearMonth.of(LocalDate.now().getYear(), thangTK).lengthOfMonth();
         float tongDoanhThu = 0;
@@ -268,7 +275,7 @@ public class ThongKeBusImpl implements ThongKeBus {
     }
 
     @Override
-    public void lay10SPBanChayNhat(String trangThaiTK, DefaultTableModel modelS, DefaultTableModel modelVPP, LocalDate x, LocalDate y) {
+    public void lay10SPBanChayNhat(String trangThaiTK, DefaultTableModel modelS, DefaultTableModel modelVPP, LocalDate x, LocalDate y) throws RemoteException{
         List<String> SP = new ArrayList<>();
         List<Integer> SL = new ArrayList<>();
         SP.add("");
@@ -365,7 +372,7 @@ public class ThongKeBusImpl implements ThongKeBus {
     }
 
     @Override
-    public void lay10SPBiDoiTraNhieuNhat(DefaultTableModel modelDT, LocalDate x, LocalDate y) {
+    public void lay10SPBiDoiTraNhieuNhat(DefaultTableModel modelDT, LocalDate x, LocalDate y) throws RemoteException{
         List<String> SP = new ArrayList<>();
         List<Integer> SL = new ArrayList<>();
         SP.add("");
@@ -430,7 +437,7 @@ public class ThongKeBusImpl implements ThongKeBus {
     }
 
     @Override
-    public void ThongKeSanPham(String trangThaiTK, String Quy, DefaultTableModel modelSach, DefaultTableModel modelVPP) {
+    public void ThongKeSanPham(String trangThaiTK, String Quy, DefaultTableModel modelSach, DefaultTableModel modelVPP) throws RemoteException{
         LocalDate x = LocalDate.now();
         LocalDate y = LocalDate.now();
         if (Quy.equals("Quý 1")) {
@@ -452,7 +459,7 @@ public class ThongKeBusImpl implements ThongKeBus {
     }
 
     @Override
-    public void hienThiThongTinThongKeNV(JLabel tongNV, JLabel nvDaNghi, JLabel nvBanHang, JLabel nvQuanLy) {
+    public void hienThiThongTinThongKeNV(JLabel tongNV, JLabel nvDaNghi, JLabel nvBanHang, JLabel nvQuanLy) throws RemoteException{
         tongNV.setText(nhanVienDao.layDSNhanVien().size() + "");
         int nvdaNghi = 0, nvBH = 0, nvQL = 0;
 
@@ -473,7 +480,7 @@ public class ThongKeBusImpl implements ThongKeBus {
     }
 
     @Override
-    public void hienSoLieuCuaNhanVienTrongThang(String thang, DefaultTableModel model, DefaultCategoryDataset dataSet) {
+    public void hienSoLieuCuaNhanVienTrongThang(String thang, DefaultTableModel model, DefaultCategoryDataset dataSet) throws RemoteException{
         thang = thang.replace("Tháng ", "");
         int thangTK = Integer.parseInt(thang);
         int soNgayTrongThang = YearMonth.of(LocalDate.now().getYear(), thangTK).lengthOfMonth();
