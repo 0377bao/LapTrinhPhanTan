@@ -1,12 +1,13 @@
 package dao.impl;
 
-import Tool.Tool;
+import tool.Tool;
 import dao.NhanVienDao;
 import entity.NhanVien;
 import entity.TaiKhoan;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
+import tool.Tool;
 
 import java.util.List;
 

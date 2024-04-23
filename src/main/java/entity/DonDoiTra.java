@@ -39,7 +39,7 @@ public class DonDoiTra {
 	@JoinColumn(name = "maNhanVien")
 	private NhanVien nhanVien;
 	@OneToMany(mappedBy = "donDoiTra", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<ChiTietDonDoiTra> dsChiTietDonDoiTra;
+	private List<ChiTietDonDoiTra> dsChiTietDonDoiTra = new ArrayList<>();
 
 	public LocalDate getNgayDoiTra() {
 		return ngayDoiTra;
@@ -103,15 +103,17 @@ public class DonDoiTra {
 
 
 
-	public DonDoiTra(String maDonDoiTra, LocalDate ngayDoiTra, String phuongThucDoiTra, int diemHoanTra, HoaDon hoaDon, NhanVien nhanVien, ArrayList<ChiTietDonDoiTra> dsChiTietDonDoiTra) {
+	public DonDoiTra(String maDonDoiTra, LocalDate ngayDoiTra, String phuongThucDoiTra, int diemHoanTra, HoaDon hoaDon, NhanVien nhanVien, List<ChiTietDonDoiTra> ds) {
 		this.maDonDoiTra = maDonDoiTra;
 		this.ngayDoiTra = ngayDoiTra;
 		this.phuongThucDoiTra = phuongThucDoiTra;
 		this.diemHoanTra = diemHoanTra;
+		this.hoaDon = hoaDon;
+		this.nhanVien = nhanVien;
+		this.dsChiTietDonDoiTra = ds;
 		this.soLuongSPDoiHang = tinhSoLuongDoiHang();
 		this.tienHoanTra = tinhTienCanTra();
 	}
-
 	public DonDoiTra() {
 
 	}

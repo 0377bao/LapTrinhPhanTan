@@ -6,7 +6,7 @@ import entity.MucKhuyenMai;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Query;
-import Tool.Tool;
+import tool.Tool;
 
 import java.util.List;
 
@@ -78,6 +78,7 @@ public class ChuongTrinhKhuyenMaiDaoImpl implements ChuongTrinhKhuyenMaiDao {
             ex.printStackTrace();
             return false;
         }
+
     }
 
     @Override
@@ -104,7 +105,6 @@ public class ChuongTrinhKhuyenMaiDaoImpl implements ChuongTrinhKhuyenMaiDao {
         em.getTransaction().commit();
     }
 
-    @Override
     public boolean kiemTraTenChuongTrinhKhuyenMai(String ten) {
         EntityManager em = emf.createEntityManager();
         try {
@@ -137,12 +137,13 @@ public class ChuongTrinhKhuyenMaiDaoImpl implements ChuongTrinhKhuyenMaiDao {
         EntityManager em = emf.createEntityManager();
         ChuongTrinhKhuyenMai ctkm = timChuongTrinhKhuyenMaiTheoId(maCTKM);
         mucKhuyenMai.setChuongTrinhKhuyenMai(ctkm);
-        try {
+        try{
             em.getTransaction().begin();
             em.persist(mucKhuyenMai);
             em.getTransaction().commit();
             return true;
-        } catch (Exception e) {
+
+        }catch(Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -174,7 +175,7 @@ public class ChuongTrinhKhuyenMaiDaoImpl implements ChuongTrinhKhuyenMaiDao {
             em.merge(mucKhuyenMai);
             em.getTransaction().commit();
             return true;
-        } catch (Exception e) {
+        }catch(Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -182,7 +183,6 @@ public class ChuongTrinhKhuyenMaiDaoImpl implements ChuongTrinhKhuyenMaiDao {
 
     @Override
     public List<MucKhuyenMai> layDSMucKhuyenMaiCuaCTKM(String ma) {
-        EntityManager em = emf.createEntityManager();
         EntityManager e = emf.createEntityManager();
         try {
             Query query = e.createQuery("SELECT m FROM MucKhuyenMai m JOIN ChuongTrinhKhuyenMai km ON m.chuongTrinhKhuyenMai.id = km.id WHERE m.chuongTrinhKhuyenMai.id = :ma");

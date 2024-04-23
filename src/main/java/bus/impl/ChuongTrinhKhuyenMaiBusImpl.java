@@ -5,6 +5,8 @@ import dao.ChuongTrinhKhuyenMaiDao;
 import dao.impl.ChuongTrinhKhuyenMaiDaoImpl;
 import entity.ChuongTrinhKhuyenMai;
 import entity.MucKhuyenMai;
+import jakarta.persistence.Query;
+
 
 import java.util.List;
 
@@ -75,8 +77,14 @@ public class ChuongTrinhKhuyenMaiBusImpl implements ChuongTrinhKhuyenMaiBus {
         return true;
     }
 
+    @Override
     public String getMessage() {
         return mes;
+    }
+
+    @Override
+    public List<MucKhuyenMai> layDSMucKhuyenMaiCuaCTKM(String ma) {
+        return ctkmDao.layDSMucKhuyenMaiCuaCTKM(ma);
     }
 
     @Override
@@ -89,11 +97,6 @@ public class ChuongTrinhKhuyenMaiBusImpl implements ChuongTrinhKhuyenMaiBus {
         return "CTKM" + (ctkmDao.layDSChuongTrinhKhuyenMai().size() + 1);
     }
 
-    @Override
-    public String taoMaChuongTrinhKhuyenMai() {
-        int max = layDSChuongTrinhKhuyenMai().size() + 1;
-        return "CTKM" + max;
-    }
 
     @Override
     public boolean themMucKhuyenMaiVaoCTKM(String maCTKM, MucKhuyenMai mucKhuyenMai) {
@@ -110,8 +113,4 @@ public class ChuongTrinhKhuyenMaiBusImpl implements ChuongTrinhKhuyenMaiBus {
         return ctkmDao.capNhatMucKhuyenMaiCuaCTKM(maCTKM, mucKhuyenMai);
     }
 
-    @Override
-    public List<MucKhuyenMai> layDSMucKhuyenMaiCuaCTKM(String ma) {
-        return ctkmDao.layDSMucKhuyenMaiCuaCTKM(ma);
-    }
 }

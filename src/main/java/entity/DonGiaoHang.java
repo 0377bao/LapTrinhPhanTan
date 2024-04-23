@@ -152,27 +152,27 @@ public class DonGiaoHang {
 		return this.soKm;
 	}
 
-//	public float tinhTienVanChuyen() {
-//		float result = 0;
-//		// trường hợp giao hàng miễn phí
-//		if (hoaDon.getThanhTien() >= 3000000) {
-//			result = 0;
-//		}
-//		// trường hợp tính tiền vận chuyển
-//		if (soKm > 40) {
-//			return -1; // trường hợp này không giao hàng
-//		} else {
-//			if (soKg <= 50) {
-//				result = soKm * 3000;
-//			} else if (soKg <= 100) {
-//				result = soKm * 5000;
-//			} else if (soKg <= 150) {
-//				result = soKm * 7000;
-//			}
-//		}
-//		this.tienVanChuyen = result;
-//		return tienVanChuyen;
-//	}
+	public float tinhTienVanChuyen() {
+		float result = 0;
+		// trường hợp giao hàng miễn phí
+		if (hoaDon.getThanhTien() >= 3000000) {
+			result = 0;
+		}
+		// trường hợp tính tiền vận chuyển
+		if (soKm > 40) {
+			return -1; // trường hợp này không giao hàng
+		} else {
+			if (soKg <= 50) {
+				result = soKm * 3000;
+			} else if (soKg <= 100) {
+				result = soKm * 5000;
+			} else if (soKg <= 150) {
+				result = soKm * 7000;
+			}
+		}
+		this.tienVanChuyen = result;
+		return tienVanChuyen;
+	}
 
 	@Override
 	public int hashCode() {

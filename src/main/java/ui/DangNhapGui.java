@@ -1,5 +1,11 @@
 package ui;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.event.ActionListener;
+
 import bus.NhanVienBus;
 import bus.TaiKhoanBus;
 import bus.impl.NhanVienBusImpl;
@@ -8,6 +14,7 @@ import controller.DangNhapController;
 import customUI.CustomImage;
 import customUI.MyButton;
 import entity.NhanVien;
+
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -20,11 +27,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.event.ActionListener;
 
 public class DangNhapGui extends JFrame {
 
@@ -153,7 +155,7 @@ public class DangNhapGui extends JFrame {
             if (kiemTra) {
                 if (!nv.getChucVu().equals("Quản lý")) {
                     TrangChu trangChu = new TrangChu(nhanVienBus.layNhanVienTheoMa(taiKhoan));
-                    trangChu.xuLyTinhNangTheoChucVuCuaNhanVien();
+//                    trangChu.xuLyTinhNangTheoChucVuCuaNhanVien();
                     trangChu.setVisible(true);
                 } else {
                     TrangChu trangChu = new TrangChu(nhanVienBus.layNhanVienTheoMa(taiKhoan));
@@ -191,3 +193,4 @@ public class DangNhapGui extends JFrame {
         txtMatKhau.selectAll();
     }
 }
+

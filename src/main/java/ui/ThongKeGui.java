@@ -13,7 +13,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
-import Tool.Tool;
+import tool.Tool;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.time.LocalDate;
 
-public class ThongKeGui extends JFrame {
+public class ThongKeGui extends JPanel {
     private DefaultTableModel modelThongKeChiTietCuaNVTheoTuan;
     private MyTable tbThongKeChiTietCuaNVTheoTuan;
     private MyTable tbDanhSachHoaDonCaNhan_1;

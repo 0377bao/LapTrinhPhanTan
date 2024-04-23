@@ -1,6 +1,8 @@
 package bus;
 
+import entity.Sach;
 import entity.SanPham;
+import entity.VanPhongPham;
 
 import java.util.List;
 
@@ -21,6 +23,8 @@ public interface SanPhamBus {
     public List<SanPham> locSachTheoTheLoai(List<SanPham> ds, String theLoai);
     public List<SanPham> locSachTheoTacGia(List<SanPham> ds, String tacGia);
     public List<SanPham> layDSSachGanHet();
+    public List<SanPham> layDSVPPGanHet();
+    public List<SanPham> layDSVPPConBan();
     public List<SanPham> locVPPTheoNCC(String maNCC);
     public List<SanPham> locVPPTheoDanhMuc(String danhMuc, List<SanPham> dsVPP);
     public List<SanPham> locVPPTheoTheLoai(List<SanPham> ds, String theLoai);

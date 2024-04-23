@@ -156,7 +156,7 @@ public class NhanVienBusImpl implements NhanVienBus {
     }
 
     @Override
-    public void timNVTheoSdt(ArrayList<NhanVien> ds, String sdt) {
+    public void timNVTheoSdt(List<NhanVien> ds, String sdt) {
         ArrayList<NhanVien> dsNV = new ArrayList<>();
         Pattern p = Pattern.compile(sdt);
         for (NhanVien nv : layDSNhanVien()) {
@@ -170,7 +170,7 @@ public class NhanVienBusImpl implements NhanVienBus {
     }
 
     @Override
-    public void timNVTheoTen(ArrayList<NhanVien> ds, String ten) {
+    public void timNVTheoTen(List<NhanVien> ds, String ten) {
         ArrayList<NhanVien> dsNV = new ArrayList<>();
         Pattern p = Pattern.compile(ten, Pattern.CASE_INSENSITIVE);
         for (NhanVien nv : layDSNhanVien()) {

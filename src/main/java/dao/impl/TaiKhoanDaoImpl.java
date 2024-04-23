@@ -3,7 +3,7 @@ package dao.impl;
 import dao.TaiKhoanDao;
 import entity.TaiKhoan;
 import jakarta.persistence.*;
-import Tool.Tool;
+import tool.Tool;
 
 public class TaiKhoanDaoImpl implements TaiKhoanDao {
     private EntityManagerFactory emf;

@@ -1,8 +1,10 @@
-package Tool;
+package tool;
+
+
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 
 import ui.PopUp;
-
-import javax.swing.*;
 
 public class PhanLuong extends SwingWorker<Void, Void> {
     private PopUp frame;
@@ -32,6 +34,7 @@ public class PhanLuong extends SwingWorker<Void, Void> {
         frame.setVisible(false);
     }
 
+
     @Override
     protected Void doInBackground() throws Exception {
         // TODO Auto-generated method stub
@@ -40,5 +43,6 @@ public class PhanLuong extends SwingWorker<Void, Void> {
         JOptionPane.showMessageDialog(null, mess);
         return null;
     }
+
 
 }

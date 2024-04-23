@@ -7,6 +7,7 @@ import entity.ChiTietDonDoiTra;
 import entity.ChiTietHoaDon;
 import entity.ChuongTrinhKhuyenMai;
 import entity.DonDoiTra;
+import tool.Tool;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -49,14 +50,14 @@ public class DonDoiTraBusImpl implements DonDoiTraBus {
     }
 
     @Override
-    public void layDanhSachHoaDonKhachHangTrong7Ngay(String sdt, DefaultTableModel model) {
+    public void layDanhSachHoaDonKhachHangTrong7Ngay(String sdt,DefaultTableModel model) {
         donDoiTraDao.layDanhSachHoaDonKhachHangTrong7Ngay(sdt).forEach(hd -> {
             int soLuongSP = 0;
             for (ChiTietHoaDon cthd : hd.getDsChiTietHoaDon()) {
                 soLuongSP += cthd.getSoLuongMua();
             }
-//             model.addRow(new Object[] { hd.getMaHoaDon(), hd.getNgayLap(), hd.getNhanVien().getTenNhanVien(),
-//                     soLuongSP, Tools.dinhDangTien(hd.getThanhTien()) });
+            model.addRow(new Object[]{hd.getMaHoaDon(), hd.getNgayLap(), hd.getNhanVien().getTenNhanVien(),
+                    soLuongSP, Tool.dinhDangTien(hd.getThanhTien())});
         });
     }
 
@@ -84,8 +85,8 @@ public class DonDoiTraBusImpl implements DonDoiTraBus {
     public void hienDanhSachSanPhamTrongHoaDon(DefaultTableModel model, String maHoaDon) {
         model.setRowCount(0);
         for (ChiTietHoaDon cthd : new HoaDonDaoImpl().layHoaDonTheoMa(maHoaDon).getDsChiTietHoaDon()) {
-//            model.addRow(new Object[] { cthd.getSanPham().getMaSanPham(), cthd.getSanPham().getTenSanPham(),
-//                    cthd.getSoLuongMua(), Tools.dinhDangTien(cthd.getGiaBan()) });
+            model.addRow(new Object[] { cthd.getSanPham().getMaSanPham(), cthd.getSanPham().getTenSanPham(),
+                    cthd.getSoLuongMua(), Tool.dinhDangTien(cthd.getGiaBan()) });
         }
     }
 
@@ -149,32 +150,32 @@ public class DonDoiTraBusImpl implements DonDoiTraBus {
 
     @Override
     public void tinhTongDDT(String PhuongThucDoiTra, JTable tb, JTextField tongTien, JTextField tongSL, JTextField diemHT, int diemTrongHD, ChuongTrinhKhuyenMai ctkm, JTextField tienGiam) {
-//        if (PhuongThucDoiTra.equals("Đổi Hàng")) {
-//            int tong = 0;
-//            for (int i = 0; i < tb.getRowCount(); i++) {
-//                tong += Integer.parseInt(tb.getValueAt(i, 2).toString());
-//            }
-//            tongSL.setText(tong + "");
-//        } else {
-//            float tong = 0;
-//            float tongTienGiam = 0;
-//            for (int i = 0; i < tb.getRowCount(); i++) {
-//                int soLuongSP = Integer.parseInt(tb.getValueAt(i, 2).toString());
-//                tongTienGiam += Float.parseFloat(tb.getValueAt(i, 3).toString().replaceAll("[,VND]", ""))
-//                        * (new HoaDonBusImpl().hamLayGiamGiaCuaChiTietHoaDon(ctkm,
-//                        new SanPhamBusImpl().timKiemSanPham(tb.getValueAt(i, 0).toString())) / 100)
-//                        * soLuongSP
-//                        + (Float.parseFloat(tb.getValueAt(i, 3).toString().replaceAll("[,VND]", ""))
-//                        * (new SanPhamBusImpl().timKiemSanPham(tb.getValueAt(i, 0).toString()).getThue() / 100)
-//                        * soLuongSP);
-//                tong += soLuongSP * (Float.parseFloat(tb.getValueAt(i, 3).toString().replaceAll("[,VND]", "")))
-//                        - tongTienGiam;
-//            }
-//            diemHT.setText(tinhDiemHoanTra(tong, diemTrongHD) + "");
-//            tongTien.setText(Tools.dinhDangTien(tong - Float.parseFloat(diemHT.getText()) * 10000));
-//
-//            tienGiam.setText(Tools.dinhDangTien(tongTienGiam + Float.parseFloat(diemHT.getText()) * 10000));
-//        }
+        if (PhuongThucDoiTra.equals("Đổi Hàng")) {
+            int tong = 0;
+            for (int i = 0; i < tb.getRowCount(); i++) {
+                tong += Integer.parseInt(tb.getValueAt(i, 2).toString());
+            }
+            tongSL.setText(tong + "");
+        } else {
+            float tong = 0;
+            float tongTienGiam = 0;
+            for (int i = 0; i < tb.getRowCount(); i++) {
+                int soLuongSP = Integer.parseInt(tb.getValueAt(i, 2).toString());
+                tongTienGiam += Float.parseFloat(tb.getValueAt(i, 3).toString().replaceAll("[,VND]", ""))
+                        * (new HoaDonBusImpl().hamLayGiamGiaCuaChiTietHoaDon(ctkm,
+                        new SanPhamBusImpl().timKiemSanPham(tb.getValueAt(i, 0).toString())) / 100)
+                        * soLuongSP
+                        + (Float.parseFloat(tb.getValueAt(i, 3).toString().replaceAll("[,VND]", ""))
+                        * (new SanPhamBusImpl().timKiemSanPham(tb.getValueAt(i, 0).toString()).getThue() / 100)
+                        * soLuongSP);
+                tong += soLuongSP * (Float.parseFloat(tb.getValueAt(i, 3).toString().replaceAll("[,VND]", "")))
+                        - tongTienGiam;
+            }
+            diemHT.setText(tinhDiemHoanTra(tong, diemTrongHD) + "");
+            tongTien.setText(Tool.dinhDangTien(tong - Float.parseFloat(diemHT.getText()) * 10000));
+
+            tienGiam.setText(Tool.dinhDangTien(tongTienGiam + Float.parseFloat(diemHT.getText()) * 10000));
+        }
     }
 
     @Override

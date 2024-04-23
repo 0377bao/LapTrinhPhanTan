@@ -46,13 +46,6 @@ public class NhaCungCapBusImpl implements NhaCungCapBus {
             mes = "Vui lòng nhập tên nhà cung cấp";
             return false;
         }
-        if(diaChi.isEmpty()) {
-            mes = "Vui lòng nhập địa chỉ nhà cung cấp";
-            return false;
-        }else if(!(diaChi.matches("^[\\p{L}0-9][\\p{L}0-9/.,' -]+"))){
-            mes = "Địa chỉ nhà cung cấp không chứa ký tự đặc biệt";
-            return false;
-        }
         if(sdt.isEmpty()) {
             mes = "Vui lòng nhập số điện thoại";
             return false;
@@ -67,7 +60,6 @@ public class NhaCungCapBusImpl implements NhaCungCapBus {
                         return false;
                     }
                 }
-                return true;
             }
         }
         if (email.isEmpty()) {
@@ -76,6 +68,13 @@ public class NhaCungCapBusImpl implements NhaCungCapBus {
         } else if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z.-]+\\.[a-zA-Z]{2,}$")) {
                 mes = "Email không hợp lệ";
                 return false;
+        }
+        if(diaChi.isEmpty()) {
+            mes = "Vui lòng nhập địa chỉ nhà cung cấp";
+            return false;
+        }else if(!(diaChi.matches("^[\\p{L}0-9][\\p{L}0-9/.,' -]+"))){
+            mes = "Địa chỉ nhà cung cấp không chứa ký tự đặc biệt";
+            return false;
         }
         return true;
     }
@@ -119,12 +118,17 @@ public class NhaCungCapBusImpl implements NhaCungCapBus {
         List<NhaCungCap> dsNcc = new ArrayList<>();
         // chuyển diaChi thành pattern để so khớp
         Pattern p = Pattern.compile(diaChi, Pattern.CASE_INSENSITIVE);
-        ds.forEach(ncc -> {
-            if(p.matcher(ncc.getDiaChi()).find()){
-                dsNcc.add(ncc);
-            }
-        });
-        ds.clear();
-        ds.addAll(dsNcc);
+        if(p.matcher("Tất cả").find()) {
+            ds.clear();
+            ds.addAll(nhaCungCapDao.layDSNhaCungCap());
+        }else {
+            ds.forEach(ncc -> {
+                if(p.matcher(ncc.getDiaChi()).find()){
+                    dsNcc.add(ncc);
+                }
+            });
+            ds.clear();
+            ds.addAll(dsNcc);
+        }
     }
 }

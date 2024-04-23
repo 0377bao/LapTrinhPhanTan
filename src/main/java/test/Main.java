@@ -1,18 +1,8 @@
 package test;
 
-import bus.impl.DonGiaoHangBusImpl;
-import bus.impl.KhachHangBusImpl;
-import bus.impl.NhanVienBusImpl;
-import dao.impl.DonGiaoHangDaoImpl;
-import dao.impl.NhanVienDaoImpl;
-import dao.impl.SanPhamDaoImpl;
-import entity.*;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import ui.DangNhapGui;
+
+
 import ui.KhuyenMaiGui;
-import ui.ThongKeGui;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,7 +10,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        NhanVien nv = new NhanVienBusImpl().layNhanVienTheoMa("NV1");
+//        NhanVien nv = new NhanVienBusImpl().layNhanVienTheoMa("NV1");
 
 //        ThongKeGui thongKeGui = new ThongKeGui(nv);
 //        thongKeGui.setVisible(true);
@@ -60,8 +50,13 @@ public class Main {
 //        tim.setSoLuongTon(40);
 //        System.out.println(daoSp.capNhatSoLuongTonSanPham(tim));
 //        NhanVienDaoImpl nhanVienIpml = new NhanVienDaoImpl();
+
+////        List<NhanVien> dsNhanVien = nhanVienIpml.layDSNhanVien();
+////        dsNhanVien.forEach(ty -> System.out.println(ty));
+
 //        List<NhanVien> dsNhanVien = nhanVienIpml.layDSNhanVien();
 //        dsNhanVien.forEach(ty -> System.out.println(ty));
+
 //        NhanVien nhanVien = nhanVienIpml.layNhanVienTheoMa("NV001");
 //        nhanVien.setTenNhanVien("bao");
 //        System.out.println(nhanVienIpml.capNhatNV(nhanVien));
@@ -98,5 +93,36 @@ public class Main {
 //        khthem.setSdt("0352761124");
 //        khthem.setEmail(khthem.getEmail().trim());
 //        System.out.println(new KhachHangBusImpl().themKhachHang(khthem));
+
+
+//        NhanVien nv = new NhanVienBusImpl().layNhanVienTheoMa("NV1");
+//        new TrangChu(nv).setVisible(true);
+
+//        new GUIThongKe(nv).setVisible(true);
+//        ThongKeBusImpl thongKeBus = new ThongKeBusImpl();
+//        System.out.println(thongKeBus.tongSoSanPham(nv, LocalDate.now(), LocalDate.now()));
+
+//        List<DonDoiTra> ds = new DonDoiTraBusImpl().layHetDSDonDoiTra();
+//        ds.forEach(ddt -> System.out.println(ddt));
+
+//          HoaDonBus hoaDonBus = new HoaDonBusImpl();
+//        List<HoaDon> ds = hoaDonBus.layHetDSHoaDon();
+//        ds.forEach(h -> System.out.println(h));
+//            HoaDon h = hoaDonBus.TimHoaDonTheoMa("HD26635");
+//            System.out.println(h);
+//        DonDoiTraBus bus = new DonDoiTraBusImpl();
+//        List<DonDoiTra> ds = bus.layHetDSDonDoiTra();
+//        ds.forEach(ty -> System.out.println(ty));
+//        SanPham s = new SanPhamBusImpl().timKiemSanPham("SPS15");
+//        s.setSoLuongTon(8);
+//        System.out.println(new SanPhamBusImpl().capNhatSoLuongTonSanPham(s));
+//        ChuongTrinhKhuyenMaiBus ch = new ChuongTrinhKhuyenMaiBusImpl();
+//        ChuongTrinhKhuyenMai k = ch.timChuongTrinhKhuyenMaiTheoMa("CTKM1");
+//        MucKhuyenMai m = new MucKhuyenMai("Tieu thuyet", 20);
+//        m.setChuongTrinhKhuyenMai(k);
+//        ch.themMucKhuyenMaiVaoCTKM("CTKM1", m);
+//        k.setTrangThai(true);
+//        ch.capNhatTrangThaiChuongTrinhKhuyenMai(k, ChuongTrinhKhuyenMaiDaoImpl.SaleProgramStatus.ACTIVE);
+
     }
 }

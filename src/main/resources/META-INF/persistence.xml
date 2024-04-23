@@ -23,7 +23,7 @@
         <class>entity.VanPhongPham</class>
         <properties>
             <property name="jakarta.persistence.jdbc.url"
-                      value="jdbc:sqlserver://localhost:1433;databaseName=NhaSachHBDK;trustServerCertificate=true" />
+                      value="jdbc:sqlserver://localhost:1433;databaseName=NhaSachTest;trustServerCertificate=true" />
             <property name="jakarta.persistence.jdbc.user" value="sa" />
             <property name="jakarta.persistence.jdbc.password"
                       value="sapassword" />

@@ -1,6 +1,6 @@
 package ui;
 
-import Tool.PhanLuong;
+import tool.PhanLuong;
 import bus.ChuongTrinhKhuyenMaiBus;
 import bus.DanhMucBus;
 import bus.impl.ChuongTrinhKhuyenMaiBusImpl;
@@ -14,6 +14,7 @@ import entity.ChuongTrinhKhuyenMai;
 import entity.DanhMuc;
 import entity.KhachHang;
 import entity.MucKhuyenMai;
+import tool.PhanLuong;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class KhuyenMaiGui extends JFrame {
+public class KhuyenMaiGui extends JPanel {
     private final DefaultTableModel modelMucKhuyenMai;
     private final DefaultTableModel modelDSKhuyenMai;
     private final DefaultTableModel modelChiTietKM;

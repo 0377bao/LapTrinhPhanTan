@@ -41,7 +41,10 @@ public class HoaDonBusImpl implements HoaDonBus {
     public float hamLayGiamGiaCuaChiTietHoaDon(ChuongTrinhKhuyenMai ctkm, SanPham sp) {
         String theLoai = "";
         if(sp instanceof Sach) theLoai = sp.getTheLoai();
-        else theLoai = ((VanPhongPham) sp).getDanhMuc().getTenDanhMuc();
+        else if(sp instanceof VanPhongPham){
+            VanPhongPham p = (VanPhongPham) sp;
+            theLoai = p.getDanhMuc().getTenDanhMuc();
+        }
         for (MucKhuyenMai mkm : ctkm.getDsMucKhuyenMai()) {
             if(mkm.getTenMucKhuyenMai().equals(theLoai)) return mkm.getTiLeKhuyenMai();
         }

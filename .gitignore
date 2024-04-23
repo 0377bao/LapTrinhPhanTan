@@ -43,3 +43,4 @@ bin/
 /.metadata/
 src/mapdata/
 target/
+src/main/java/mapdata/

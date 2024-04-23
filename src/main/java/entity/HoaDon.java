@@ -1,6 +1,6 @@
 package entity;
 
-//import bus.BUSHoaDon;
+import bus.impl.HoaDonBusImpl;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -42,7 +42,7 @@ public class HoaDon {
 	private ChuongTrinhKhuyenMai ctkm;
 	@Column(columnDefinition = "float", nullable = false)
 	private float tienKhachDua;
-	@OneToMany(mappedBy = "hoaDon", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "hoaDon", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<ChiTietHoaDon> dsChiTietHoaDon = new ArrayList<>();
 
 	@Column(columnDefinition = "float", nullable = false)
@@ -63,7 +63,7 @@ public class HoaDon {
 		this.ctkm = ctkm;
 		this.dsChiTietHoaDon = dsChiTietHoaDon;
 		// NOTE: chưa có phương tính getThanhTien() nên để mặc định 0
-		this.thanhTien = 0;
+		this.thanhTien = getThanhTien();
 		this.tienKhachDua = tienKhachDua;
 	}
 
@@ -185,31 +185,31 @@ public class HoaDon {
 		return result;
 	}
 
-//	public float tinhGiamGia() {
-//		float result = 0;
-//		for(ChiTietHoaDon cthd : dsChiTietHoaDon) {
-//			float giamGia = new BUSHoaDon().hamLayGiamGiaCuaChiTietHoaDon(this.ctkm, cthd.getSanPham());
-//			result += cthd.tinhThanhTien() * giamGia / 100;
-//		}
-//		return result;
-//	}
-//
-//	public float getThanhTien() {
-//		return tinhTongTien() - tinhGiamGia() - (diemGiamGia * 10000) + tinhThue();
-//	}
-//
-//	public float tinhTienThua() {
-//		return this.tienKhachDua - getThanhTien();
-//	}
+	public float tinhGiamGia() {
+		float result = 0;
+		for(ChiTietHoaDon cthd : dsChiTietHoaDon) {
+			float giamGia = new HoaDonBusImpl().hamLayGiamGiaCuaChiTietHoaDon(this.ctkm, cthd.getSanPham());
+			result += cthd.tinhThanhTien() * giamGia / 100;
+		}
+		return result;
+	}
 
-//	public float tinhThue() {
-//		float result = 0;
-//		for(ChiTietHoaDon cthd : dsChiTietHoaDon) {
-//			result += cthd.getGiaBan() * cthd.getSanPham().getThue() / 100 * cthd.getSoLuongMua();
-//
-//		}
-//		return result;
-//	}
+	public float getThanhTien() {
+		return tinhTongTien() - tinhGiamGia() - (diemGiamGia * 10000) + tinhThue();
+	}
+
+	public float tinhTienThua() {
+		return this.tienKhachDua - getThanhTien();
+	}
+
+	public float tinhThue() {
+		float result = 0;
+		for(ChiTietHoaDon cthd : dsChiTietHoaDon) {
+			result += cthd.getGiaBan() * cthd.getSanPham().getThue() / 100 * cthd.getSoLuongMua();
+
+		}
+		return result;
+	}
 
 	@Override
 	public String toString() {

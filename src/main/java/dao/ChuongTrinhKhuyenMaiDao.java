@@ -14,10 +14,14 @@ public interface ChuongTrinhKhuyenMaiDao {
     public boolean capNhatTrangThaiChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm, boolean status);
     public boolean capNhatChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm);
     public void tatTrangThaiChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm);
-    public boolean kiemTraTenChuongTrinhKhuyenMai(String ten);
-    public List<MucKhuyenMai> timMucKhuyenMaiTheoMaCTKM(String maCTKM);
+
+    public List<MucKhuyenMai> layDSMucKhuyenMaiCuaCTKM(String ma);
+
+    List<MucKhuyenMai> timMucKhuyenMaiTheoMaCTKM(String maCTKM);
+
     public boolean themMucKhuyenMaiVaoCTKM(String maCTKM, MucKhuyenMai mucKhuyenMai);
     public boolean xoaMucKhuyenMaiCuaCTKM(String maCTKM, MucKhuyenMai mucKhuyenMai);
     public boolean capNhatMucKhuyenMaiCuaCTKM(String maCTKM, MucKhuyenMai mucKhuyenMai);
-    public List<MucKhuyenMai> layDSMucKhuyenMaiCuaCTKM(String ma);
+    public boolean kiemTraTenChuongTrinhKhuyenMai(String ten);
+
 }

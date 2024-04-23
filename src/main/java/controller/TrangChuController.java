@@ -1,9 +1,10 @@
 package controller;
 
-import ui.TrangChu;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import ui.TrangChu;
+
 
 public class TrangChuController implements ActionListener {
 
