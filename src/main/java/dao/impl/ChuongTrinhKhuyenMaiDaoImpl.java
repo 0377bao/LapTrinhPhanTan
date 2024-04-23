@@ -12,20 +12,25 @@ import java.util.List;
 
 public class ChuongTrinhKhuyenMaiDaoImpl implements ChuongTrinhKhuyenMaiDao {
     private EntityManagerFactory emf;
-    private EntityManager em;
 
     public ChuongTrinhKhuyenMaiDaoImpl() {
         emf = Tool.initServer();
-        em = emf.createEntityManager();
     }
 
     @Override
     public ChuongTrinhKhuyenMai timChuongTrinhKhuyenMaiTheoId(String id) {
-        return em.find(ChuongTrinhKhuyenMai.class, id);
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.find(ChuongTrinhKhuyenMai.class, id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     @Override
     public ChuongTrinhKhuyenMai timChuongTrinhKhuyenMaiDangSuDung(boolean isStatus) {
+        EntityManager em = emf.createEntityManager();
         Query q = em.createNamedQuery("ChuongTrinhKhuyenMai. timChuongTrinhKhuyenMaiDangSuDung", ChuongTrinhKhuyenMai.class);
         q.setParameter("status", isStatus);
         return (ChuongTrinhKhuyenMai) q.getSingleResult();
@@ -33,12 +38,14 @@ public class ChuongTrinhKhuyenMaiDaoImpl implements ChuongTrinhKhuyenMaiDao {
 
     @Override
     public List<ChuongTrinhKhuyenMai> layDSChuongTrinhKhuyenMai() {
+        EntityManager em = emf.createEntityManager();
         Query q = em.createNamedQuery("ChuongTrinhKhuyenMai.layDSChuongTrinhKhuyenMai", ChuongTrinhKhuyenMai.class);
         return q.getResultList();
     }
 
     @Override
     public boolean themChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm) {
+        EntityManager em = emf.createEntityManager();
         boolean flag = false;
         try {
             em.getTransaction().begin();
@@ -58,21 +65,17 @@ public class ChuongTrinhKhuyenMaiDaoImpl implements ChuongTrinhKhuyenMaiDao {
 
     @Override
     public boolean capNhatTrangThaiChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm, boolean status) {
+        EntityManager e = emf.createEntityManager();
         try {
-            em.getTransaction().begin();
-            Query q = em.createNamedQuery("ChuongTrinhKhuyenMai.capNhatTrangThaiChuongTrinhKhuyenMai");
-            q.setParameter("id", ctkm.getMaCTKM());
-            if (!status) {
-                q.setParameter("code", false);
-            } else {
-                q.setParameter("code", true);
-            }
-            q.executeUpdate();
-            em.getTransaction().commit();
+            e.getTransaction().begin();
+            e.createNamedQuery("ChuongTrinhKhuyenMai.capNhatTrangThaiChuongTrinhKhuyenMai")
+                    .setParameter("id", ctkm.getMaCTKM())
+                    .setParameter("code", status)
+                    .executeUpdate();
+            e.getTransaction().commit();
             return true;
-        } catch (Exception e) {
-            em.getTransaction().rollback();
-            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
             return false;
         }
 
@@ -80,6 +83,7 @@ public class ChuongTrinhKhuyenMaiDaoImpl implements ChuongTrinhKhuyenMaiDao {
 
     @Override
     public boolean capNhatChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm) {
+        EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
             em.merge(ctkm);
@@ -94,20 +98,15 @@ public class ChuongTrinhKhuyenMaiDaoImpl implements ChuongTrinhKhuyenMaiDao {
 
     @Override
     public void tatTrangThaiChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai ctkm) {
+        EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         ctkm.setTrangThai(false);
         em.merge(ctkm);
         em.getTransaction().commit();
     }
 
-    @Override
-    public List<MucKhuyenMai> layDSMucKhuyenMaiCuaCTKM(String ma) {
-        Query q = em.createQuery("select m from MucKhuyenMai m join m.chuongTrinhKhuyenMai c where m.chuongTrinhKhuyenMai.id = :ma");
-        q.setParameter("ma", ma);
-        return (List<MucKhuyenMai>) q.getResultList();
-    }
-
     public boolean kiemTraTenChuongTrinhKhuyenMai(String ten) {
+        EntityManager em = emf.createEntityManager();
         try {
             Query query = em.createQuery("SELECT count(c) > 0 FROM ChuongTrinhKhuyenMai c WHERE c.tenCTKM = :ten");
             query.setParameter("ten", ten).getSingleResult();
@@ -121,18 +120,21 @@ public class ChuongTrinhKhuyenMaiDaoImpl implements ChuongTrinhKhuyenMaiDao {
     // trung ham
     @Override
     public List<MucKhuyenMai> timMucKhuyenMaiTheoMaCTKM(String maCTKM) {
+        EntityManager em = emf.createEntityManager();
         try {
             Query query = em.createQuery("SELECT m FROM MucKhuyenMai m JOIN ChuongTrinhKhuyenMai km ON m.chuongTrinhKhuyenMai.id = km.id WHERE m.chuongTrinhKhuyenMai.id = :maCTKM");
             query.setParameter("maCTKM", maCTKM);
             return query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
+            em.getTransaction().rollback();
         }
         return null;
     }
 
     @Override
     public boolean themMucKhuyenMaiVaoCTKM(String maCTKM, MucKhuyenMai mucKhuyenMai) {
+        EntityManager em = emf.createEntityManager();
         ChuongTrinhKhuyenMai ctkm = timChuongTrinhKhuyenMaiTheoId(maCTKM);
         mucKhuyenMai.setChuongTrinhKhuyenMai(ctkm);
         try{
@@ -149,6 +151,7 @@ public class ChuongTrinhKhuyenMaiDaoImpl implements ChuongTrinhKhuyenMaiDao {
 
     @Override
     public boolean xoaMucKhuyenMaiCuaCTKM(String maCTKM, MucKhuyenMai mucKhuyenMai) {
+        EntityManager em = emf.createEntityManager();
         ChuongTrinhKhuyenMai ctkm = timChuongTrinhKhuyenMaiTheoId(maCTKM);
         mucKhuyenMai.setChuongTrinhKhuyenMai(ctkm);
         try {
@@ -164,6 +167,7 @@ public class ChuongTrinhKhuyenMaiDaoImpl implements ChuongTrinhKhuyenMaiDao {
 
     @Override
     public boolean capNhatMucKhuyenMaiCuaCTKM(String maCTKM, MucKhuyenMai mucKhuyenMai) {
+        EntityManager em = emf.createEntityManager();
         ChuongTrinhKhuyenMai ctkm = timChuongTrinhKhuyenMaiTheoId(maCTKM);
         mucKhuyenMai.setChuongTrinhKhuyenMai(ctkm);
         try {
@@ -175,6 +179,19 @@ public class ChuongTrinhKhuyenMaiDaoImpl implements ChuongTrinhKhuyenMaiDao {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public List<MucKhuyenMai> layDSMucKhuyenMaiCuaCTKM(String ma) {
+        EntityManager e = emf.createEntityManager();
+        try {
+            Query query = e.createQuery("SELECT m FROM MucKhuyenMai m JOIN ChuongTrinhKhuyenMai km ON m.chuongTrinhKhuyenMai.id = km.id WHERE m.chuongTrinhKhuyenMai.id = :ma");
+            query.setParameter("ma", ma);
+            return query.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
 }
